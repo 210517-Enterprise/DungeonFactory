@@ -37,12 +37,22 @@ public class UserService {
 	
 	public User findById(int id) {
 		return userRepo.findById(id)
-				.orElseThrow(() -> new UserNotFoundException("No use found with id " + id));
+				.orElseThrow(() -> new UserNotFoundException("No user found with id " + id));
 	}
 	
 	public List<User> findAll() {
 		return userRepo.findAll();
 						
+	}
+	
+	public User validateCredentials(String username, String password) {
+		List<User> loggedInUserList = userRepo.checkUsernamePassword(username, password);
+		if(loggedInUserList.size() > 0) {
+			User loggedInUser = loggedInUserList.get(0);
+			return loggedInUser;
+		} else {
+			throw new UserNotFoundException("No user found with username: " + username + " passoword: " + password);
+		}
 	}
 	
 	
