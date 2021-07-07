@@ -40,5 +40,10 @@ public class UserController {
 		return ResponseEntity.ok(userService.findAll());
 	}
 	
+	@PostMapping("/login")
+	public User login(User u) {
+		User loggedInUser = userService.validateCredentials(u.getUsername(), u.getPassword());
+		return loggedInUser;
+	}
 	
 }
