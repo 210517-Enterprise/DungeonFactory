@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,10 +33,5 @@ public class User {
 	
 	@NotEmpty
 	private String password;
-	
-//	@OneToMany(mappedBy="owner")
-//private List<Character> characters;
-	
-	
-	
+
 }

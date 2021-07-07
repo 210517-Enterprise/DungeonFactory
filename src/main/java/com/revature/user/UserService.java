@@ -1,4 +1,4 @@
-package com.revature.service;
+package com.revature.user;
 
 
 import java.util.List;
@@ -10,12 +10,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.exceptions.UserNotFoundException;
-import com.revature.models.User;
-import com.revature.repository.UserRepository;
 
 @Service
 public class UserService {
-	
 	
 	private UserRepository userRepo;
 	
@@ -54,14 +51,5 @@ public class UserService {
 			throw new UserNotFoundException("No user found with username: " + username + " passoword: " + password);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

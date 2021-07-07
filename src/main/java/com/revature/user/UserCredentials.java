@@ -1,4 +1,4 @@
-package com.revature.dto;
+package com.revature.user;
 
 import com.sun.istack.NotNull;
 
