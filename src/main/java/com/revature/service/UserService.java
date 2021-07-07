@@ -2,6 +2,7 @@ package com.revature.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,10 +47,9 @@ public class UserService {
 	}
 	
 	public User validateCredentials(String username, String password) {
-		List<User> loggedInUserList = userRepo.checkUsernamePassword(username, password);
-		if(loggedInUserList.size() > 0) {
-			User loggedInUser = loggedInUserList.get(0);
-			return loggedInUser;
+		Optional<User> loggedInUser = userRepo.findByUsername(username);
+		if(loggedInUser.isPresent() && loggedInUser.get().getPassword().equals(password)) {
+			return loggedInUser.get();
 		} else {
 			throw new UserNotFoundException("No user found with username: " + username + " passoword: " + password);
 		}

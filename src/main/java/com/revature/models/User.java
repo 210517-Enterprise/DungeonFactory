@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -22,11 +23,12 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="u_id", nullable =false, unique=true, updatable = false)
+	@Column(name="id", nullable =false, unique=true, updatable = false)
 	private int id;
 	
-	@Length(min=1)
+	@Length(min=2)
 	@Pattern(regexp="[a-zA-Z][a-zA-Z0-9]*")
+	@Column(name="username", nullable=false, unique=true)
 	private String username;
 	
 	@NotEmpty

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.dto.UserCredentials;
 import com.revature.models.User;
 import com.revature.service.UserService;
 
@@ -41,9 +42,11 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public User login(User u) {
-		User loggedInUser = userService.validateCredentials(u.getUsername(), u.getPassword());
+	public User login(@RequestBody UserCredentials creds) {
+
+		User loggedInUser = userService.validateCredentials(creds.getUsername(), creds.getPassword());
 		return loggedInUser;
+
 	}
-	
+
 }
