@@ -1,6 +1,4 @@
-package com.revature.models;
-
-import java.util.List;
+package com.revature.character;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.revature.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +23,7 @@ public class Character {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="c_name")
+	@Column(name="name", nullable=false)
 	private String name;
 	
 	private String description;
@@ -39,11 +38,9 @@ public class Character {
 	private int intellegecne;
 	private int wisdom;
 	private int charisma;
-	
-	private List<String> equipment;
-	
+
 	@ManyToOne
-	@JoinColumn(name="c_owner", nullable=false)
+	@JoinColumn(name="owner", nullable=false)
 	private User owner;
 	
 	private boolean isPublic;
