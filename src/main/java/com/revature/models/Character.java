@@ -24,7 +24,7 @@ public class Character {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="c_name")
+	@Column(name="c_name", nullable=false)
 	private String name;
 	
 	private String description;
@@ -40,7 +40,7 @@ public class Character {
 	private int wisdom;
 	private int charisma;
 	
-	private List<String> equipment;
+//	private List<String> equipment;
 	
 	@ManyToOne
 	@JoinColumn(name="c_owner", nullable=false)
