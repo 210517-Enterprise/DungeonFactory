@@ -14,7 +14,7 @@ public class UserAdvice {
 	@ExceptionHandler(UsernameAlreadyRegisteredException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
 	public String handleUsernameAlreadyRegisteredException(){
-		return "Username is already registered";
+		return "Username constraint violated";
 	}
 	
 	@ExceptionHandler(UserNotFoundException.class)

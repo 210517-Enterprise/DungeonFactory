@@ -56,8 +56,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/auth")
-	public User getSessionUser(@RequestBody HttpSession session) {
+	public User getSessionUser(HttpSession session) {
 		return (User) session.getAttribute("user");
+	}
+	
+	@GetMapping("/logout")
+	public void logoutUser(HttpSession session) {
+		session.removeAttribute("user");
 	}
 
 }
