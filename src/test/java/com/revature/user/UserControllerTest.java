@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,7 +36,8 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
                 .andExpect(status().isOk())
-        ;
+                .andExpect(jsonPath("$.username").value("foo"))
+                .andExpect(jsonPath("$.password").value("bar"));
     }
 
     @Test
@@ -43,7 +45,21 @@ public class UserControllerTest {
         mvc.perform(post("/users/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
-                .andExpect(status().isNotFound())
-        ;
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testRegisterWithValidUser() throws Exception {
+        // TODO
+    }
+
+    @Test
+    public void testRegisterWithInvalidUsername() throws Exception {
+        // TODO
+    }
+
+    @Test
+    public void testRegisterWithExistingUsername() throws Exception {
+        // TODO
     }
 }
