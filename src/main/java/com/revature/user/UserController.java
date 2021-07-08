@@ -16,33 +16,36 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
 	private UserService userService;
-	
+
 	@Autowired
 	public UserController(UserService service) {
 		this.userService = service;
 	}
-	
+
 	@GetMapping("/{username}")
 	public ResponseEntity<User> findByUsername(@PathVariable("username") String username) {
 		return ResponseEntity.ok(userService.findByUsername(username));
 	}
-	
+
 	@PostMapping("/")
 	public ResponseEntity<User> insert(@RequestBody User u) {
 		return ResponseEntity.ok(userService.insert(u));
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<User>> findAll() {
 		return ResponseEntity.ok(userService.findAll());
 	}
-	
+
 	@PostMapping("/login")
 	public User login(@RequestBody UserCredentials creds) {
-
 		User loggedInUser = userService.validateCredentials(creds.getUsername(), creds.getPassword());
 		return loggedInUser;
+	}
 
+	@PostMapping("/register")
+	public ResponseEntity<User> registerUser(@RequestBody UserCredentials userInfo) {
+		return ResponseEntity.ok(userService.insert(new User(userInfo.getUsername(), userInfo.getPassword())));
 	}
 
 }
