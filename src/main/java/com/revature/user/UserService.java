@@ -22,7 +22,11 @@ public class UserService {
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public User insert(User newUser) {
 		
-		return userRepo.save(newUser);
+		try {
+			return userRepo.save(newUser);
+		} catch(Exception e) {
+			throw new UsernameAlreadyRegisteredException("Username is already registered");
+		}
 		
 	}
 
