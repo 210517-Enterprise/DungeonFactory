@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.user.errors.InvalidLoginCredentials;
+import com.revature.user.errors.UserNotFoundException;
+import com.revature.user.errors.UsernameAlreadyRegisteredException;
+
 @Service
 public class UserService {
 	
@@ -47,11 +51,14 @@ public class UserService {
 	
 	public User validateCredentials(String username, String password) {
 		Optional<User> loggedInUser = userRepo.findByUsername(username);
-		if(loggedInUser.isPresent() && loggedInUser.get().getPassword().equals(password)) {
-			return loggedInUser.get();
-		} else {
-			throw new UserNotFoundException("No user found with username: " + username + " passoword: " + password);
+		if(!loggedInUser.isPresent()) {
+			throw new UserNotFoundException("No user found with username: " + username);
 		}
+		if(!loggedInUser.get().getPassword().equals(password)) {
+			throw new InvalidLoginCredentials("Invalid password");
+		}
+		
+		return loggedInUser.get();
 	}
 
 }

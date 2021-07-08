@@ -1,4 +1,4 @@
-package com.revature.user;
+package com.revature.user.errors;
 
 public class UsernameAlreadyRegisteredException extends RuntimeException{
 
