@@ -10,6 +10,7 @@ import {
 import Home from './Home'
 import Login from './User/Login'
 import Register from './User/Register'
+import CharacterList from './Character/CharacterList'
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
                     <li>
                         <Link to="/register">Register</Link>
                     </li>
+                    <li>
+                        <Link to="/characters">Characters</Link>
+                    </li>
                 </ul>
             </div>
             <Switch>
@@ -34,6 +38,9 @@ function App() {
                 </Route>
                 <Route path="/register">
                     <Register/>
+                </Route>
+                <Route path="/characters">
+                    <CharacterList/>
                 </Route>
                 <Route path="/">
                     <Home/>
