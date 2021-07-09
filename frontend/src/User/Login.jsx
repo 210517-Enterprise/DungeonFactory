@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router';
 
 class Login extends React.Component {
     constructor(props) {
@@ -32,6 +33,8 @@ class Login extends React.Component {
 
             if(response.status !== 200){
                 this.setState({loginStatus: await response.text()});
+            }else {
+                this.setState({loginStatus: "loggedin"});
             }
         } else {
             this.setState({loginStatus: "Missing username or password"});
@@ -42,7 +45,11 @@ class Login extends React.Component {
         let messageBox;
 
         if(this.state.loginStatus){
-            messageBox = <div>{this.state.loginStatus}</div>
+            if(this.state.loginStatus === "loggedin"){
+                messageBox = <div><Redirect to="../Home"/></div>
+            } else {
+                messageBox = <div>{this.state.loginStatus}</div>
+            }
         } else {
             messageBox = <div></div>
         }
