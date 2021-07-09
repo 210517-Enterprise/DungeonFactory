@@ -60,5 +60,25 @@ public class UserService {
 		
 		return loggedInUser.get();
 	}
+	
+	public User update(User u) {
+		Optional<User> existingUser = userRepo.findById(u.getId());
+
+		if (existingUser.isPresent()) {
+			return userRepo.save(u);
+		} else {
+			throw new UserNotFoundException("No user was found!");
+		}
+
+	}
+	
+	public void delete(int id) {
+		Optional<User> existingUser = userRepo.findById(id);
+		if(existingUser.isPresent()) {
+			userRepo.deleteById(id);
+		} else {
+			throw new UserNotFoundException("No user found");
+		}
+	}
 
 }
