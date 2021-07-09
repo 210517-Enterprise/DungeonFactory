@@ -10,7 +10,7 @@ class Login extends React.Component {
         this.handlePassChange = this.handlePassChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
+
     handleUserChange(event){
         this.setState({username:event.target.value})
     }
@@ -22,7 +22,7 @@ class Login extends React.Component {
     async handleSubmit(event){
         event.preventDefault();
 
-        if(this.state.username !== "" && this.state.password !== ""){
+        if (this.state.username !== "" && this.state.password !== ""){
             const requestInfo = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -31,10 +31,11 @@ class Login extends React.Component {
 
             let response = await fetch('http://localhost:8080/user/login', requestInfo)
 
-            if(response.status !== 200){
+            if (response.status !== 200){
                 this.setState({loginStatus: await response.text()});
-            }else {
+            } else {
                 this.setState({loginStatus: "loggedin"});
+                this.props.onLogin(await response.json());
             }
         } else {
             this.setState({loginStatus: "Missing username or password"});
@@ -44,8 +45,8 @@ class Login extends React.Component {
     render() {
         let messageBox;
 
-        if(this.state.loginStatus){
-            if(this.state.loginStatus === "loggedin"){
+        if (this.state.loginStatus){
+            if (this.state.loginStatus === "loggedin"){
                 messageBox = <div><Redirect to="../Home"/></div>
             } else {
                 messageBox = <div>{this.state.loginStatus}</div>

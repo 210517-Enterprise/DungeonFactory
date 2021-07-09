@@ -50,8 +50,6 @@ class Register extends React.Component {
     render() {
         let messageBox;
 
-        let messageBox;
-
         if(this.state.loginStatus){
             if(this.state.loginStatus === "loggedin"){
                 messageBox = <div><Redirect to="../Home"/></div>
