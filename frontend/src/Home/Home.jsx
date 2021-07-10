@@ -20,8 +20,8 @@ class Home extends React.Component {
 
 
                     <div class="main">
-                        <h1>Dungeon Factory</h1>
-                        <h2>Character Creator</h2>
+                        
+                        <h2>DND 5th Edition Character Creator</h2>
 
                     <br />
 
