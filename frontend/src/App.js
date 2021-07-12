@@ -7,10 +7,11 @@ import {
     Link
 } from "react-router-dom";
 
-import Home from './Home'
+import Home from './Home/Home'
 import Login from './User/Login'
 import Register from './User/Register'
 import React from 'react';
+import D20 from './D20.gif'
 
 class App extends React.Component {
     constructor(props) {
@@ -35,12 +36,7 @@ class App extends React.Component {
     }
 
     render() { 
-        let links = [
-            {
-                to: "/",
-                label: "Home"
-            }
-        ]
+        let links = []
 
         if (this.state.currentUser) {
             links.push({
@@ -61,10 +57,17 @@ class App extends React.Component {
         return (
             <div className="app">
                 <BrowserRouter>
-                    <div>
-                        <ul>
+                    <div class="navbar">
+                        <div class="left-nav">
+
+                            <Link to="/">  <img src={D20} alt="tinylogo"/> </Link>
+
+                        </div>
+                        
+                        
+                        <div class= "right-nav">
                             {links.map(link => <li key={link.to}><Link to={link.to}>{link.label}</Link></li>)}
-                        </ul>
+                        </div>
                     </div>
                     <Switch>
                         <Route path="/login">
