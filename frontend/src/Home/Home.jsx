@@ -1,5 +1,5 @@
 import React from 'react';
-import DFLogo from '../Home/DFLogoDarkTheme.gif'
+import DFLogo from '../Home/logonewcolor.gif'
 import '../Home/Home.css'
 
 

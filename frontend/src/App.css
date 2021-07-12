@@ -4,7 +4,7 @@ body, #root, .app {
 
 
 .navbar {
-  background-color: rgb(39, 34, 34);
+  background-color: rgb(153, 153, 153);
   height: 63px;
   justify-content: space-between;
   flex: row wrap;
