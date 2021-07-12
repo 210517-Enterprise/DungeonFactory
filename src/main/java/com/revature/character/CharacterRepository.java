@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Integer>{
 	
-	public Optional<Character> findByCharacterId(int id);
+	public Optional<Character> findById(int id);
 
 }

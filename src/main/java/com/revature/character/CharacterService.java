@@ -28,7 +28,7 @@ public class CharacterService {
 	
 	//find by id
 	public Character findByCharacterId(int id) {
-		return charRepo.findByCharacterId(id)
+		return charRepo.findById(id)
 				.orElseThrow(() -> new CharacterNotFoundException("No character found with specified ID: "+ id));
 	}
 	
