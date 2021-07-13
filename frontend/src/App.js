@@ -13,11 +13,7 @@ import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import React from 'react';
-<<<<<<< HEAD
 import D20 from './D20.gif'
-=======
-import CharacterList from './Character/CharList';
->>>>>>> Added new CharList
 
 class App extends React.Component {
     constructor(props) {
@@ -96,6 +92,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/logout">
                             <Logout onLogout={this.handleLogout}/>
+                        </Route>
+                        <Route path="/characters">
+                            <CharacterList user={this.state.currentUser}/>
                         </Route>
                         <Route path="/">
                             <Home/>

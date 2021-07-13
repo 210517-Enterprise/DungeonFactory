@@ -13,5 +13,4 @@ public interface CharacterRepository extends JpaRepository<Character, Integer>{
 
 	public Set<Character> findByOwnerId(int ownerId);
 
-
 }
