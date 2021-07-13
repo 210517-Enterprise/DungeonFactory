@@ -41,6 +41,7 @@ class Register extends React.Component {
                 this.setState({loginStatus: await response.text()});
             } else {
                 this.setState({loginStatus: "loggedin"})
+                this.props.onLogin(await response.json());
             }
         } else {
             this.setState({loginStatus: "Username is not filled in or passwords did not match"});

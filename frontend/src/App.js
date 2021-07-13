@@ -9,6 +9,7 @@ import {
 
 import Home from './Home/Home'
 import Login from './User/Login'
+import Logout from './User/Logout'
 import Register from './User/Register'
 import React from 'react';
 import D20 from './D20.gif'
@@ -19,10 +20,15 @@ class App extends React.Component {
         
         this.state = {currentUser: null};
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
     }
     
-    handleLogin(user){
+    handleLogin(user) {
         this.setState({currentUser: user});
+    }
+
+    handleLogout() {
+        this.setState({currentUser: null});
     }
 
     async componentDidMount() {
@@ -42,6 +48,10 @@ class App extends React.Component {
             links.push({
                 to: "/characters",
                 label: "Characters"
+            });
+            links.push({
+                to: "/logout",
+                label: "Logout"
             });
         } else {
             links.push({
@@ -74,7 +84,10 @@ class App extends React.Component {
                             <Login currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
                         </Route>
                         <Route path="/register">
-                            <Register/>
+                            <Register currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
+                        </Route>
+                        <Route path="/logout">
+                            <Logout onLogout={this.handleLogout}/>
                         </Route>
                         <Route path="/">
                             <Home/>
