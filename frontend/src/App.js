@@ -11,7 +11,7 @@ import Home from './Home'
 import Login from './User/Login'
 import Register from './User/Register'
 import React from 'react';
-import CharacterList from './Character/CharacterList';
+import CharacterList from './Character/CharList';
 
 class App extends React.Component {
     constructor(props) {
@@ -75,7 +75,7 @@ class App extends React.Component {
                             <Register/>
                         </Route>
                         <Route path="/characters">
-                            <CharacterList/>
+                            <CharacterList user={this.state.currentUser}/>
                         </Route>
                         <Route path="/">
                             <Home/>

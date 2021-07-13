@@ -4,6 +4,7 @@ package com.revature.character;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,14 @@ public class CharacterService {
 		return charRepo.save(newCharacter);
 	}
 	
+	//find all character by a user's id
+	public Set<Character> findByOwnerId(int id){
+		return charRepo.findByOwnerId(id);
+	}
+	
 	//find by id
 	public Character findByCharacterId(int id) {
-		return charRepo.findByCharacterId(id)
+		return charRepo.findById(id)
 				.orElseThrow(() -> new CharacterNotFoundException("No character found with specified ID: "+ id));
 	}
 	
@@ -38,7 +44,6 @@ public class CharacterService {
 	}
 	
 	//update character
-	
 	public Character update(Character c) {
         Optional<Character> existingCharacter = charRepo.findById(c.getId());
 

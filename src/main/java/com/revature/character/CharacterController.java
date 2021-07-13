@@ -1,6 +1,7 @@
 package com.revature.character;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,11 @@ public class CharacterController {
 	@Autowired
 	public CharacterController(CharacterService service) {
 		this.charService = service;
+	}
+	
+	@GetMapping("/owner/{id}")
+	public ResponseEntity<Set<Character>> findByOwnerId(@PathVariable("id") int id){
+		return ResponseEntity.ok(charService.findByOwnerId(id));
 	}
 	
 	//find by character id mapping
