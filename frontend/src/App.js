@@ -14,6 +14,7 @@ import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import React, { useEffect, useState } from 'react';
 import D20 from './D20.gif'
+import CharacterCreator from './Character/CharacterCreator'
 
 export default function App() {
     const [user, updateUser] = useState(null);
@@ -60,6 +61,29 @@ export default function App() {
                         <Link to="/">  <img src={D20} alt="tinylogo"/> </Link>
 
                     </div>
+                    <Switch>
+                        <Route path="/login">
+                            <Login currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
+                        </Route>
+                        <Route path="/register">
+                            <Register currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
+                        </Route>
+                        <Route path="/characters">
+                            <Characters user={this.state.currentUser}/>
+                        </Route>
+                        <Route path="/logout">
+                            <Logout onLogout={this.handleLogout}/>
+                        </Route>
+                        <Route path="/">
+                            <Home/>
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
+            </div>
+        )
+    }
+}
+
                     
                     
                     <div class= "right-nav">
