@@ -38,7 +38,6 @@ public class CharacterController {
 	
 	@GetMapping("/mychars")
 	public ResponseEntity<Set<Character>> findBySessionOwner(HttpSession session){
-		System.out.println(session.getAttribute("user"));
 		return ResponseEntity.ok(charService.findByOwner((User) session.getAttribute("user")));
 	}
 	
