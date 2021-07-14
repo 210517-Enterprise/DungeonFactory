@@ -33,7 +33,7 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        let response = await fetch('http://localhost:8080/user/auth')
+        let response = await fetch('http://localhost:8080/user/auth', {method: 'GET', credentials: 'include'})
 
         try {
             this.setState({currentUser: await response.json()});
@@ -92,9 +92,6 @@ class App extends React.Component {
                         </Route>
                         <Route path="/logout">
                             <Logout onLogout={this.handleLogout}/>
-                        </Route>
-                        <Route path="/characters">
-                            <CharacterList user={this.state.currentUser}/>
                         </Route>
                         <Route path="/">
                             <Home/>

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.user.User;
+
 @Service
 public class CharacterService {
 
@@ -28,8 +30,8 @@ public class CharacterService {
 	}
 	
 	//find all character by a user's id
-	public Set<Character> findByOwnerId(int id){
-		return charRepo.findByOwnerId(id);
+	public Set<Character> findByOwner(User owner){
+		return charRepo.findByOwner(owner);
 	}
 	
 	//find by id

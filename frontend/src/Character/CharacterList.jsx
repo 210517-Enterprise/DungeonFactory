@@ -1,18 +1,15 @@
-import React, {useState, useEffect, useReducer} from 'react'
+import React, {useEffect, useState} from 'react'
 
-function addCharacter(characters, character){
-    characters.value.push(character);
-}
+
 
 export default function CharList({user}){
-    const [characters, updateCharacters] = useReducer(addCharacter, []);
+    const [characters, updateCharacters] = useState([]);
 
-    fetch(`http://localhost:8080/character/owner/${user.id}`)
-        .then(response => response.json)
-        .then(json => json.array.forEach(char => {
-            if(!characters)
-                updateCharacters(char)
-        }));
+    useEffect(() => {
+        fetch('http://localhost:8080/character/mychars', {method: 'GET', credentials: 'include'})
+        .then(response => response.json())
+        .then(json => updateCharacters(json))
+    }, [])
 
     return (
         <>
@@ -22,7 +19,6 @@ export default function CharList({user}){
                 {characters.map(character => (
                     <li key= {character.id}>
                         <h3>{character.race}</h3> 
-                        <h4>{character.class}</h4>  
                     </li>
                 ))}
             </ul>

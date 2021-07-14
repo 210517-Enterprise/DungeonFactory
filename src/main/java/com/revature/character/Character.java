@@ -32,6 +32,10 @@ public class Character {
 	@JoinColumn(name="user_id", nullable=false)
 	private User owner;
 	
+	public Character(CharacterBody cBody, User user) {
+		this.race = cBody.getRace();
+		this.owner = user;
+	}
 	
 	//TO DO add class specifics if needed
 	

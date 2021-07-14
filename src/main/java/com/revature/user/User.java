@@ -1,18 +1,13 @@
 package com.revature.user;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-
-import com.revature.character.Character;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -38,9 +33,6 @@ public class User {
 	@NotEmpty
 	private String password;
 	
-	@OneToMany(mappedBy="owner")
-	private Set<Character> characters;
-
 	public User(String username, String password) {
 		super();
 		this.username = username;
