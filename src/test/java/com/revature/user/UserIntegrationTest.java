@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = DungeonFactoryApplication.class)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-integrationtest.properties")
-public class UserControllerTest {
+public class UserIntegrationTest {
     @Autowired
     MockMvc mvc;
 
@@ -32,7 +32,7 @@ public class UserControllerTest {
         u.setPassword("bar");
         userService.insert(u);
 
-        mvc.perform(post("/users/login")
+        mvc.perform(post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
                 .andExpect(status().isOk())
@@ -42,7 +42,7 @@ public class UserControllerTest {
 
     @Test
     public void testLoggingInWithUserThatDoesNotExist() throws Exception {
-        mvc.perform(post("/users/login")
+        mvc.perform(post("/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
                 .andExpect(status().isNotFound());
@@ -50,16 +50,60 @@ public class UserControllerTest {
 
     @Test
     public void testRegisterWithValidUser() throws Exception {
-        // TODO
+        mvc.perform(post("/user/register")
+        	.contentType(MediaType.APPLICATION_JSON)
+        	.content("{\"username\": \"bar\", \"password\": \"foo\"}"))
+        	.andExpect(status().isOk())
+        	.andExpect(jsonPath("$.username").value("bar"))
+        	.andExpect(jsonPath("$.password").value("foo"));
     }
 
     @Test
     public void testRegisterWithInvalidUsername() throws Exception {
-        // TODO
+    	mvc.perform(post("/user/register")
+    			.contentType(MediaType.APPLICATION_JSON)
+    			.content("{\"username\": \"a\", \"password\":\"test\"}"))
+    			.andExpect(status().isConflict());
     }
 
     @Test
     public void testRegisterWithExistingUsername() throws Exception {
-        // TODO
+    	mvc.perform(post("/user/register")
+    			.contentType(MediaType.APPLICATION_JSON)
+    			.content("{\"username\": \"foo\", \"password\": \"bar\"}"))
+    			.andExpect(status().isConflict());
     }
+    
+    @Test
+    public void testDeleteWithValidUser() throws Exception {
+    	mvc.perform(delete("/user/{id}", "1")
+    			.contentType(MediaType.APPLICATION_JSON))
+    			.andExpect(status().isOk());
+    			
+    }
+    
+    @Test
+    public void testDeleteWithUserThatDoesNotExist() throws Exception {
+    	mvc.perform(delete("/user/{id}", "1")
+    			.contentType(MediaType.APPLICATION_JSON))
+    			.andExpect(status().isNotFound());
+    }
+    
+    @Test
+    public void updateUserWithValidUsername() throws Exception {
+    	 User u = new User();
+         u.setUsername("zoo");
+         u.setPassword("animal");
+         userService.insert(u);
+    	
+    	mvc.perform(put("/user")
+    			.contentType(MediaType.APPLICATION_JSON)
+    			.content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
+    			.andExpect(jsonPath("$.username").value("updatedName"))
+    			.andExpect(jsonPath("$.password").value("test"))
+    			.andExpect(status().isOk());
+    			
+    }
+    
+    
 }

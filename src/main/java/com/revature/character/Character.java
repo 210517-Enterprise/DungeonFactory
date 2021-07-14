@@ -27,7 +27,7 @@ public class Character {
 	
 	@Column(name="race", nullable=false)
 	private String race;
-	
+
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
 	private User owner;
@@ -36,7 +36,6 @@ public class Character {
 		this.race = cBody.getRace();
 		this.owner = user;
 	}
-	
 	//TO DO add class specifics if needed
 	
 }
