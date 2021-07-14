@@ -10,7 +10,7 @@ import {
 import Home from './Home/Home'
 import Login from './User/Login'
 import Logout from './User/Logout'
-import Register from './User/Register'
+import Register from './User/RegisterFunc'
 import Characters from './Character/CharacterList'
 import React from 'react';
 import D20 from './D20.gif'
