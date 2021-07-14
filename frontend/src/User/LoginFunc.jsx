@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Redirect} from 'react-router';
 
-export default function Login({user, onLogin}) {
-    const [json, updateJson] = useState(null);
+export default function Login({user, updateUser}) {
     const [errorMessage, updateErrorMessage] = useState("");
     const {register, handleSubmit} = useForm({
         defaultVaules: {
@@ -26,8 +25,7 @@ export default function Login({user, onLogin}) {
             updateErrorMessage(response.text)
         } else {
             const user = await response.json();
-            updateJson(user);
-            onLogin(user);
+            updateUser(user);
         }
 
     }
@@ -36,6 +34,7 @@ export default function Login({user, onLogin}) {
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <h1>LOGIN</h1>
+                <label>{errorMessage}</label>
                 <label>
                     Username:  
                     <input {... register("username", {required: true})}/>
