@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.revature.user.errors.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -70,15 +71,26 @@ public class UserController {
 		session.removeAttribute("user");
 	}
 	
-	// Update a user
 	@PutMapping
-	public ResponseEntity<User> update(@RequestBody User u) {
-		return ResponseEntity.ok(userService.update(u));		
+	public ResponseEntity<User> update(@RequestBody User u, HttpSession session) {
+	    User currentUser = (User) session.getAttribute("user");
+
+	    if (currentUser == null) {
+	        throw new UserNotFoundException();
+        }
+
+	    u.setId(currentUser.getId());
+		return ResponseEntity.ok(userService.update(u));
 	}
 	
-	// Delete a User
-	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable("id") int id) {
-		userService.delete(id);
+	@DeleteMapping
+	public void deleteUser(HttpSession session) {
+        User currentUser = (User) session.getAttribute("user");
+
+        if (currentUser == null) {
+            throw new UserNotFoundException();
+        }
+
+		userService.delete(currentUser.getId());
 	}
 }

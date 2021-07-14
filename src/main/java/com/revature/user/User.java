@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class User {
 	private String username;
 	
 	@NotEmpty
+    @JsonIgnore
 	private String password;
 	
 	public User(String username, String password) {
