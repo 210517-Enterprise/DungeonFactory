@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import Home from './Home/Home'
-import Login from './User/Login'
+import Login from './User/LoginFunc'
 import Logout from './User/Logout'
 import Register from './User/RegisterFunc'
 import Characters from './Character/CharacterList'
@@ -82,10 +82,10 @@ class App extends React.Component {
                     </div>
                     <Switch>
                         <Route path="/login">
-                            <Login currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
+                            <Login user={this.state.currentUser} onLogin={this.handleLogin}/>
                         </Route>
                         <Route path="/register">
-                            <Register currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
+                            <Register user={this.state.currentUser} onLogin={this.handleLogin}/>
                         </Route>
                         <Route path="/characters">
                             <Characters user={this.state.currentUser}/>
