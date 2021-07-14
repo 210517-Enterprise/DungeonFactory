@@ -76,34 +76,50 @@ public class UserIntegrationTest {
     
     @Test
     public void testDeleteWithValidUser() throws Exception {
-    	mvc.perform(delete("/user/{id}", "1")
+        User u = new User();
+        u.setUsername("noo");
+        u.setPassword("yes");
+        userService.insert(u);
+
+    	mvc.perform(delete("/user")
+                .sessionAttr("user", u)
     			.contentType(MediaType.APPLICATION_JSON))
     			.andExpect(status().isOk());
-    			
     }
     
     @Test
     public void testDeleteWithUserThatDoesNotExist() throws Exception {
-    	mvc.perform(delete("/user/{id}", "1")
+    	mvc.perform(delete("/user")
     			.contentType(MediaType.APPLICATION_JSON))
     			.andExpect(status().isNotFound());
     }
     
     @Test
-    public void updateUserWithValidUsername() throws Exception {
-    	 User u = new User();
-         u.setUsername("zoo");
-         u.setPassword("animal");
-         userService.insert(u);
+    public void updateUserWithValidUsernameAndSession() throws Exception {
+        User u = new User();
+        u.setUsername("zoo");
+        u.setPassword("animal");
+        userService.insert(u);
     	
-    	mvc.perform(put("/user")
+        mvc.perform(put("/user")
     			.contentType(MediaType.APPLICATION_JSON)
+                .sessionAttr("user", u)
     			.content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
     			.andExpect(jsonPath("$.username").value("updatedName"))
     			.andExpect(jsonPath("$.password").value("test"))
     			.andExpect(status().isOk());
-    			
     }
-    
-    
+
+    @Test
+    public void updateUserWithValidUsernameAndNoSession() throws Exception {
+        User u = new User();
+        u.setUsername("moo");
+        u.setPassword("animal");
+        userService.insert(u);
+
+        mvc.perform(put("/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
+                .andExpect(status().isNotFound());
+    }
 }

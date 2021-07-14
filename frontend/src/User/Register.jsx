@@ -1,88 +1,61 @@
-import React from 'react';
-import { Redirect } from 'react-router';
+import React, {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {Redirect} from 'react-router';
 
-class Register extends React.Component {
-    constructor(props) {
-        super(props)
+export default function Register({user, onLogin}) {
+    const [errorMessage, updateErrorMessage] = useState("");
+    const {register, handleSubmit} = useForm({
+        defaultVaules: {
+            username: "",
+            password: "",
+            confPass: ""
+        }}); 
 
-        this.state = {username:"", password:"", loginStatus:""};
-        this.handleUserChange = this.handleUserChange.bind(this);
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleConfChange = this.handleConfChange.bind(this);
-    }
-    
-    handleUserChange(event){
-        this.setState({username:event.target.value})
-    }
-
-    handlePassChange(event){
-        this.setState({password:event.target.value})
-    }
-
-    handleConfChange(event){
-        this.setState({confPass:event.target.value})
-    }
-
-    async handleSubmit(event){
-        event.preventDefault();
-
-        if(this.state.username !== "" && this.state.password !== "" && this.state.password === this.state.confPass){
+    async function onSubmit (data) {
+        if (data.password === data.confPass) {
             const requestInfo = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ username: this.state.username, password: this.state.password }),
+                body: JSON.stringify({ username: data.username, password: data.password }),
                 credentials: 'include'
             };
-    
-            let response = await fetch('http://localhost:8080/user/register', requestInfo)
 
+            const response = await fetch('http://localhost:8080/user/register', requestInfo)
 
             if(response.status !== 200){
-                this.setState({loginStatus: await response.text()});
+                updateErrorMessage(response.text)
             } else {
-                this.setState({loginStatus: "loggedin"})
-                this.props.onLogin(await response.json());
+                const user = await response.json();
+                onLogin(user);
             }
+
         } else {
-            this.setState({loginStatus: "Username is not filled in or passwords did not match"});
+            updateErrorMessage("Passwords did not match");
         }
     }
 
-    render() {
-        let messageBox;
-
-        if(this.state.loginStatus){
-            if(this.state.loginStatus === "loggedin"){
-                messageBox = <div><Redirect to="../Home"/></div>
-            } else {
-                messageBox = <div>{this.state.loginStatus}</div>
-            }
-        } else {
-            messageBox = <div></div>
-        }
-
-        return (
-            <form onSubmit={this.handleSubmit}>       
-                <label><h1>REGISTER</h1></label>
-                {messageBox} 
+    return user == null ? (
+        <>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <h1>REGISTER</h1>
+                <label>{errorMessage}</label>
                 <label>
-                    Username:
-                    <input type="text" id="username" value={this.state.username} onChange={this.handleUserChange} />        
+                    Username:  
+                    <input {... register("username", {required: true})}/>
                 </label>
                 <br/>
                 <label>
                     Password:
-                    <input type="password" id="password" value={this.state.password} onChange={this.handlePassChange} />        
+                    <input {... register("password", {required: true})}/>
                 </label>
                 <label>
-                    Confirm Password:
-                    <input type="password" id="confPass" value={this.state.confPass} onChange={this.handleConfChange} />        
+                    Confirm Password:  
+                    <input {... register("confPass", {required: true})}/>
                 </label>
-            <input type="submit" value="Submit" />
+                <input type="submit"/>
             </form>
-        );
-    }
+        </>
+    ) : (
+        <div><Redirect to="../Home"/></div>
+    );
 }
-
-export default Register;

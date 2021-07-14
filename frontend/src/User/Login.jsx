@@ -1,78 +1,53 @@
-import React from 'react';
-import { Redirect } from 'react-router';
+import React, {useState} from 'react';
+import {useForm} from 'react-hook-form';
+import {Redirect} from 'react-router';
 
-class Login extends React.Component {
-    constructor(props) {
-        super(props)
+export default function Login({user, updateUser}) {
+    const [errorMessage, updateErrorMessage] = useState("");
+    const {register, handleSubmit} = useForm({
+        defaultVaules: {
+            username: "",
+            password: "",
+        }}); 
 
-        this.state = {username:"", password:"", loginStatus:""};
-        this.handleUserChange = this.handleUserChange.bind(this);
-        this.handlePassChange = this.handlePassChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    async function onSubmit (data) {
 
-    handleUserChange(event){
-        this.setState({username:event.target.value})
-    }
+        const requestInfo = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ username: data.username, password: data.password }),
+            credentials: 'include'
+        };
 
-    handlePassChange(event){
-        this.setState({password:event.target.value})
-    }
+        const response = await fetch('http://localhost:8080/user/login', requestInfo)
 
-    async handleSubmit(event){
-        event.preventDefault();
-
-        if (this.state.username !== "" && this.state.password !== ""){
-            const requestInfo = {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ username: this.state.username, password: this.state.password }),
-                credentials: 'include'
-            };
-
-            let response = await fetch('http://localhost:8080/user/login', requestInfo)
-
-            if (response.status !== 200){
-                this.setState({loginStatus: await response.text()});
-            } else {
-                this.setState({loginStatus: "loggedin"});
-                this.props.onLogin(await response.json());
-            }
+        if(response.status !== 200){
+            updateErrorMessage(response.text)
         } else {
-            this.setState({loginStatus: "Missing username or password"});
-        }
-    }
-    
-    render() {
-        let messageBox;
-
-        if (this.state.loginStatus){
-            if (this.state.loginStatus === "loggedin"){
-                messageBox = <div><Redirect to="../Home"/></div>
-            } else {
-                messageBox = <div>{this.state.loginStatus}</div>
-            }
-        } else {
-            messageBox = <div></div>
+            const user = await response.json();
+            updateUser(user);
         }
 
-        return (
-            <form onSubmit={this.handleSubmit}>       
-                <label><h1>LOGIN</h1></label>
-                {messageBox} 
+    }
+
+    return user == null ? (
+        <>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <h1>LOGIN</h1>
+                <label>{errorMessage}</label>
                 <label>
-                    Username:
-                    <input type="text" id="username" value={this.state.username} onChange={this.handleUserChange} />        
+                    Username:  
+                    <input {... register("username", {required: true})}/>
                 </label>
                 <br/>
                 <label>
                     Password:
-                    <input type="password" id="password" value={this.state.password} onChange={this.handlePassChange} />        
+                    <input {... register("password", {required: true})}/>
                 </label>
-            <input type="submit" value="Submit" />
+                <input type="submit"/>
             </form>
-        );
-    }
+        </>
+    ) : (
+        <div><Redirect to="../Home"/></div>
+    );
 }
-
-export default Login;
