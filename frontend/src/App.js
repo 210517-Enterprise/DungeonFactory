@@ -8,9 +8,9 @@ import {
 } from "react-router-dom";
 
 import Home from './Home/Home'
-import Login from './User/LoginFunc'
-import Logout from './User/LogoutFunc'
-import Register from './User/RegisterFunc'
+import Login from './User/Login'
+import Logout from './User/Logout'
+import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import React, { useEffect, useState } from 'react';
 import D20 from './D20.gif'
@@ -77,7 +77,7 @@ export default function App() {
                         <Characters user={user}/>
                     </Route>
                     <Route path="/logout">
-                        <Logout user={user} updateUser={updateUser}/>
+                        <Logout updateUser={updateUser}/>
                     </Route>
                     <Route path="/">
                         <Home/>

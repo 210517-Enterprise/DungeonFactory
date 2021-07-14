@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Redirect } from 'react-router';
 
-export default function Logout({user, updateUser}) {
+export default function Logout({updateUser}) {
     
-    useEffect((props) => {
+    useEffect(() => {
         fetch('http://localhost:8080/user/logout', {method: 'GET', credentials: 'include'});
-        props.updateUser(null);
+        updateUser(null);
     }, [])
     
     return <div><Redirect to="../Home"/></div>
