@@ -14,6 +14,7 @@ import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import React from 'react';
 import D20 from './D20.gif'
+import CharacterCreator from './Character/CharacterCreator'
 
 class App extends React.Component {
     constructor(props) {
@@ -92,6 +93,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/logout">
                             <Logout onLogout={this.handleLogout}/>
+                        </Route>
+                        <Route path="/charactercreator">
+                            <CharacterCreator />
                         </Route>
                         <Route path="/">
                             <Home/>
