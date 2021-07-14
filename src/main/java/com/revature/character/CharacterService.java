@@ -4,11 +4,14 @@ package com.revature.character;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.revature.user.User;
 
 @Service
 public class CharacterService {
@@ -26,6 +29,11 @@ public class CharacterService {
 		return charRepo.save(newCharacter);
 	}
 	
+	//find all character by a user's id
+	public Set<Character> findByOwner(User owner){
+		return charRepo.findByOwner(owner);
+	}
+	
 	//find by id
 	public Character findByCharacterId(int id) {
 		return charRepo.findById(id)
@@ -38,7 +46,6 @@ public class CharacterService {
 	}
 	
 	//update character
-	
 	public Character update(Character c) {
         Optional<Character> existingCharacter = charRepo.findById(c.getId());
 

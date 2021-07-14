@@ -11,6 +11,7 @@ import Home from './Home/Home'
 import Login from './User/Login'
 import Logout from './User/Logout'
 import Register from './User/Register'
+import Characters from './Character/CharacterList'
 import React from 'react';
 import D20 from './D20.gif'
 
@@ -32,7 +33,7 @@ class App extends React.Component {
     }
 
     async componentDidMount() {
-        let response = await fetch('http://localhost:8080/user/auth')
+        let response = await fetch('http://localhost:8080/user/auth', {method: 'GET', credentials: 'include'})
 
         try {
             this.setState({currentUser: await response.json()});
@@ -85,6 +86,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/register">
                             <Register currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
+                        </Route>
+                        <Route path="/characters">
+                            <Characters user={this.state.currentUser}/>
                         </Route>
                         <Route path="/logout">
                             <Logout onLogout={this.handleLogout}/>

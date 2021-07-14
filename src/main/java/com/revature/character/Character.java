@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.revature.user.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +27,15 @@ public class Character {
 	
 	@Column(name="race", nullable=false)
 	private String race;
+
+	@ManyToOne
+	@JoinColumn(name="user_id", nullable=false)
+	private User owner;
 	
+	public Character(CharacterBody cBody, User user) {
+		this.race = cBody.getRace();
+		this.owner = user;
+	}
 	//TO DO add class specifics if needed
 	
 }

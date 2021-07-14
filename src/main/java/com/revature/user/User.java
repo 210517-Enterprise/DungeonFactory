@@ -34,7 +34,6 @@ public class User {
 	@NotEmpty
 	private String password;
 	
-
 	public User(String username, String password) {
 		super();
 		this.username = username;
