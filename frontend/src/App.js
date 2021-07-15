@@ -21,9 +21,9 @@ export default function App() {
 
     useEffect(() => {
         async function getUser() {
-            let response = await fetch('http://localhost:8080/user/auth', {method: 'GET', credentials: 'include'});
+            let response = await fetch('http://localhost:8080/user/auth', { method: 'GET', credentials: 'include' });
             let json = await response.json();
-            if(json){
+            if (json) {
                 updateUser(json);
             }
         }
@@ -32,7 +32,7 @@ export default function App() {
 
     let links = []
 
-    if (user){
+    if (user) {
         links.push({
             to: "/characters",
             label: "Characters"
@@ -58,32 +58,9 @@ export default function App() {
                 <div class="navbar">
                     <div class="left-nav">
 
-                        <Link to="/">  <img src={D20} alt="tinylogo"/> </Link>
+                        <Link to="/">Home</Link>
 
                     </div>
-                    <Switch>
-                        <Route path="/login">
-                            <Login currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
-                        </Route>
-                        <Route path="/register">
-                            <Register currentUser={this.state.currentUser} onLogin={this.handleLogin}/>
-                        </Route>
-                        <Route path="/characters">
-                            <Characters user={this.state.currentUser}/>
-                        </Route>
-                        <Route path="/logout">
-                            <Logout onLogout={this.handleLogout}/>
-                        </Route>
-                        <Route path="/">
-                            <Home/>
-                        </Route>
-                    </Switch>
-                </BrowserRouter>
-            </div>
-        )
-    }
-}
-
                     
                     
                     <div class= "right-nav">
@@ -110,5 +87,4 @@ export default function App() {
             </BrowserRouter>
         </div>
     )
-
 }
