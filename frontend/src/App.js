@@ -13,11 +13,6 @@ import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-=======
-import D20 from './D20.gif'
-import CharacterCreator from './Character/CharacterCreator'
->>>>>>> b423777a5f2ff13b1355b44af375f10ac39bdcad
 
 export default function App() {
     const [user, updateUser] = useState(null);
@@ -60,13 +55,7 @@ export default function App() {
             <BrowserRouter>
                 <div class="navbar">
                     <div class="left-nav">
-<<<<<<< HEAD
                         <Link to="/">Home</Link>
-=======
-
-                        <Link to="/">Home</Link>
-
->>>>>>> b423777a5f2ff13b1355b44af375f10ac39bdcad
                     </div>
                     
                     <div class= "right-nav">
