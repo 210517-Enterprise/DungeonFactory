@@ -55,11 +55,8 @@ export default function App() {
             <BrowserRouter>
                 <div class="navbar">
                     <div class="left-nav">
-
                         <Link to="/">Home</Link>
-
                     </div>
-                    
                     
                     <div class= "right-nav">
                         {links.map(link => <li key={link.to}><Link to={link.to}>{link.label}</Link></li>)}
