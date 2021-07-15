@@ -1,7 +1,8 @@
 body, #root, .app {
   width: 100%;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(184, 184, 184);
 }
-
 
 .navbar {
   background-color:#374046;
