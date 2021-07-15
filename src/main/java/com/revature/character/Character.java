@@ -26,7 +26,31 @@ public class Character {
 	
 	@Column(name="race", nullable=false)
 	private String race;
-
+	
+	@Column(name="class", nullable=false)
+	private String character_class;
+	
+	@Column(name="strength", nullable=false)
+	private int strength;
+	
+	@Column(name="constitution", nullable=false)
+	private int constitution;
+	
+	@Column(name="intelligence", nullable=false)
+	private int intelligence;
+	
+	@Column(name="wisdom", nullable=false)
+	private int wisdom;
+	
+	@Column(name="dexterity", nullable=false)
+	private int dexterity;
+	
+	@Column(name="charisma", nullable=false)
+	private int charisma;
+	
+	@Column(name="name", nullable=false)
+	private String character_name;
+	
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
 	private User owner;

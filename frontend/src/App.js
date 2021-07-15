@@ -14,6 +14,7 @@ import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import CharacterCreator from './Character/CharacterCreator'
 import React, { useEffect, useState } from 'react';
+import CharacterCreator from './Character/CharacterCreator';
 
 export default function App() {
     const [user, updateUser] = useState(null);
@@ -77,6 +78,9 @@ export default function App() {
                     </Route>
                     <Route path="/logout">
                         <Logout updateUser={updateUser}/>
+                    </Route>
+                    <Route path="/charactercreator">
+                        <CharacterCreator/>
                     </Route>
                     <Route path="/">
                         <Home/>
