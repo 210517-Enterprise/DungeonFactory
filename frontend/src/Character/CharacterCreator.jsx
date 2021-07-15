@@ -23,7 +23,7 @@ export default function CharacterCreator() {
             credentials: 'include'
         };
 
-        const response = await fetch('http://localhost:8080/character/create', requestInfo);
+        const response = await fetch('http://localhost:8080/character/', requestInfo);
         updateCharacter(await response.json());
     }
 

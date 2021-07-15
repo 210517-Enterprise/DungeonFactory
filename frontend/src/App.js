@@ -12,6 +12,7 @@ import Login from './User/Login'
 import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
+import CharacterCreator from './Character/CharacterCreator'
 import React, { useEffect, useState } from 'react';
 
 export default function App() {
@@ -71,6 +72,9 @@ export default function App() {
                     </Route>
                     <Route path="/characters">
                         <Characters user={user}/>
+                    </Route>
+                    <Route path="/charactercreator">
+                        <CharacterCreator/>
                     </Route>
                     <Route path="/logout">
                         <Logout updateUser={updateUser}/>
