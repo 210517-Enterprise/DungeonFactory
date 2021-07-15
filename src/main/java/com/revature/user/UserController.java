@@ -50,7 +50,7 @@ public class UserController {
 	@PostMapping("/login")
 	public User login(@RequestBody UserCredentials creds, HttpSession session) {
 		User loggedInUser = userService.validateCredentials(creds.getUsername(), creds.getPassword());
-		session.setAttribute("user", loggedInUser);
+        session.setAttribute("user", loggedInUser);
 		return loggedInUser;
 	}
 

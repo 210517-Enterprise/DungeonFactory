@@ -4,6 +4,7 @@ package com.revature.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,7 +16,6 @@ import com.revature.user.errors.UsernameAlreadyRegisteredException;
 
 @Service
 public class UserService {
-	
 	private UserRepository userRepo;
 	
 	@Autowired
@@ -25,13 +25,14 @@ public class UserService {
 	
 	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public User insert(User newUser) {
-		
+        String hashed = BCrypt.hashpw(newUser.getPassword(), BCrypt.gensalt());
+        newUser.setPassword(hashed);
+
 		try {
 			return userRepo.save(newUser);
 		} catch(Exception e) {
 			throw new UsernameAlreadyRegisteredException("Username is already registered");
 		}
-		
 	}
 
 	public User findByUsername(String username) {
@@ -46,7 +47,6 @@ public class UserService {
 	
 	public List<User> findAll() {
 		return userRepo.findAll();
-						
 	}
 	
 	public User validateCredentials(String username, String password) {
@@ -54,10 +54,11 @@ public class UserService {
 		if(!loggedInUser.isPresent()) {
 			throw new UserNotFoundException("No user found with username: " + username);
 		}
-		if(!loggedInUser.get().getPassword().equals(password)) {
-			throw new InvalidLoginCredentials("Invalid password");
-		}
-		
+
+        if (!BCrypt.checkpw(password, loggedInUser.get().getPassword())) {
+            throw new InvalidLoginCredentials("Invalid password");
+        }
+
 		return loggedInUser.get();
 	}
 	
@@ -69,7 +70,6 @@ public class UserService {
 		} else {
 			throw new UserNotFoundException("No user was found!");
 		}
-
 	}
 	
 	public void delete(int id) {
@@ -80,5 +80,4 @@ public class UserService {
 			throw new UserNotFoundException("No user found");
 		}
 	}
-
 }

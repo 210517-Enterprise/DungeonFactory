@@ -1,8 +1,11 @@
 package com.revature.user;
 
 import com.revature.DungeonFactoryApplication;
+import com.revature.user.errors.InvalidLoginCredentials;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -118,5 +121,15 @@ public class UserIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testPasswordHashing() throws Exception {
+        User u = new User();
+        u.setUsername("moo");
+        u.setPassword("animal");
+        userService.insert(u);
+
+        assertTrue(BCrypt.checkpw("animal", u.getPassword()));
     }
 }
