@@ -13,7 +13,6 @@ import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import React, { useEffect, useState } from 'react';
-import D20 from './D20.gif'
 
 export default function App() {
     const [user, updateUser] = useState(null);
