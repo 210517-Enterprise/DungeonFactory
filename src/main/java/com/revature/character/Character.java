@@ -48,7 +48,7 @@ public class Character {
 	@Column(name="charisma", nullable=false)
 	private int charisma;
 	
-	@Column(name="charisma", nullable=false)
+	@Column(name="name", nullable=false)
 	private String character_name;
 	
 	@ManyToOne
