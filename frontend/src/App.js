@@ -13,15 +13,20 @@ import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import React, { useEffect, useState } from 'react';
+<<<<<<< HEAD
+=======
+import D20 from './D20.gif'
+import CharacterCreator from './Character/CharacterCreator'
+>>>>>>> b423777a5f2ff13b1355b44af375f10ac39bdcad
 
 export default function App() {
     const [user, updateUser] = useState(null);
 
     useEffect(() => {
         async function getUser() {
-            let response = await fetch('http://localhost:8080/user/auth', {method: 'GET', credentials: 'include'});
+            let response = await fetch('http://localhost:8080/user/auth', { method: 'GET', credentials: 'include' });
             let json = await response.json();
-            if(json){
+            if (json) {
                 updateUser(json);
             }
         }
@@ -30,7 +35,7 @@ export default function App() {
 
     let links = []
 
-    if (user){
+    if (user) {
         links.push({
             to: "/characters",
             label: "Characters"
@@ -55,7 +60,13 @@ export default function App() {
             <BrowserRouter>
                 <div class="navbar">
                     <div class="left-nav">
+<<<<<<< HEAD
                         <Link to="/">Home</Link>
+=======
+
+                        <Link to="/">Home</Link>
+
+>>>>>>> b423777a5f2ff13b1355b44af375f10ac39bdcad
                     </div>
                     
                     <div class= "right-nav">
@@ -82,5 +93,4 @@ export default function App() {
             </BrowserRouter>
         </div>
     )
-
 }

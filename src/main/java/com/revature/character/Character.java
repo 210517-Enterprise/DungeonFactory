@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Table(name="characters")
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Character {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id", nullable = false, unique=true, updatable=false)
@@ -31,11 +30,4 @@ public class Character {
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
 	private User owner;
-	
-	public Character(CharacterBody cBody, User user) {
-		this.race = cBody.getRace();
-		this.owner = user;
-	}
-	//TO DO add class specifics if needed
-	
 }
