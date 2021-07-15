@@ -36,8 +36,7 @@ public class UserIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("foo"))
-                .andExpect(jsonPath("$.password").value("bar"));
+                .andExpect(jsonPath("$.username").value("foo"));
     }
 
     @Test
@@ -54,8 +53,7 @@ public class UserIntegrationTest {
         	.contentType(MediaType.APPLICATION_JSON)
         	.content("{\"username\": \"bar\", \"password\": \"foo\"}"))
         	.andExpect(status().isOk())
-        	.andExpect(jsonPath("$.username").value("bar"))
-        	.andExpect(jsonPath("$.password").value("foo"));
+        	.andExpect(jsonPath("$.username").value("bar"));
     }
 
     @Test
@@ -106,7 +104,6 @@ public class UserIntegrationTest {
                 .sessionAttr("user", u)
     			.content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
     			.andExpect(jsonPath("$.username").value("updatedName"))
-    			.andExpect(jsonPath("$.password").value("test"))
     			.andExpect(status().isOk());
     }
 
