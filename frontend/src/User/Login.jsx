@@ -22,7 +22,7 @@ export default function Login({user, updateUser}) {
         const response = await fetch('http://localhost:8080/user/login', requestInfo)
 
         if(response.status !== 200){
-            updateErrorMessage(response.text)
+            updateErrorMessage(await response.text())
         } else {
             const user = await response.json();
             updateUser(user);
@@ -35,6 +35,7 @@ export default function Login({user, updateUser}) {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <h1>LOGIN</h1>
                 <label>{errorMessage}</label>
+                <br/>
                 <label>
                     Username:  
                     <input {... register("username", {required: true})}/>
