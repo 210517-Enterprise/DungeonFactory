@@ -34,28 +34,27 @@ export default function Register({user, updateUser}) {
         }
     }
 
+    let Error;
+    if (errorMessage) {
+        Error = <div className="login-error" role="alert">{errorMessage}</div>
+    }
+
     return user == null ? (
-        <>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <h1>REGISTER</h1>
-                <label>{errorMessage}</label>
-                <br/>
-                <label>
-                    Username:  
-                    <input {... register("username", {required: true})}/>
-                </label>
-                <br/>
-                <label>
-                    Password:
-                    <input {... register("password", {required: true})}/>
-                </label>
-                <label>
-                    Confirm Password:  
-                    <input {... register("confPass", {required: true})}/>
-                </label>
-                <input type="submit"/>
+        <div className="login-form-container">
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+                <div className="login-top-container">
+                    <div className="login-header">Register</div>
+                    <div className="login-subheader">Creating a new account</div>
+                    {Error}
+                    <input className="login-field" placeholder="Username" {... register("username", {required: true})}/>
+                    <input className="login-field" type="password" placeholder="Password" {... register("password", {required: true})}/>
+                    <input className="login-field" type="password" placeholder="Repeat Password" {... register("confPass", {required: true})}/>
+                </div>
+                <div className="login-submit-container">
+                    <input className="login-button" type="submit"/>
+                </div>
             </form>
-        </>
+        </div>
     ) : (
         <div><Redirect to="../Home"/></div>
     );
