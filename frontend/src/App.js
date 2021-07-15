@@ -57,7 +57,7 @@ export default function App() {
                 <div class="navbar">
                     <div class="left-nav">
 
-                        <Link to="/">  <img src={D20} alt="tinylogo"/> </Link>
+                        <Link to="/">Home</Link>
 
                     </div>
                     

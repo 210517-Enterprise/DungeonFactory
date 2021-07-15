@@ -8,28 +8,19 @@ class Home extends React.Component {
     render() {
         return (
 
-
-            <div>
-
-                <div class="Home Page">
-                    
-                    <div class="image-holder">
-                    <img src={DFLogo} alt="DungeonFactory Logo" />
-                    </div>
+            <div class="Home Page">
                 
+                <img class="logo" src={DFLogo} alt="DungeonFactory Logo" />
 
-
-                    <div class="main">
-                        
-                        <h2>DND 5th Edition Character Creator</h2>
-
-                    <br />
-
+                <div class="main">
                     
-                    </div>
+                    <h2>DND 5th Edition Character Creator</h2>
+
+                <br />
+
                 
                 </div>
-
+            
             </div>
         )
     }
