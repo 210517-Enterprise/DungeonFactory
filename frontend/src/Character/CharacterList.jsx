@@ -18,7 +18,7 @@ import './CharacterList.css';
 
 
 
-export default function CharList({user}){
+export default function CharList({user, updateCharacterId}){
     const [characters, updateCharacters] = useState([]);
 
     useEffect(() => {
@@ -71,11 +71,19 @@ export default function CharList({user}){
 
                 {characters.length !== 0 ?
                     characters.map(character => (
+<<<<<<< HEAD
                         <Link to={`/character/${character.id}`}>
                             <div class="card">
                                 <img src={classToPng(character.character_class)} alt={character.character_class}/>
                                 <div class="container">
                                     <h4><b>{character.character_name}</b></h4>
+=======
+                        <Link to="/CharacterView" onClick={updateCharacterId(character.id)}>
+                            <div class="card">
+                                <img src={monk} alt="Class"/>
+                                <div class="container">
+                                    <h4><b>{character.id}</b></h4>
+>>>>>>> 0fd5d820dd3e8afd34122d82c903d84072e52171
                                 </div>
                             </div> 
                         </Link> ))

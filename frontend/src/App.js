@@ -18,6 +18,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function App() {
     const [user, updateUser] = useState(null);
+    const [characterId, updateCharacterId] = useState(null);
 
     useEffect(() => {
         async function getUser() {
@@ -71,13 +72,18 @@ export default function App() {
                         <Register user={user} updateUser={updateUser}/>
                     </Route>
                     <Route path="/characters">
-                        <Characters user={user}/>
+                        <Characters user={user} updateCharacterId={updateCharacterId}/>
                     </Route>
                     <Route path="/charactercreator">
                         <CharacterCreator/>
                     </Route>
+<<<<<<< HEAD
                     <Route path="/character/:id">
                         <CharacterView/>
+=======
+                    <Route path="/characterview">
+                        <CharacterView characterId={characterId}/>
+>>>>>>> 0fd5d820dd3e8afd34122d82c903d84072e52171
                     </Route>
                     <Route path="/logout">
                         <Logout updateUser={updateUser}/>
