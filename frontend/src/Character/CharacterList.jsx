@@ -20,7 +20,7 @@ export default function CharList({user}){
         <>
             <h1>Characters</h1>   
             <span> 
-                <Link to="/CharacterCreator">
+                <Link to="/character/create">
                     <div class="card">
                         <img src={add} alt="Add a new character"/>
                         <div class="container">

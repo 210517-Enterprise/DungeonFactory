@@ -12,7 +12,7 @@ import Login from './User/Login'
 import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
-import CharacterCreator from './Character/CharacterCreator'
+import CharacterForm from './Character/CharacterForm'
 import React, { useEffect, useState } from 'react';
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
 
     if (user) {
         links.push({
-            to: "/characters",
+            to: "/character/list",
             label: "Characters"
         });
         links.push({
@@ -69,17 +69,14 @@ export default function App() {
                     <Route path="/register">
                         <Register user={user} updateUser={updateUser}/>
                     </Route>
-                    <Route path="/characters">
+                    <Route path="/character/list">
                         <Characters user={user}/>
-                    </Route>
-                    <Route path="/charactercreator">
-                        <CharacterCreator/>
                     </Route>
                     <Route path="/logout">
                         <Logout updateUser={updateUser}/>
                     </Route>
-                    <Route path="/charactercreator">
-                        <CharacterCreator/>
+                    <Route path="/character/create">
+                        <CharacterForm/>
                     </Route>
                     <Route path="/">
                         <Home/>
