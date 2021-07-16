@@ -1,39 +1,81 @@
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Redirect } from "react-router";
+import styled from "styled-components";
+import CharacterRacePicker from "./CharacterRacePicker";
+import CharacterClassPicker from "./CharacterClassPicker";
+import CharacterAbilityScorePicker from "./CharacterAbilityScorePicker";
+import CharacterDetails from "./CharacterDetails";
+
+const FormContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
+const Form = styled.div`
+  width: 1280px;
+  margin-bottom: 500px;
+`
+
+const Header = styled.div`
+  font-size: 42px;
+  color: #39ABFE;
+  margin: 72px 0 32px 0;
+`
+
+const Button = styled.button`
+  flex: 0;
+  padding: 12px 16px;
+  border-radius: 4px;
+  background: #39ABFE;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 18px;
+  color: white;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+`
 
 export default function CharacterForm() {
     const [races, updateRaces] = useState([]);
     const [classes, updateClasses] = useState([]);
-    const [character, updateCharacter] = useState(null);
 
-    const { register, handleSubmit } = useForm({
-        defaultValues: {
-            race: "",
-            class: "",
-            strength: "",
-            constitution: "",
-            intelligence: "",
-            wisdom: "",
-            dexterity: "",
-            charisma: "",
-            characterName: ""
+    const [race, updateRace] = useState("");
+    const [characterClass, updateClass] = useState("");
 
-        }
+    const [abilities, updateAbilities] = useState({
+        strength: 0,
+        dexterity: 0,
+        constitution: 0,
+        intelligence: 0,
+        wisdom: 0,
+        charisma: 0
     });
 
-    async function onSubmit(data) {
+    const [details, updateDetails] = useState({
+        characterName: "",
+        personality: "",
+        bonds: "",
+        background: "",
+        ideals: "",
+        flaws: "",
+        alignment: "",
+        featAndTraits: ""
+    });
+
+    async function handleSubmit() {
         const requestInfo = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ race: data.race, character_class: data.class, strength: data.strength, constitution: data.constitution, intelligence: data.intelligence, wisdom: data.wisdom, dexterity: data.dexterity, charisma: data.charisma, character_name: data.characterName }),
+            body: JSON.stringify({
+                race,
+                characterClass,
+                ...abilities,
+                ...details
+            }),
             credentials: 'include'
         };
 
         const response = await fetch('http://localhost:8080/character/', requestInfo);
-        updateCharacter(await response.json());
-
-
     }
 
     async function getRaces() {
@@ -46,7 +88,6 @@ export default function CharacterForm() {
         const response = await fetch("https://www.dnd5eapi.co/api/classes/")
         const classes = await response.json();
         updateClasses(classes.results)
-
     }
 
     useEffect(() => {
@@ -55,65 +96,19 @@ export default function CharacterForm() {
     }, []);
 
     const characterForm = (
-        <div className="">
-            <div className="form-header">
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div>{(character) ? <Redirect to="./Characters"/> : ""}</div>
-                <div className="race">
-                    <label htmlFor="Race Select">Select a Race</label>
-                    <select {...register("race")} >
-                        {races.map((result) => {
-                            return <option value={result.name}>{result.name}</option>
-                        })}
-                    </select>
-                </div>
-
-                <div className="className">
-                    <label htmlFor="Class Select">Select a Class</label>
-                    <select {...register("class")}>
-                        {classes.map((result) => {
-                            return <option value={result.name}>{result.name}</option>
-                        })}
-                    </select>
-                </div>
-
-                <div className="abilities">
-                    <label htmlFor="constitution">Constitution</label>
-                    <input {...register("constitution", {required: true})}>
-                    </input>
-
-                    <label htmlFor="charisma">Charisma</label>
-                    <input {...register("charisma", {required: true})}>
-                    </input>
-
-                    <label htmlFor="dexterity">Dexterity</label>
-                    <input {...register("dexterity", {required: true})}>
-                    </input>
-
-                    <label htmlFor="intelligence">Intelligence</label>
-                    <input {...register("intelligence", {required: true})}>
-                    </input>
-
-                    <label htmlFor="wisdom">Wisdom</label>
-                    <input {...register("wisdom", {required: true})}>
-                    </input>
-
-                    <label htmlFor="strength">Strength</label>
-                    <input {...register("strength", {required: true})}>
-                    </input>
-                </div>
-
-                <div className="characterName">
-                    <label htmlFor="characterName">Character Name</label>
-                    <input {...register("characterName", {required: true})}>
-                    </input>
-
-                </div>
-
-                <input type="submit"/>
-            </form>
-        </div>
+        <FormContainer>
+            <Form>
+                <Header>Choose a race</Header>
+                <CharacterRacePicker races={races} onChange={r => updateRace(r)} />
+                <Header>Choose a class</Header>
+                <CharacterClassPicker classes={classes} onChange={c => updateClass(c)} />
+                <Header>Determine ability scores</Header>
+                <CharacterAbilityScorePicker abilities={abilities} onChange={a => updateAbilities(a)} />
+                <Header>Describe your character</Header>
+                <CharacterDetails details={details} onChange={d => updateDetails(d)} />
+                <Button onClick={handleSubmit}>Create</Button>
+            </Form>
+        </FormContainer>
     )
 
     if (races.length === 0 || classes.length === 0) {
