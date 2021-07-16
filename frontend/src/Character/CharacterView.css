@@ -1,0 +1,54 @@
+.wrapper {
+    color: #7D94A4;
+}
+
+.classRace {
+    background-color:#2D3439;;
+    position: relative;
+    margin: auto;
+    width: 35%;
+    border-radius: 10px;
+}
+
+.attributes {
+    background-color: #2D3439;
+    position: relative;
+    margin: auto;
+    margin-top: 25px;
+    width: 35%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+span.attributes > div {
+    background-color: #2D3439;
+    position: relative;
+    display: inline;
+    border-radius: 10px;
+}
+
+span.attributes > div > div {
+    font-size: larger;
+    display: flex;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+span.attributes > div > div > span {
+    margin: auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.cr {
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+}
+
+h3 {
+    font-weight: 2000;
+}

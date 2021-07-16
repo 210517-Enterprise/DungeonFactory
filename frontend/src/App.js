@@ -12,11 +12,13 @@ import Login from './User/Login'
 import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
+import CharacterView from './Character/CharacterView';
 import CharacterForm from './Character/CharacterForm'
 import React, { useEffect, useState } from 'react';
 
 export default function App() {
     const [user, updateUser] = useState(null);
+    const [characterId, updateCharacterId] = useState(null);
 
     useEffect(() => {
         async function getUser() {
@@ -72,11 +74,14 @@ export default function App() {
                     <Route path="/character/list">
                         <Characters user={user}/>
                     </Route>
-                    <Route path="/logout">
-                        <Logout updateUser={updateUser}/>
-                    </Route>
                     <Route path="/character/create">
                         <CharacterForm/>
+                    </Route>
+                    <Route path="/character/:id">
+                        <CharacterView/>
+                    </Route>
+                    <Route path="/logout">
+                        <Logout updateUser={updateUser}/>
                     </Route>
                     <Route path="/">
                         <Home/>
@@ -84,5 +89,5 @@ export default function App() {
                 </Switch>
             </BrowserRouter>
         </div>
-    )
+)
 }
