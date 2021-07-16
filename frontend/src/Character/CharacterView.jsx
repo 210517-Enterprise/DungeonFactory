@@ -94,7 +94,7 @@ export default function CharacterView() {
 
     return (character) ? (
         <>
-            <h1>{character.character_name}</h1>
+            <h1>{character.characterName}</h1>
             <div className="wrapper">
                 <span className="classRace">
                     <div className="cr">
@@ -102,8 +102,8 @@ export default function CharacterView() {
                         <h3>Race: {character.race}</h3>
                     </div>
                     <div className="cr">
-                        <img src={classToPng(character.character_class)} alt={character.character_class}/>
-                        <h3>Class: {character.character_class}</h3>
+                        <img src={classToPng(character.characterClass)} alt={character.characterClass}/>
+                        <h3>Class: {character.characterClass}</h3>
                     </div>
                 </span>
                 <span className="attributes">

@@ -25,6 +25,7 @@ export default function CharList({user, updateCharacterId}){
         fetch('http://localhost:8080/character', {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(json => updateCharacters(json))
+        console.log(characters)
     }, [])
 
     function classToPng(className) {
@@ -73,9 +74,9 @@ export default function CharList({user, updateCharacterId}){
                     characters.map(character => (
                         <Link to={`/character/${character.id}`}>
                             <div class="card">
-                                <img src={classToPng(character.character_class)} alt={character.character_class}/>
+                                <img src={classToPng(character.characterClass)} alt={character.characterClass}/>
                                 <div class="container">
-                                    <h4><b>{character.character_name}</b></h4>
+                                    <h4><b>{character.characterName}</b></h4>
                                 </div>
                             </div> 
                         </Link> ))
