@@ -51,6 +51,27 @@ public class Character {
 	@Column(name="name", nullable=false)
 	private String character_name;
 	
+	@Column(name="background", nullable=false)
+	private String background;
+	
+	@Column(name="alignment", nullable=false)
+	private String alignment;
+	
+	@Column(name="personality", nullable=false)
+	private String personality;
+	
+	@Column(name="ideals", nullable=false)
+	private String ideals;
+	
+	@Column(name="bonds", nullable=false)
+	private String bonds;
+	
+	@Column(name="flaws", nullable=false)
+	private String flaws;
+	
+	@Column(name="featAndTraits", nullable=false)
+	private String feat_and_traits;
+
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
 	private User owner;
