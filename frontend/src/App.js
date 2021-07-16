@@ -77,13 +77,8 @@ export default function App() {
                     <Route path="/charactercreator">
                         <CharacterCreator/>
                     </Route>
-<<<<<<< HEAD
                     <Route path="/character/:id">
                         <CharacterView/>
-=======
-                    <Route path="/characterview">
-                        <CharacterView characterId={characterId}/>
->>>>>>> 0fd5d820dd3e8afd34122d82c903d84072e52171
                     </Route>
                     <Route path="/logout">
                         <Logout updateUser={updateUser}/>
