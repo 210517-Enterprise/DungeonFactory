@@ -62,7 +62,7 @@ export default function CharacterDetails({ details, onChange }) {
     return (
         <Container>
             <DetailColumn>
-                <Field name="characterName" onChange={onChange} details={details} />
+                <Field name="characterName" label="Character Name" onChange={onChange} details={details} />
                 <Field name="personality" onChange={onChange} details={details} label="Personality Traits" multi={true} />
                 <Field name="bonds" onChange={onChange} details={details} multi={true} />
             </DetailColumn>
