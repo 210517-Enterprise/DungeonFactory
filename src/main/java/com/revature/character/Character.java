@@ -28,7 +28,7 @@ public class Character {
 	private String race;
 	
 	@Column(name="class", nullable=false)
-	private String character_class;
+	private String characterClass;
 	
 	@Column(name="strength", nullable=false)
 	private int strength;
@@ -49,8 +49,29 @@ public class Character {
 	private int charisma;
 	
 	@Column(name="name", nullable=false)
-	private String character_name;
+	private String characterName;
 	
+	@Column(name="background", nullable=false)
+	private String background;
+	
+	@Column(name="alignment", nullable=false)
+	private String alignment;
+	
+	@Column(name="personality", nullable=false)
+	private String personality;
+	
+	@Column(name="ideals", nullable=false)
+	private String ideals;
+	
+	@Column(name="bonds", nullable=false)
+	private String bonds;
+	
+	@Column(name="flaws", nullable=false)
+	private String flaws;
+	
+	@Column(name="featAndTraits", nullable=false)
+	private String featAndTraits;
+
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
 	private User owner;
