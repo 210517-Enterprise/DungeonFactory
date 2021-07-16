@@ -126,7 +126,7 @@ public class UserIntegrationTest {
     @Test
     public void testPasswordHashing() throws Exception {
         User u = new User();
-        u.setUsername("moo");
+        u.setUsername("");
         u.setPassword("animal");
         userService.insert(u);
 

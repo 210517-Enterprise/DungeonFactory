@@ -28,7 +28,7 @@ export default function CharacterCreator() {
         const requestInfo = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ race: data.race, character_class: data.class, strength: data.strength, constitution: data.constitution, intelligence: data.intelligence, wisdom: data.wisdom, dexterity: data.dexterity, charisma: data.charisma, character_name: data.characterName }),
+            body: JSON.stringify({ race: data.race, characterClass: data.class, strength: data.strength, constitution: data.constitution, intelligence: data.intelligence, wisdom: data.wisdom, dexterity: data.dexterity, charisma: data.charisma, characterName: data.characterName }),
             credentials: 'include'
         };
 
@@ -82,33 +82,33 @@ export default function CharacterCreator() {
 
             <div class="abilities">
                 <label for="constitution">Constitution</label>
-                <input {...register("constitution", { required: true })}>
+                <input type="number" {...register("constitution", { required: true })}>
                 </input>
                 
                 <label for="charisma">Charisma</label>
-                <input {...register("charisma", { required: true })}>
+                <input type="number" {...register("charisma", { required: true })}>
                 </input>
 
                 <label for="dexterity">Dexterity</label>
-                <input {...register("dexterity", { required: true })}>
+                <input type="number" {...register("dexterity", { required: true })}>
                 </input>
 
                 <label for="intelligence">Intelligence</label>
-                <input {...register("intelligence", { required: true })}>
+                <input type="number" {...register("intelligence", { required: true })}>
                 </input>
 
                 <label for="wisdom">Wisdom</label>
-                <input {...register("wisdom", { required: true })}>
+                <input type="number" {...register("wisdom", { required: true })}>
                 </input>
 
                 <label for="strength">Strength</label>
-                <input {...register("strength", { required: true })}>
+                <input type="number" {...register("strength", { required: true })}>
                 </input>
             </div>
 
             <div class="characterName">
             <label for="characterName">Character Name</label>
-                <input {...register("characterName", { required: true })}>
+                <input type="text" {...register("characterName", { required: true })}>
                 </input>
 
             </div>
