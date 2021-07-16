@@ -1,10 +1,12 @@
 package com.revature.character;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.javafaker.Faker;
 import com.revature.DungeonFactoryApplication;
 import com.revature.user.User;
 import com.revature.user.UserService;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,16 +36,41 @@ public class CharacterIntegrationTest {
     @Autowired
     CharacterService characterService;
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    Faker faker = new Faker();
+
+    public User randomUser() {
+        User u = new User();
+        u.setUsername(faker.name().firstName());
+        u.setPassword(faker.pokemon().name());
+        userService.insert(u);
+        return u;
+    }
+
+    public Character randomCharacter(User u) {
+        Faker faker = new Faker();
+        Character c = new Character();
+        c.setRace("elf");
+        c.setCharacter_name(faker.name().fullName());
+        c.setCharacter_class(faker.job().title());
+        c.setOwner(u);
+        characterService.insert(c);
+        return c;
+    }
+
     @Test
     public void testValidCharacterCreate() throws Exception {
-        User u = new User();
-        u.setUsername("too");
-        u.setPassword("bar");
-        userService.insert(u);
+        User u = randomUser();
+
+        ObjectNode character = objectMapper.createObjectNode();
+        character.put("race", "elf");
+        character.put("character_class", "wizard");
+        character.put("character_name", "foo");
 
         mvc.perform(post("/character")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"race\": \"dwarf\"}")
+                .content(character.toString())
                 .sessionAttr("user", u))
                 .andExpect(status().isOk());
     }
@@ -59,6 +85,8 @@ public class CharacterIntegrationTest {
         Character c = new Character();
         c.setRace("elf");
         c.setOwner(u);
+        c.setCharacter_class("wizard");
+        c.setCharacter_name("woobar");
         characterService.insert(c);
 
         mvc.perform(get("/character/" + c.getId())
@@ -70,19 +98,18 @@ public class CharacterIntegrationTest {
 
     @Test
     public void testValidCharacterUpdate() throws Exception {
-        User u = new User();
-        u.setUsername("soo");
-        u.setPassword("bar");
-        userService.insert(u);
+        User u = randomUser();
+        Character c = randomCharacter(u);
 
-        Character c = new Character();
-        c.setRace("elf");
-        c.setOwner(u);
-        characterService.insert(c);
+        ObjectNode character = objectMapper.createObjectNode();
+        character.put("id", c.getId());
+        character.put("race", "dwarf");
+        character.put("character_class", "wizard");
+        character.put("character_name", "foo");
 
         mvc.perform(put("/character")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": \" " + c.getId() + "\",\"race\": \"dwarf\"}")
+                .content(character.toString())
                 .sessionAttr("user", u))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(c.getId()))
@@ -91,15 +118,8 @@ public class CharacterIntegrationTest {
 
     @Test
     public void testValidCharacterList() throws Exception {
-        User u = new User();
-        u.setUsername("roo");
-        u.setPassword("bar");
-        userService.insert(u);
-
-        Character c = new Character();
-        c.setRace("elf");
-        c.setOwner(u);
-        characterService.insert(c);
+        User u = randomUser();
+        Character c = randomCharacter(u);
 
         mvc.perform(get("/character")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -107,7 +127,8 @@ public class CharacterIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(c.getId()))
                 .andExpect(jsonPath("$[0].owner.id").value(u.getId()))
-                .andExpect(jsonPath("$[0].race").value("elf"));
+                .andExpect(jsonPath("$[0].character_class").value(c.getCharacter_class()))
+                .andExpect(jsonPath("$[0].race").value(c.getRace()));
     }
 
     @Test
@@ -120,15 +141,8 @@ public class CharacterIntegrationTest {
 
     @Test
     public void testValidCharacterDelete() throws Exception {
-        User u = new User();
-        u.setUsername("foo");
-        u.setPassword("bar");
-        userService.insert(u);
-
-        Character c = new Character();
-        c.setRace("elf");
-        c.setOwner(u);
-        characterService.insert(c);
+        User u = randomUser();
+        Character c = randomCharacter(u);
 
         mvc.perform(delete("/character/" + c.getId())
                 .sessionAttr("user", u))
@@ -137,20 +151,10 @@ public class CharacterIntegrationTest {
 
     @Test
     public void testInvalidCharacterDeleteNotOwner() throws Exception {
-        User owner = new User();
-        owner.setUsername("zoo");
-        owner.setPassword("bar");
-        userService.insert(owner);
+        User owner = randomUser();
+        User u = randomUser();
 
-        User u = new User();
-        u.setUsername("moo");
-        u.setPassword("bar");
-        userService.insert(u);
-
-        Character c = new Character();
-        c.setRace("elf");
-        c.setOwner(owner);
-        characterService.insert(c);
+        Character c = randomCharacter(owner);
 
         mvc.perform(delete("/character/" + c.getId())
                 .sessionAttr("user", u))
@@ -159,15 +163,8 @@ public class CharacterIntegrationTest {
 
     @Test
     public void testInvalidCharacterDeleteNotSession() throws Exception {
-        User owner = new User();
-        owner.setUsername("noo");
-        owner.setPassword("bar");
-        userService.insert(owner);
-
-        Character c = new Character();
-        c.setRace("elf");
-        c.setOwner(owner);
-        characterService.insert(c);
+        User u = randomUser();
+        Character c = randomCharacter(u);
 
         mvc.perform(delete("/character/" + c.getId()))
                 .andExpect(status().isForbidden());
