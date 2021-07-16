@@ -52,8 +52,15 @@ public class CharacterIntegrationTest {
         Faker faker = new Faker();
         Character c = new Character();
         c.setRace("elf");
-        c.setCharacter_name(faker.name().fullName());
-        c.setCharacter_class(faker.job().title());
+        c.setCharacterName(faker.name().fullName());
+        c.setCharacterClass(faker.job().title());
+        c.setAlignment(faker.job().keySkills());
+        c.setBackground(faker.job().position());
+        c.setPersonality(faker.job().keySkills());
+        c.setIdeals(faker.ancient().hero());
+        c.setBonds(faker.superhero().power());
+        c.setFlaws("Liar");
+        c.setFeatAndTraits(faker.superhero().descriptor()); 
         c.setOwner(u);
         characterService.insert(c);
         return c;
@@ -62,12 +69,20 @@ public class CharacterIntegrationTest {
     @Test
     public void testValidCharacterCreate() throws Exception {
         User u = randomUser();
+        Character c = randomCharacter(u);
 
         ObjectNode character = objectMapper.createObjectNode();
         character.put("race", "elf");
-        character.put("character_class", "wizard");
-        character.put("character_name", "foo");
-
+        character.put("characterClass", "wizard");
+        character.put("characterName", "foo");
+        character.put("background", c.getBackground());
+        character.put("alignment", c.getAlignment());
+        character.put("personality", c.getPersonality());
+        character.put("ideals", c.getIdeals());
+        character.put("bonds", c.getBonds());
+        character.put("flaws", c.getFlaws());
+        character.put("featAndTraits", c.getFeatAndTraits());
+        
         mvc.perform(post("/character")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(character.toString())
@@ -85,8 +100,16 @@ public class CharacterIntegrationTest {
         Character c = new Character();
         c.setRace("elf");
         c.setOwner(u);
-        c.setCharacter_class("wizard");
-        c.setCharacter_name("woobar");
+        c.setCharacterClass("wizard");
+        c.setCharacterName("woobar");
+        c.setBackground("athlete");
+        c.setAlignment("judge");
+        c.setPersonality("funny");
+        c.setIdeals("lawful");
+        c.setBonds("people");
+        c.setFlaws("mortal");
+        c.setFeatAndTraits("stunning attack");
+        
         characterService.insert(c);
 
         mvc.perform(get("/character/" + c.getId())
@@ -104,8 +127,16 @@ public class CharacterIntegrationTest {
         ObjectNode character = objectMapper.createObjectNode();
         character.put("id", c.getId());
         character.put("race", "dwarf");
-        character.put("character_class", "wizard");
-        character.put("character_name", "foo");
+        character.put("characterClass", "wizard");
+        character.put("characterName", "foo");
+        character.put("background", c.getBackground());
+        character.put("alignment", c.getAlignment());
+        character.put("personality", c.getPersonality());
+        character.put("ideals", c.getIdeals());
+        character.put("bonds", c.getBonds());
+        character.put("flaws", c.getFlaws());
+        character.put("featAndTraits", c.getFeatAndTraits());
+        
 
         mvc.perform(put("/character")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -127,7 +158,7 @@ public class CharacterIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(c.getId()))
                 .andExpect(jsonPath("$[0].owner.id").value(u.getId()))
-                .andExpect(jsonPath("$[0].character_class").value(c.getCharacter_class()))
+                .andExpect(jsonPath("$[0].characterClass").value(c.getCharacterClass()))
                 .andExpect(jsonPath("$[0].race").value(c.getRace()));
     }
 

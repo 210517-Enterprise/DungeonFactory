@@ -28,7 +28,7 @@ export default function CharacterCreator() {
         const requestInfo = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ race: data.race, character_class: data.class, strength: data.strength, constitution: data.constitution, intelligence: data.intelligence, wisdom: data.wisdom, dexterity: data.dexterity, charisma: data.charisma, character_name: data.characterName }),
+            body: JSON.stringify({ race: data.race, characterClass: data.class, strength: data.strength, constitution: data.constitution, intelligence: data.intelligence, wisdom: data.wisdom, dexterity: data.dexterity, charisma: data.charisma, characterName: data.characterName }),
             credentials: 'include'
         };
 
