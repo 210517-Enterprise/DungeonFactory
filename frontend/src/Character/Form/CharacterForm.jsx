@@ -2,28 +2,42 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import CharacterRacePicker from "./CharacterRacePicker";
 import CharacterClassPicker from "./CharacterClassPicker";
+import CharacterFormProgress from "./CharacterFormProgress";
 import CharacterAbilityScorePicker from "./CharacterAbilityScorePicker";
 import CharacterDetails from "./CharacterDetails";
 
-const FormContainer = styled.div`
+const Modal = styled.div`
+  position: fixed;
+  right: 0;
+  z-index: 999999;
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+`
+
+const FormContainer = styled.div`
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 1280px;
+  height: 960px;
+  background: #262C30;
+  border-radius: 20px;
+  overflow: hidden;
 `
 
 const Form = styled.div`
-  width: 1280px;
-  margin-bottom: 500px;
-`
-
-const Header = styled.div`
-  font-size: 42px;
-  color: #39ABFE;
-  margin: 72px 0 32px 0;
+  padding: 96px;
+  position: relative;
 `
 
 const Button = styled.button`
   flex: 0;
-  padding: 12px 16px;
+  padding: 12px 18px;
   border-radius: 4px;
   background: #39ABFE;
   font-weight: 600;
@@ -33,14 +47,46 @@ const Button = styled.button`
   display: inline-block;
   border: none;
   cursor: pointer;
+  margin-top: 42px;
+  margin-right: 18px;
 `
 
-export default function CharacterForm() {
+const CloseButton = styled.div`
+  right: 32px;
+  top: 32px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+  cursor: pointer;
+  position: absolute;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  &:before, &:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background: #fff;
+  }
+  &:before {
+    transform: rotate(45deg);
+  }
+  &:after {
+    transform: rotate(-45deg);
+  }
+`
+
+export default function CharacterForm({ visible, onClose }) {
     const [races, updateRaces] = useState([]);
     const [classes, updateClasses] = useState([]);
 
     const [race, updateRace] = useState("");
     const [characterClass, updateClass] = useState("");
+
+    const [currentStep, updateStep] = useState(1);
 
     const [abilities, updateAbilities] = useState({
         strength: 0,
@@ -95,25 +141,36 @@ export default function CharacterForm() {
         getClasses();
     }, []);
 
+    const steps = {
+        1: <CharacterRacePicker races={races} onChange={r => updateRace(r)} />,
+        2: <CharacterClassPicker classes={classes} onChange={c => updateClass(c)} />,
+        3: <CharacterAbilityScorePicker abilities={abilities} onChange={a => updateAbilities(a)} />,
+        4: <CharacterDetails details={details} onChange={d => updateDetails(d)} />
+    }
+
+    let button;
+    if (currentStep === 4) {
+        button = <Button onClick={handleSubmit}>Save</Button>
+    } else {
+        button = <Button onClick={() => updateStep(currentStep + 1)}>Next</Button>
+    }
+
     const characterForm = (
-        <FormContainer>
-            <Form>
-                <Header>Choose a race</Header>
-                <CharacterRacePicker races={races} onChange={r => updateRace(r)} />
-                <Header>Choose a class</Header>
-                <CharacterClassPicker classes={classes} onChange={c => updateClass(c)} />
-                <Header>Determine ability scores</Header>
-                <CharacterAbilityScorePicker abilities={abilities} onChange={a => updateAbilities(a)} />
-                <Header>Describe your character</Header>
-                <CharacterDetails details={details} onChange={d => updateDetails(d)} />
-                <Button onClick={handleSubmit}>Create</Button>
-            </Form>
-        </FormContainer>
+        <Modal>
+            <FormContainer>
+                <Form>
+                    <CloseButton onClick={onClose} />
+                    {steps[currentStep]}
+                    {button}
+                </Form>
+                <CharacterFormProgress step={currentStep} onChange={step => updateStep(step)}/>
+            </FormContainer>
+        </Modal>
     )
 
-    if (races.length === 0 || classes.length === 0) {
-        return <p>Loading Data</p>
+    if (visible) {
+        return characterForm
     } else {
-        return characterForm;
+        return <></>
     }
 }

@@ -13,11 +13,12 @@ import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import CharacterView from './Character/CharacterView';
-import CharacterForm from './Character/Form/CharacterForm'
 import React, { useEffect, useState } from 'react';
+import CharacterForm from "./Character/Form/CharacterForm";
 
 export default function App() {
     const [user, updateUser] = useState(null);
+    const [characterFormVisible, updateFormVisibility] = useState(false);
 
     useEffect(() => {
         async function getUser() {
@@ -54,6 +55,7 @@ export default function App() {
 
     return (
         <div className="app">
+            <CharacterForm visible={characterFormVisible} onClose={() => updateFormVisibility(false)} />
             <BrowserRouter>
                 <div className="navbar">
                     <div className="left-nav">
@@ -71,10 +73,7 @@ export default function App() {
                         <Register user={user} updateUser={updateUser}/>
                     </Route>
                     <Route path="/character/list">
-                        <Characters user={user}/>
-                    </Route>
-                    <Route path="/character/create">
-                        <CharacterForm/>
+                        <Characters user={user} onCreate={() => updateFormVisibility(true)} />
                     </Route>
                     <Route path="/character/:id">
                         <CharacterView/>
