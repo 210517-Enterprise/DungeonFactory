@@ -54,6 +54,7 @@ const ScoreNumber = styled.div`
 
 const Message = styled.div`
   opacity: 0.5;
+  margin-bottom: 42px;
 `
 
 const Ability = ({ ability, abilities, onChange, onDragging, dragging }) => {

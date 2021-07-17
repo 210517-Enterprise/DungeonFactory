@@ -7,10 +7,11 @@ import {Button} from "../../UI/Button";
 const RaceListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 42px;
 `
 
 const RaceContainer = styled.div`
-  margin: 12px 28px 12px 0px;
+  margin: 12px 28px 28px 0;
   justify-content: center;
 `
 

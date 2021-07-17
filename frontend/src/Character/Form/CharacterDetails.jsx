@@ -8,6 +8,7 @@ import {Button} from "../../UI/Button";
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 42px;
 `
 
 const DetailColumn = styled.div`

@@ -23,6 +23,7 @@ const Image = styled.img`
 const Description = styled.div`
   text-align: center;
   font-size: 20px;
+  margin-bottom: 42px;
 `
 
 export default function Home({ onStart }){

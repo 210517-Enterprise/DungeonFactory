@@ -7,6 +7,7 @@ import {Button} from "../../UI/Button";
 const ClassListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 42px;
 `
 
 const ClassContainer = styled.div`
