@@ -25,11 +25,9 @@ export default function CharList({user, updateCharacterId}){
         fetch('http://localhost:8080/character', {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(json => updateCharacters(json))
-        console.log(characters)
     }, [])
 
     function classToPng(className) {
-        console.log(className)
         if (className === "Barbarian") {
             return barbarian;
         } else if (className === "Bard"){

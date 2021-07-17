@@ -46,7 +46,7 @@ span.attributes > div > div > span {
 .personalityfandt {
     display: flex;
     width: 35%;
-    height: 200px;
+    height: 230px;
     position: relative;
     margin: auto;
     margin-top: 25px;
@@ -55,20 +55,37 @@ span.attributes > div > div > span {
 .personalityfandt > div {
     width: 45%;
     height: 100%;
-    margin: auto;
+    margin-right: 25px;
     margin-top: 8px;
     border-radius: 10px;
     background-color: #2D3439;
     text-align: center;
 }
 
-.personalityfandt> div > h3 {
+.personalityfandt > div > h3 {
     font-size: 180%;
 }
 
 .personalityfandt > div > p {
-    margin-left: 30px;
+    margin-left: 45px;
     margin-right: 30px;
+    text-align: left;
+}
+
+.backalign {
+    width: 40%;
+    position: relative;
+    margin: auto;
+    margin-top: 25px;
+    text-align: center;
+}
+
+.backalign > div {
+    width: 40%;
+    border-radius: 10px;
+    background-color: #2D3439;
+    margin-right: 25px;
+    margin-top: 8px;
 }
 
 .cr {
