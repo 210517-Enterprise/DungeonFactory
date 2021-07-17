@@ -80,38 +80,6 @@ export default function CharacterView() {
                         <p>{character.flaws}</p>
                     </div>
                 </span>
-                <span className="personalityfandt">
-                    <div>
-                        <h3>Personality</h3>
-                        <p>{character.personality}</p>
-                    </div>
-                    <div>
-                        <h3>Feats & Traits</h3>
-                        <p>{character.featAndTraits}</p>
-                    </div>
-                </span>
-                <span className="backalign">
-                    <div>
-                        <p><b>Background:</b> {character.background}</p>
-                    </div>
-                    <div>
-                        <p><b>Alignment:</b> {character.alignment}</p>
-                    </div>
-                </span>
-                <span className="idealbondflaw">
-                    <div>
-                        <h3>Ideals</h3>
-                        <p>{character.ideals}</p>
-                    </div>
-                    <div>
-                        <h3>Bonds</h3>
-                        <p>{character.bonds}</p>
-                    </div>
-                    <div>
-                        <h3>Flaws</h3>
-                        <p>{character.flaws}</p>
-                    </div>
-                </span>
             </div>
         </>
     ) : (
