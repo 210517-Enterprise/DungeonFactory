@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button, Error, Field, Form, FormContainer, SubHeader, SubmitContainer, TopContainer, Header} from "./LoginForm";
-import {Modal} from "../Modal/Modal";
+import {Modal} from "../UI/Modal";
 
 export default function RegisterForm({ updateUser, visible, onClose }) {
     const [errorMessage, updateErrorMessage] = useState("");

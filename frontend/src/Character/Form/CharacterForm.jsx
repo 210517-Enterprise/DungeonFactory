@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
-import styled from "styled-components";
+import {useState, useEffect} from "react";
+import styled, {keyframes} from "styled-components";
 import CharacterRacePicker from "./CharacterRacePicker";
 import CharacterClassPicker from "./CharacterClassPicker";
 import CharacterFormProgress from "./CharacterFormProgress";
 import CharacterAbilityScorePicker from "./CharacterAbilityScorePicker";
 import CharacterDetails from "./CharacterDetails";
-import {Modal, CloseButton} from "../../Modal/Modal";
+import { Redirect } from "react-router-dom";
+import {Modal, CloseButton} from "../../UI/Modal";
+import {zoomIn} from "react-animations";
+
+const zoomInAnimation = keyframes`${zoomIn}`;
 
 const FormContainer = styled.div`
   z-index: 2;
@@ -17,27 +21,13 @@ const FormContainer = styled.div`
   background: #262C30;
   border-radius: 20px;
   overflow: hidden;
+
+  animation: 0.2s ${zoomInAnimation};
 `
 
 const Form = styled.div`
   padding: 96px;
   position: relative;
-`
-
-const Button = styled.button`
-  flex: 0;
-  padding: 12px 18px;
-  border-radius: 4px;
-  background: #39ABFE;
-  font-weight: 600;
-  font-family: inherit;
-  font-size: 18px;
-  color: white;
-  display: inline-block;
-  border: none;
-  cursor: pointer;
-  margin-top: 42px;
-  margin-right: 18px;
 `
 
 export default function CharacterForm({ visible, onClose }) {
@@ -48,6 +38,12 @@ export default function CharacterForm({ visible, onClose }) {
     const [characterClass, updateClass] = useState("");
 
     const [currentStep, updateStep] = useState(1);
+
+    const [slideLeft, updateSlideLeft] = useState(false);
+
+    const [showAnimation, updateShowAnimation] = useState(false);
+
+    const [redirect, updateRedirect] = useState(null);
 
     const [abilities, updateAbilities] = useState({
         strength: 0,
@@ -82,7 +78,17 @@ export default function CharacterForm({ visible, onClose }) {
             credentials: 'include'
         };
 
-        const response = await fetch('http://localhost:8080/character/', requestInfo);
+        try {
+            const response = await fetch('http://localhost:8080/character/', requestInfo);
+            const data = await response.json()
+
+            if (response.status === 200) {
+                handleClose()
+                updateRedirect(data.id)
+            }
+        } catch (e) {
+            console.log("An unknown error occurred: " + e)
+        }
     }
 
     async function getRaces() {
@@ -102,32 +108,87 @@ export default function CharacterForm({ visible, onClose }) {
         getClasses();
     }, []);
 
-    const steps = {
-        1: <CharacterRacePicker races={races} onChange={r => updateRace(r)} />,
-        2: <CharacterClassPicker classes={classes} onChange={c => updateClass(c)} />,
-        3: <CharacterAbilityScorePicker abilities={abilities} onChange={a => updateAbilities(a)} />,
-        4: <CharacterDetails details={details} onChange={d => updateDetails(d)} />
+    const handleClose = () => {
+        updateShowAnimation(false)
+        updateStep(1)
+        onClose()
+
+        updateRace("");
+        updateClass("");
+        updateStep(1);
+        updateSlideLeft(false);
+        updateShowAnimation(false);
+        updateRedirect(null);
+        updateAbilities({
+            strength: 0,
+            dexterity: 0,
+            constitution: 0,
+            intelligence: 0,
+            wisdom: 0,
+            charisma: 0
+        });
+        updateDetails({
+            characterName: "",
+            personality: "",
+            bonds: "",
+            background: "",
+            ideals: "",
+            flaws: "",
+            alignment: "",
+            featAndTraits: ""
+        });
     }
 
-    let button;
-    if (currentStep === 4) {
-        button = <Button onClick={handleSubmit}>Save</Button>
-    } else {
-        button = <Button onClick={() => updateStep(currentStep + 1)}>Next</Button>
+    const handleStepChange = (step) => {
+        updateShowAnimation(true)
+        updateStep(step)
+
+        if (currentStep > step) {
+            updateSlideLeft(true)
+        } else {
+            updateSlideLeft(false)
+        }
+    }
+
+    const steps = {
+        1: <CharacterRacePicker
+            races={races}
+            onChange={r => updateRace(r)}
+            slideLeft={slideLeft}
+            showAnimation={showAnimation}
+            onNext={() => handleStepChange(currentStep + 1)} />,
+        2: <CharacterClassPicker
+            classes={classes}
+            onChange={c => updateClass(c)}
+            slideLeft={slideLeft}
+            onNext={() => handleStepChange(currentStep + 1)} />,
+        3: <CharacterAbilityScorePicker
+            abilities={abilities}
+            onChange={a => updateAbilities(a)}
+            onNext={() => handleStepChange(currentStep + 1)} />,
+        4: <CharacterDetails
+            details={details}
+            onChange={d => updateDetails(d)}
+            onNext={handleSubmit} />
     }
 
     const characterForm = (
         <Modal>
             <FormContainer>
                 <Form>
-                    <CloseButton onClick={onClose} />
+                    <CloseButton onClick={handleClose} />
                     {steps[currentStep]}
-                    {button}
                 </Form>
-                <CharacterFormProgress step={currentStep} onChange={step => updateStep(step)}/>
+                <CharacterFormProgress step={currentStep} onChange={handleStepChange} />
             </FormContainer>
         </Modal>
     )
+
+    if (redirect) {
+        const id = redirect
+        updateRedirect(null)
+        return <Redirect to={"/character/" + id} />
+    }
 
     if (visible) {
         return characterForm

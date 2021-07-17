@@ -1,6 +1,8 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 import React, {useState} from "react";
 import {Header} from "./Header";
+import {Slide} from "../../UI/Slide";
+import {Button} from "../../UI/Button";
 
 const ClassListContainer = styled.div`
   display: flex;
@@ -23,7 +25,7 @@ const ClassIcon = styled.div`
 `
 
 const ClassName = styled.div`
-    text-align: center;
+  text-align: center;
 `
 
 const CharacterClass = (({ name, onChange, selected }) => {
@@ -35,22 +37,23 @@ const CharacterClass = (({ name, onChange, selected }) => {
     )
 })
 
-export default function CharacterClassPicker({ classes, onChange }) {
-    const [selected, updateSelected] = useState(classes[0])
+export default function CharacterClassPicker({ classes, onChange, slideLeft, onNext }) {
+    const [selected, updateSelected] = useState("")
 
     const handleChange = (charClass) => {
         onChange(charClass)
         updateSelected(charClass)
     }
+
     const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} onChange={handleChange} selected={c.name === selected} />)
 
     return (
-        <>
+        <Slide slideLeft={slideLeft}>
             <Header>Choose a class</Header>
             <ClassListContainer>
                 <ClassList/>
             </ClassListContainer>
-        </>
-
-        )
+            {selected && <Button onClick={onNext}>Next</Button>}
+        </Slide>
+    )
 }

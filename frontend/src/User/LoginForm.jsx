@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Modal} from "../Modal/Modal";
-import styled from "styled-components"
+import {Modal} from "../UI/Modal";
+import styled, {keyframes} from "styled-components"
+import {zoomIn} from "react-animations";
+
+const zoomInAnimation = keyframes`${zoomIn}`;
 
 export const FormContainer = styled.div`
   display: flex;
@@ -16,6 +19,8 @@ export const Form = styled.form`
   background: #2D3439;
   border-radius: 8px;
   position: relative;
+  
+  animation: 0.2s ${zoomInAnimation};
 `
 
 export const TopContainer = styled.div`
