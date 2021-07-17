@@ -64,9 +64,11 @@ Entering `docker-compose up` within the `./DungeonFactory` directory will now sp
     - React
     - CSS
     - Fetch
+- Deployment
+    - Docker
+    - Docker-Compose
+    - Shell Scripting
 - PostgreSQL
-- Docker
-- Docker-Compose
 - [dnd5e API](http://www.dnd5eapi.co/)
 
 ## Created by
