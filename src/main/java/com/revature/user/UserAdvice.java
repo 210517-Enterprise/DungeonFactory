@@ -11,10 +11,21 @@ import com.revature.user.errors.ErrorResponse;
 import com.revature.user.errors.InvalidLoginCredentials;
 import com.revature.user.errors.UserNotFoundException;
 import com.revature.user.errors.UsernameAlreadyRegisteredException;
+
+/**
+ * Class provides user exceptions with HTTP requests
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton 
+ *
+ */
 @Component
 @RestControllerAdvice
 public class UserAdvice {
 
+	/**
+	 * Method for handling the exception if a user is already registered. 
+	 * @param userAlreadyRegistered
+	 * @return error response message
+	 */
 	@ExceptionHandler(UsernameAlreadyRegisteredException.class)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -24,6 +35,11 @@ public class UserAdvice {
 		return err;
 	}
 	
+	/**
+	 * Method handling the exception if login credentials are invalid.
+	 * @param invalidLoginCredentials
+	 * @return error response message
+	 */
 	@ExceptionHandler(InvalidLoginCredentials.class)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -33,6 +49,11 @@ public class UserAdvice {
 		return err;
 	}
 	
+	/**
+	 * Method handling a user not found exception
+	 * @param userNotFound
+	 * @return error response message
+	 */
 	@ExceptionHandler(UserNotFoundException.class)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.NOT_FOUND)

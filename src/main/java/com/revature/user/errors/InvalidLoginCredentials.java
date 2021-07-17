@@ -1,5 +1,10 @@
 package com.revature.user.errors;
 
+/**
+ * Class defines custom invalid login credentials
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 public class InvalidLoginCredentials extends RuntimeException {
 
 	public InvalidLoginCredentials() {

@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class defines the character controller. Responsible creating, updating, reading and deleting a character with HTTP requests.
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 @CrossOrigin(allowCredentials="true", origins="http://localhost:3000")
 @RestController
 @RequestMapping("/character")
@@ -26,11 +31,20 @@ public class CharacterController {
 
 	private final CharacterService charService;
 	
+	/**
+	 * Constructor that injects the character service
+	 * @param service
+	 */
 	@Autowired
 	public CharacterController(CharacterService service) {
 		this.charService = service;
 	}
-
+	
+	/**
+	 * Method that uses a get request to return a list of characters.
+	 * @param session - session of user
+	 * @return set of characters 
+	 */
     @GetMapping
 	public ResponseEntity<Set<Character>> list(HttpSession session){
         User user = (User) session.getAttribute("user");
@@ -42,6 +56,12 @@ public class CharacterController {
         return ResponseEntity.ok(charService.findByOwner(user));
 	}
 	
+    /**
+     * Method uses a post request to create a character.
+     * @param character
+     * @param session of user
+     * @return created character
+     */
 	@PostMapping
 	public ResponseEntity<Character> create(@RequestBody Character character, HttpSession session){
         User user = (User) session.getAttribute("user");
@@ -54,12 +74,23 @@ public class CharacterController {
 
 		return ResponseEntity.ok(charService.insert(character));
 	}
-
+	
+	/**
+	 * Method uses a get request to return a character by character id. 
+	 * @param character id
+	 * @return character
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<Character> findByCharacterId(@PathVariable("id") int id) {
 		return ResponseEntity.ok(charService.findByCharacterId(id));
 	}
 	
+	/**
+	 * Method uses a put request to update a character.
+	 * @param character to update
+	 * @param session of user
+	 * @return updated character
+	 */
 	@PutMapping
 	public ResponseEntity<Character> update(@RequestBody Character c, HttpSession session) {
         User user = (User) session.getAttribute("user");
@@ -77,6 +108,11 @@ public class CharacterController {
 		return ResponseEntity.ok(charService.update(c));
 	}
 	
+	/**
+	 * Method uses a delete request to delete a character.
+	 * @param id - character id
+	 * @param session - session of user
+	 */
 	@DeleteMapping("/{id}")
     public void deleteCharacter(@PathVariable("id") int id, HttpSession session) {
 	    User user = (User) session.getAttribute("user");

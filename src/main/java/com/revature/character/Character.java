@@ -14,7 +14,11 @@ import com.revature.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * This class defines a character class that can be mapped to database table called Characters.
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 @Entity
 @Table(name="characters")
 @Data @NoArgsConstructor @AllArgsConstructor
