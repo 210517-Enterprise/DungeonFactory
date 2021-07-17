@@ -31,7 +31,7 @@ export default function Home({ onStart }){
             <ImageContainer>
                 <Image class="logo" src={DFLogo} alt="DungeonFactory Logo" />
             </ImageContainer>
-            <Description>Easily create 5th edition DnD characters with step by step program</Description>
+            <Description>Easily create 5th edition DnD characters with step by step character builder.</Description>
             <Button onClick={onStart} >Get Started</Button>
         </Container>
     )

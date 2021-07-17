@@ -5,7 +5,7 @@ import CharacterClassPicker from "./CharacterClassPicker";
 import CharacterFormProgress from "./CharacterFormProgress";
 import CharacterAbilityScorePicker from "./CharacterAbilityScorePicker";
 import CharacterDetails from "./CharacterDetails";
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {Modal, CloseButton} from "../../UI/Modal";
 import {zoomIn} from "react-animations";
 
@@ -31,6 +31,7 @@ const Form = styled.div`
 `
 
 export default function CharacterForm({ visible, onClose }) {
+    const history = useHistory()
     const [races, updateRaces] = useState([]);
     const [classes, updateClasses] = useState([]);
 
@@ -42,8 +43,6 @@ export default function CharacterForm({ visible, onClose }) {
     const [slideLeft, updateSlideLeft] = useState(false);
 
     const [showAnimation, updateShowAnimation] = useState(false);
-
-    const [redirect, updateRedirect] = useState(null);
 
     const [abilities, updateAbilities] = useState({
         strength: 0,
@@ -84,7 +83,7 @@ export default function CharacterForm({ visible, onClose }) {
 
             if (response.status === 200) {
                 handleClose()
-                updateRedirect(data.id)
+                history.push("/character/" + data.id)
             }
         } catch (e) {
             console.log("An unknown error occurred: " + e)
@@ -111,14 +110,12 @@ export default function CharacterForm({ visible, onClose }) {
     const handleClose = () => {
         updateShowAnimation(false)
         updateStep(1)
-        onClose()
 
         updateRace("");
         updateClass("");
         updateStep(1);
         updateSlideLeft(false);
         updateShowAnimation(false);
-        updateRedirect(null);
         updateAbilities({
             strength: 0,
             dexterity: 0,
@@ -137,6 +134,8 @@ export default function CharacterForm({ visible, onClose }) {
             alignment: "",
             featAndTraits: ""
         });
+
+        onClose()
     }
 
     const handleStepChange = (step) => {
@@ -183,12 +182,6 @@ export default function CharacterForm({ visible, onClose }) {
             </FormContainer>
         </Modal>
     )
-
-    if (redirect) {
-        const id = redirect
-        updateRedirect(null)
-        return <Redirect to={"/character/" + id} />
-    }
 
     if (visible) {
         return characterForm

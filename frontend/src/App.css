@@ -5,6 +5,10 @@ body, #root, .app {
   background: #262C30;
 }
 
+a {
+  text-decoration: none;
+}
+
 input:focus {
   outline: none;
 }
