@@ -1,7 +1,9 @@
 import styled, {css} from "styled-components";
 import {capitalize} from "../../util";
-import {useState} from "react";
+import React, {useState} from "react";
 import {Header} from "./Header";
+import {Slide} from "../../UI/Slide";
+import {Button} from "../../UI/Button";
 
 const Container = styled.div`
   display: flex;
@@ -60,9 +62,9 @@ const Field = ({ name, label, multi, rows, onChange, details }) => {
     )
 }
 
-export default function CharacterDetails({ details, onChange }) {
+export default function CharacterDetails({ details, onChange, slideLeft, onNext }) {
     return (
-        <>
+        <Slide slideLeft={slideLeft}>
             <Header>Describe your character</Header>
             <Container>
                 <DetailColumn>
@@ -80,6 +82,7 @@ export default function CharacterDetails({ details, onChange }) {
                     <Field name="featAndTraits" onChange={onChange} details={details} multi={true} rows="12" label="Features & Traits" />
                 </DetailColumn>
             </Container>
-        </>
+            <Button onClick={onNext}>Create</Button>
+        </Slide>
     )
 }

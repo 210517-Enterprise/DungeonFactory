@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 import React, {useState} from "react";
 import {Header} from "./Header";
+import {Slide} from "../../UI/Slide";
+import {Button} from "../../UI/Button";
 
 const Container = styled.div`
   display: flex;
@@ -69,11 +71,12 @@ const AbilityList = ({ abilities, onChange }) => {
 
 export default function CharacterAbilityScorePicker(props) {
     return (
-        <>
+        <Slide slideLeft={props.slideLeft}>
             <Header>Determine Ability Scores</Header>
             <Container>
                 <AbilityList {...props}/>
             </Container>
-        </>
+            <Button onClick={props.onNext}>Next</Button>
+        </Slide>
     )
 }

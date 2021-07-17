@@ -1,4 +1,7 @@
-import styled from "styled-components";
+import styled, {css, keyframes} from "styled-components";
+import {zoomIn} from "react-animations";
+
+const zoomInAnimation = keyframes`${zoomIn}`;
 
 export const Modal = styled.div`
   position: fixed;
@@ -10,6 +13,7 @@ export const Modal = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.7);
+  animation: ${zoomInAnimation};
 `
 
 export const CloseButton = styled.div`

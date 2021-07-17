@@ -43,10 +43,10 @@ export default function App() {
 
     return (
         <div className="app">
-            <CharacterForm visible={characterFormVisible} onClose={() => updateCharacterFormVisibility(false)} />
             <LoginForm visible={loginFormVisible} onClose={() => updateLoginFormVisibility(false)} updateUser={updateUser}/>
             <RegisterForm visible={registerFormVisible} onClose={() => updateRegisterFormVisibility(false)} updateUser={updateUser}/>
             <BrowserRouter>
+                <CharacterForm visible={characterFormVisible} onClose={() => updateCharacterFormVisibility(false)} />
                 <div className="navbar">
                     <div className="left-nav">
                         <Link to="/">Home</Link>

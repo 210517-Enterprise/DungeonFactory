@@ -1,6 +1,8 @@
-import styled, { css } from "styled-components";
+import styled, {css} from "styled-components";
 import React, {useState} from "react";
 import {Header} from "./Header";
+import {Slide} from "../../UI/Slide";
+import {Button} from "../../UI/Button";
 
 const RaceListContainer = styled.div`
   display: flex;
@@ -36,21 +38,22 @@ const Race = (({ name, onChange, selected }) => {
   )
 })
 
-export default function CharacterRacePicker({ races, onChange }) {
-  const [selected, updateSelected] = useState(races[0])
+export default function CharacterRacePicker({ races, onChange, slideLeft, showAnimation, onNext }) {
+    const [selected, updateSelected] = useState("")
 
-  const handleChange = (race) => {
-      onChange(race)
-      updateSelected(race)
-  }
-  const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} selected={race.name === selected} />)
+    const handleChange = (race) => {
+        onChange(race)
+        updateSelected(race)
+    }
+    const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} selected={race.name === selected} />)
 
-  return (
-      <>
+    return (
+        <Slide slideLeft={slideLeft} disabled={!showAnimation}>
           <Header>Choose a race</Header>
-          <RaceListContainer>
-              <RaceList/>
-          </RaceListContainer>
-      </>
-  )
+            <RaceListContainer>
+                <RaceList/>
+            </RaceListContainer>
+            {selected && <Button onClick={onNext}>Next</Button>}
+        </Slide>
+    )
 }
