@@ -3,7 +3,7 @@
 Dungeon Factory is a character creator for Dungeons and Dragons 5th Edition. Utilizing a React front end and a Spring Boot backend we are able provide the user with a UI for creation and management of these characters. User and character information is stored within a database using Spring ORM with retrieval of the information through a RESTful API. Data used to create these characters is retrieved from the [dnd5e API](http://www.dnd5eapi.co/).
 
 ## Features
-###### Currently
+##### Currently
 - Access to characters based on login
 - Creation of characters
     - Name
@@ -17,7 +17,7 @@ Dungeon Factory is a character creator for Dungeons and Dragons 5th Edition. Uti
     - Deleting
 - Easily spin up this application locally
 
-###### Future Plans
+##### Future Plans
 - Updating/Leveling characters
 - Simulated rolling of stats
 - Publication/Privatization of characters
@@ -27,9 +27,9 @@ Dungeon Factory is a character creator for Dungeons and Dragons 5th Edition. Uti
 
 ## To Deploy
 *This guide assumes you have maven, JDK >=8, node >=14.7, Docker and Docker-Compose >=version 3*
-##### 1: Docker setup
+#### 1: Docker setup
 Clone this repo then navigate to the `./DungeonFactory` directory. From there enter `scripts/buildDocker.sh`. This will compile both the Spring Boot application and build the React site then create two docker images. One will be running our frontend with nginx and the other will run our rest API.
-##### 2: Setting up your `<docker-compose.yml>`
+#### 2: Setting up your `docker-compose.yml`
 Your docker-compose.yml will contain your information for connection to a database. In future releases you will also be able to specify ports you wish to host the React application on and swap which type of database you wish to use. For now you are only able to use a PostgreSQL database.
 *replace any fields in curly braces with your information*
 ```
@@ -50,7 +50,7 @@ services:
             - "3000:80"
 ```
 Place this file within the `./DungeonFactory` directory.
-##### 3: Deploying
+#### 3: Deploying
 Entering `docker-compose up` within the `./DungeonFactory` directory will now spin up this application. By going to `http://localhost:3000` you will be able to access the frontend and create an account and characters. 
 
 ## Technologies Used
