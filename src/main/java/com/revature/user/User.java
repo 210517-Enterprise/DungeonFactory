@@ -17,6 +17,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class defines a user class that can be mapped to database table called Users.
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 @Entity
 @Table(name="users")
 @Data @NoArgsConstructor @AllArgsConstructor

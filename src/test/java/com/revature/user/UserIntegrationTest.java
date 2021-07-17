@@ -17,6 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Class defines the user integration tests
+ * @author Frank Aurori
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DungeonFactoryApplication.class)
 @AutoConfigureMockMvc
@@ -27,7 +32,11 @@ public class UserIntegrationTest {
 
     @Autowired
     UserService userService;
-
+    
+    /**
+     * Method to test login with valid user credentials
+     * @throws Exception
+     */
     @Test
     public void testLoggingInWithValidDetails() throws Exception {
         User u = new User();
@@ -41,7 +50,11 @@ public class UserIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("foo"));
     }
-
+    
+    /**
+     * Method to test user login with a user that does not exist
+     * @throws Exception
+     */
     @Test
     public void testLoggingInWithUserThatDoesNotExist() throws Exception {
         mvc.perform(post("/user/login")
@@ -49,7 +62,11 @@ public class UserIntegrationTest {
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
                 .andExpect(status().isNotFound());
     }
-
+    
+    /**
+     * Method to test registration with a valid user
+     * @throws Exception
+     */
     @Test
     public void testRegisterWithValidUser() throws Exception {
         mvc.perform(post("/user/register")
@@ -58,7 +75,11 @@ public class UserIntegrationTest {
         	.andExpect(status().isOk())
         	.andExpect(jsonPath("$.username").value("bar"));
     }
-
+    
+    /**
+     * Method to test registration with an invalid username
+     * @throws Exception
+     */
     @Test
     public void testRegisterWithInvalidUsername() throws Exception {
     	mvc.perform(post("/user/register")
@@ -66,7 +87,11 @@ public class UserIntegrationTest {
     			.content("{\"username\": \"a\", \"password\":\"test\"}"))
     			.andExpect(status().isConflict());
     }
-
+    
+    /**
+     * Method to test registration with an existing username
+     * @throws Exception
+     */
     @Test
     public void testRegisterWithExistingUsername() throws Exception {
     	mvc.perform(post("/user/register")
@@ -75,6 +100,10 @@ public class UserIntegrationTest {
     			.andExpect(status().isConflict());
     }
     
+    /**
+     * Method to test delete with a valid user
+     * @throws Exception
+     */
     @Test
     public void testDeleteWithValidUser() throws Exception {
         User u = new User();
@@ -88,6 +117,10 @@ public class UserIntegrationTest {
     			.andExpect(status().isOk());
     }
     
+    /**
+     * Method to test delete with a user that does not exist
+     * @throws Exception
+     */
     @Test
     public void testDeleteWithUserThatDoesNotExist() throws Exception {
     	mvc.perform(delete("/user")
@@ -95,6 +128,10 @@ public class UserIntegrationTest {
     			.andExpect(status().isNotFound());
     }
     
+    /**
+     * Method to test user update with a valid username and session
+     * @throws Exception
+     */
     @Test
     public void updateUserWithValidUsernameAndSession() throws Exception {
         User u = new User();
@@ -109,7 +146,11 @@ public class UserIntegrationTest {
     			.andExpect(jsonPath("$.username").value("updatedName"))
     			.andExpect(status().isOk());
     }
-
+    
+    /**
+     * Method to test user update with a valid username and no session
+     * @throws Exception
+     */
     @Test
     public void updateUserWithValidUsernameAndNoSession() throws Exception {
         User u = new User();
@@ -122,7 +163,11 @@ public class UserIntegrationTest {
                 .content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
                 .andExpect(status().isNotFound());
     }
-
+    
+    /**
+     * Method to test password hashing
+     * @throws Exception
+     */
     @Test
     public void testPasswordHashing() throws Exception {
         User u = new User();
