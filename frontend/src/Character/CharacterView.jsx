@@ -39,10 +39,12 @@ export default function CharacterView() {
                         <div>
                             <span>STR: {character.strength}</span>
                             <span>CON: {character.constitution}</span>
-                            <span>INT: {character.intelligence}</span>
                         </div>
                         <div>
+                            <span>INT: {character.intelligence}</span>
                             <span>WIS: {character.wisdom}</span>
+                        </div>
+                        <div>
                             <span>DEX: {character.dexterity}</span>
                             <span>CHA: {character.charisma}</span>
                         </div>
@@ -64,6 +66,20 @@ export default function CharacterView() {
                     </div>
                     <div>
                         <p><b>Alignment:</b> {character.alignment}</p>
+                    </div>
+                </span>
+                <span className="idealbondflaw">
+                    <div>
+                        <h3>Ideals</h3>
+                        <p>{character.ideals}</p>
+                    </div>
+                    <div>
+                        <h3>Bonds</h3>
+                        <p>{character.bonds}</p>
+                    </div>
+                    <div>
+                        <h3>Flaws</h3>
+                        <p>{character.flaws}</p>
                     </div>
                 </span>
             </div>
