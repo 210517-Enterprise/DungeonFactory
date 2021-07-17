@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {Header} from "./Header";
 import {Slide} from "../../UI/Slide";
 import {Button} from "../../UI/Button";
+import {classToPng} from "../CharacterImages";
 
 const ClassListContainer = styled.div`
   display: flex;
@@ -22,16 +23,18 @@ const ClassIcon = styled.div`
   cursor: pointer;
   border: 4px solid rgba(0, 0, 0, 0);
   ${props => props.selected && css`border: 4px solid #39ABFE;`};
+  background-image: url(${props => props.img});
+  background-size: 140px;
 `
 
 const ClassName = styled.div`
   text-align: center;
 `
 
-const CharacterClass = (({ name, onChange, selected }) => {
+const CharacterClass = (({ name, onChange, selected, img}) => {
     return (
         <ClassContainer onClick={() => onChange(name)} >
-            <ClassIcon selected={selected} />
+            <ClassIcon selected={selected} img={img} />
             <ClassName>{name}</ClassName>
         </ClassContainer>
     )
@@ -45,7 +48,7 @@ export default function CharacterClassPicker({ classes, onChange, slideLeft, onN
         updateSelected(charClass)
     }
 
-    const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} onChange={handleChange} selected={c.name === selected} />)
+    const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} img={classToPng(c.name)} onChange={handleChange} selected={c.name === selected} />)
 
     return (
         <Slide slideLeft={slideLeft}>

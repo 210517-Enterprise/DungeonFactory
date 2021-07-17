@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {Header} from "./Header";
 import {Slide} from "../../UI/Slide";
 import {Button} from "../../UI/Button";
+import {raceToPng} from "../CharacterImages";
 
 const RaceListContainer = styled.div`
   display: flex;
@@ -23,16 +24,20 @@ const RaceIcon = styled.div`
   cursor: pointer;
   border: 4px solid rgba(0, 0, 0, 0);
   ${props => props.selected && css`border: 4px solid #39ABFE;`};
+  background-image: url(${props => props.img});
+  background-size: 150px;
+  background-position: 50% 30%;
+  background-repeat: no-repeat;
 `
 
 const RaceName = styled.div`
     text-align: center;
 `
 
-const Race = (({ name, onChange, selected }) => {
+const Race = (({ name, onChange, selected, img }) => {
   return (
       <RaceContainer>
-          <RaceIcon selected={selected} onClick={() => onChange(name)} />
+          <RaceIcon selected={selected} img={img} onClick={() => onChange(name)} />
           <RaceName>{name}</RaceName>
       </RaceContainer>
   )
@@ -45,7 +50,7 @@ export default function CharacterRacePicker({ races, onChange, slideLeft, showAn
         onChange(race)
         updateSelected(race)
     }
-    const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} selected={race.name === selected} />)
+    const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} img={raceToPng(race.name)} selected={race.name === selected} />)
 
     return (
         <Slide slideLeft={slideLeft} disabled={!showAnimation}>
