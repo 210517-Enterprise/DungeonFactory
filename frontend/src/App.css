@@ -4,6 +4,10 @@ body, #root, .app {
   color: #7D94A4;
 }
 
+input:focus {
+  outline: none;
+}
+
 .navbar {
   background: #2D3439;
   height: 63px;
