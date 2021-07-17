@@ -21,6 +21,7 @@ export default function App() {
     const [characterFormVisible, updateCharacterFormVisibility] = useState(false);
     const [loginFormVisible, updateLoginFormVisibility] = useState(false);
     const [registerFormVisible, updateRegisterFormVisibility] = useState(false);
+    const [currentCharacter, updateCurrentCharacter] = useState(null)
 
     useEffect(() => {
         async function getUser() {
@@ -41,12 +42,24 @@ export default function App() {
         }
     }
 
+    const handleEdit = (character) => () => {
+        updateCurrentCharacter(character)
+        updateCharacterFormVisibility(true)
+    }
+
+    const handleDelete = () => {
+    }
+
     return (
         <div className="app">
             <LoginForm visible={loginFormVisible} onClose={() => updateLoginFormVisibility(false)} updateUser={updateUser}/>
             <RegisterForm visible={registerFormVisible} onClose={() => updateRegisterFormVisibility(false)} updateUser={updateUser}/>
             <BrowserRouter>
-                <CharacterForm visible={characterFormVisible} onClose={() => updateCharacterFormVisibility(false)} />
+                <CharacterForm
+                    character={currentCharacter}
+                    visible={characterFormVisible}
+                    onClose={() => updateCharacterFormVisibility(false)}
+                    onChange={c => updateCurrentCharacter(c)} />
                 <div className="navbar">
                     <div className="left-nav">
                         <Link to="/">Home</Link>
@@ -63,7 +76,7 @@ export default function App() {
                         <Characters user={user} onCreate={() => updateCharacterFormVisibility(true)} />
                     </Route>
                     <Route path="/character/:id">
-                        <CharacterView/>
+                        <CharacterView currentCharacter={currentCharacter} onChange={c => updateCurrentCharacter(c)} onDelete={handleDelete} onEdit={handleEdit}/>
                     </Route>
                     <Route path="/logout">
                         <Logout updateUser={updateUser}/>

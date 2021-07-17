@@ -30,7 +30,7 @@ const Form = styled.div`
   position: relative;
 `
 
-export default function CharacterForm({ visible, onClose }) {
+export default function CharacterForm({ visible, onClose, character, onChange }) {
     const history = useHistory()
     const [races, updateRaces] = useState([]);
     const [classes, updateClasses] = useState([]);
@@ -65,10 +65,12 @@ export default function CharacterForm({ visible, onClose }) {
     });
 
     async function handleSubmit() {
+        const method = character ? "PUT" : "POST"
         const requestInfo = {
-            method: 'POST',
+            method: method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
+                id: character && character.id,
                 race,
                 characterClass,
                 ...abilities,
@@ -78,11 +80,12 @@ export default function CharacterForm({ visible, onClose }) {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/character/', requestInfo);
+            const response = await fetch('http://localhost:8080/character', requestInfo);
             const data = await response.json()
 
             if (response.status === 200) {
                 handleClose()
+                onChange(data)
                 history.push("/character/" + data.id)
             }
         } catch (e) {
@@ -101,6 +104,33 @@ export default function CharacterForm({ visible, onClose }) {
         const classes = await response.json();
         updateClasses(classes.results)
     }
+
+    useEffect(() => {
+        if (character === null) {
+            return
+        }
+
+        updateRace(character.race)
+        updateClass(character.characterClass)
+        updateAbilities({
+            strength: character.strength,
+            dexterity: character.dexterity,
+            constitution: character.constitution,
+            charisma: character.charisma,
+            wisdom: character.wisdom,
+            intelligence: character.intelligence,
+        })
+        updateDetails({
+            characterName: character.characterName,
+            personality: character.personality,
+            bonds: character.bonds,
+            background: character.background,
+            ideals: character.ideals,
+            flaws: character.flaws,
+            alignment: character.alignment,
+            featAndTraits: character.featAndTraits
+        });
+    }, [character, visible])
 
     useEffect(() => {
         getRaces();
@@ -152,11 +182,13 @@ export default function CharacterForm({ visible, onClose }) {
     const steps = {
         1: <CharacterRacePicker
             races={races}
+            currentRace={race}
             onChange={r => updateRace(r)}
             slideLeft={slideLeft}
             showAnimation={showAnimation}
             onNext={() => handleStepChange(currentStep + 1)} />,
         2: <CharacterClassPicker
+            currentClass={characterClass}
             classes={classes}
             onChange={c => updateClass(c)}
             slideLeft={slideLeft}

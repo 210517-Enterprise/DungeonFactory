@@ -38,14 +38,12 @@ const Race = (({ name, onChange, selected }) => {
   )
 })
 
-export default function CharacterRacePicker({ races, onChange, slideLeft, showAnimation, onNext }) {
-    const [selected, updateSelected] = useState("")
-
+export default function CharacterRacePicker({ currentRace, races, onChange, slideLeft, showAnimation, onNext }) {
     const handleChange = (race) => {
         onChange(race)
-        updateSelected(race)
     }
-    const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} selected={race.name === selected} />)
+
+    const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} selected={race.name === currentRace} />)
 
     return (
         <Slide slideLeft={slideLeft} disabled={!showAnimation}>
@@ -53,7 +51,7 @@ export default function CharacterRacePicker({ races, onChange, slideLeft, showAn
             <RaceListContainer>
                 <RaceList/>
             </RaceListContainer>
-            {selected && <Button onClick={onNext}>Next</Button>}
+            {currentRace && <Button onClick={onNext}>Next</Button>}
         </Slide>
     )
 }

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router';
+import styled from "styled-components";
 import {classToPng, raceToPng} from './CharacterImages';
 // Css
 import './CharacterView.css';
+import {Button} from "../UI/Button";
 
+const ButtonContainer = styled.div``
 
-export default function CharacterView() {
-    const [character, updateCharacter] = useState(null);
+export default function CharacterView({ onEdit, onDelete, currentCharacter, onChange }) {
     const { id } = useParams();
 
     useEffect(() => {
@@ -16,69 +18,75 @@ export default function CharacterView() {
         };
         fetch(`http://localhost:8080/character/${id}`, requestInfo)
             .then(response => response.json())
-            .then(json => updateCharacter(json));
+            .then(json => onChange(json));
     }, []);
 
-    return (character) ? (
+    return (currentCharacter) ? (
         <>
-            <h1>{character.characterName}</h1>
+            <h1>{currentCharacter.characterName}</h1>
             <div className="wrapper">
                 <span className="classRace">
                     <div>
-                        <img src={raceToPng(character.race)} alt={character.race}/>
-                        <h3>Race: {character.race}</h3>
+                        <img src={raceToPng(currentCharacter.race)} alt={currentCharacter.race}/>
+                        <h3>Race: {currentCharacter.race}</h3>
                     </div>
                     <div>
-                        <img src={classToPng(character.characterClass)} alt={character.characterClass}/>
-                        <h3>Class: {character.characterClass}</h3>
+                        <img src={classToPng(currentCharacter.characterClass)} alt={currentCharacter.characterClass}/>
+                        <h3>Class: {currentCharacter.characterClass}</h3>
                     </div>
                 </span>
                 <span className="attributes">
                     <div>
                         <h3>Attributes</h3>
                         <span>
-                            <p>STR: {character.strength}</p>
-                            <p>CON: {character.constitution}</p>
-                            <p>INT: {character.intelligence}</p>
+                            <p>STR: {currentCharacter.strength}</p>
+                            <p>CON: {currentCharacter.constitution}</p>
+                            <p>INT: {currentCharacter.intelligence}</p>
                         </span>
                         <span>
-                            <p>WIS: {character.wisdom}</p>
-                            <p>DEX: {character.dexterity}</p>
-                            <p>CHA: {character.charisma}</p>
+                            <p>WIS: {currentCharacter.wisdom}</p>
+                            <p>DEX: {currentCharacter.dexterity}</p>
+                            <p>CHA: {currentCharacter.charisma}</p>
                         </span>
                     </div>
                 </span>
                 <span className="personalityfandt">
                     <div>
                         <h3>Personality</h3>
-                        <p>{character.personality}</p>
+                        <p>{currentCharacter.personality}</p>
                     </div>
                     <div>
                         <h3>Feats & Traits</h3>
-                        <p>{character.featAndTraits}</p>
+                        <p>{currentCharacter.featAndTraits}</p>
                     </div>
                 </span>
                 <span className="backalign">
                     <div>
-                        <p><b>Background:</b> {character.background}</p>
+                        <p><b>Background:</b> {currentCharacter.background}</p>
                     </div>
                     <div>
-                        <p><b>Alignment:</b> {character.alignment}</p>
+                        <p><b>Alignment:</b> {currentCharacter.alignment}</p>
                     </div>
                 </span>
                 <span className="idealbondflaw">
                     <div>
                         <h3>Ideals</h3>
-                        <p>{character.ideals}</p>
+                        <p>{currentCharacter.ideals}</p>
                     </div>
                     <div>
                         <h3>Bonds</h3>
-                        <p>{character.bonds}</p>
+                        <p>{currentCharacter.bonds}</p>
                     </div>
                     <div>
                         <h3>Flaws</h3>
-                        <p>{character.flaws}</p>
+                        <p>{currentCharacter.flaws}</p>
                     </div>
+                </span>
+                <span>
+                    <ButtonContainer>
+                        <Button background="#7D94A4" onClick={onEdit(currentCharacter)}>Edit</Button>
+                        <Button background="#CD5555" onClick={onDelete(currentCharacter)}>Delete</Button>
+                    </ButtonContainer>
                 </span>
             </div>
         </>

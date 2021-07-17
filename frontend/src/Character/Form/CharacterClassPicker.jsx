@@ -37,15 +37,12 @@ const CharacterClass = (({ name, onChange, selected }) => {
     )
 })
 
-export default function CharacterClassPicker({ classes, onChange, slideLeft, onNext }) {
-    const [selected, updateSelected] = useState("")
-
+export default function CharacterClassPicker({ currentClass, classes, onChange, slideLeft, onNext }) {
     const handleChange = (charClass) => {
         onChange(charClass)
-        updateSelected(charClass)
     }
 
-    const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} onChange={handleChange} selected={c.name === selected} />)
+    const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} onChange={handleChange} selected={c.name === currentClass} />)
 
     return (
         <Slide slideLeft={slideLeft}>
@@ -53,7 +50,7 @@ export default function CharacterClassPicker({ classes, onChange, slideLeft, onN
             <ClassListContainer>
                 <ClassList/>
             </ClassListContainer>
-            {selected && <Button onClick={onNext}>Next</Button>}
+            {currentClass && <Button onClick={onNext}>Next</Button>}
         </Slide>
     )
 }
