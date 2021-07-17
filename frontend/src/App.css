@@ -2,6 +2,7 @@ body, #root, .app {
   width: 100%;
   font-family: 'Roboto', sans-serif;
   color: #7D94A4;
+  background: #262C30;
 }
 
 input:focus {

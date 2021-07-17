@@ -33,6 +33,14 @@ export default function App() {
         getUser();
     }, [])
 
+    const handleGetStarted = () => {
+        if (user) {
+            updateCharacterFormVisibility(true)
+        } else {
+            updateRegisterFormVisibility(true)
+        }
+    }
+
     return (
         <div className="app">
             <CharacterForm visible={characterFormVisible} onClose={() => updateCharacterFormVisibility(false)} />
@@ -61,7 +69,7 @@ export default function App() {
                         <Logout updateUser={updateUser}/>
                     </Route>
                     <Route path="/">
-                        <Home/>
+                        <Home onStart={handleGetStarted} />
                     </Route>
                 </Switch>
             </BrowserRouter>
