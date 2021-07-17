@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import lombok.NoArgsConstructor;
 
+/**
+ * Class defines the custom character not found exception
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 @NoArgsConstructor
 public class CharacterNotFoundException extends RuntimeException {

@@ -22,6 +22,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * Class defines the character integration tests
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = DungeonFactoryApplication.class)
 @AutoConfigureMockMvc
@@ -39,7 +44,11 @@ public class CharacterIntegrationTest {
     ObjectMapper objectMapper = new ObjectMapper();
 
     Faker faker = new Faker();
-
+    
+    /**
+     * Method creates a random user 
+     * @return user
+     */
     public User randomUser() {
         User u = new User();
         u.setUsername(faker.name().firstName());
@@ -47,7 +56,12 @@ public class CharacterIntegrationTest {
         userService.insert(u);
         return u;
     }
-
+    
+    /**
+     * Method creates a random character
+     * @param user
+     * @return character
+     */
     public Character randomCharacter(User u) {
         Faker faker = new Faker();
         Character c = new Character();
@@ -65,7 +79,11 @@ public class CharacterIntegrationTest {
         characterService.insert(c);
         return c;
     }
-
+    
+    /**
+     * Method to test a valid character create
+     * @throws Exception
+     */
     @Test
     public void testValidCharacterCreate() throws Exception {
         User u = randomUser();
@@ -89,7 +107,11 @@ public class CharacterIntegrationTest {
                 .sessionAttr("user", u))
                 .andExpect(status().isOk());
     }
-
+    
+    /**
+     * Method to test a find valid character by id
+     * @throws Exception
+     */
     @Test
     public void testValidFindByCharacterId() throws Exception {
         User u = new User();
@@ -118,7 +140,11 @@ public class CharacterIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(c.getId()));
     }
-
+    
+    /**
+     * Method to test valid character update
+     * @throws Exception
+     */
     @Test
     public void testValidCharacterUpdate() throws Exception {
         User u = randomUser();
@@ -146,7 +172,11 @@ public class CharacterIntegrationTest {
                 .andExpect(jsonPath("$.id").value(c.getId()))
                 .andExpect(jsonPath("$.race").value("dwarf"));
     }
-
+    
+    /**
+     * Method to test valid character list
+     * @throws Exception
+     */
     @Test
     public void testValidCharacterList() throws Exception {
         User u = randomUser();
@@ -161,7 +191,11 @@ public class CharacterIntegrationTest {
                 .andExpect(jsonPath("$[0].characterClass").value(c.getCharacterClass()))
                 .andExpect(jsonPath("$[0].race").value(c.getRace()));
     }
-
+    
+    /**
+     * Method to test invalid character create without a session
+     * @throws Exception
+     */
     @Test
     public void testInvalidCharacterCreateNoSession() throws Exception {
         mvc.perform(post("/character")
@@ -169,7 +203,11 @@ public class CharacterIntegrationTest {
                 .content("{\"race\": \"dwarf\"}"))
                 .andExpect(status().isForbidden());
     }
-
+    
+    /**
+     * Method to test character deletion
+     * @throws Exception
+     */
     @Test
     public void testValidCharacterDelete() throws Exception {
         User u = randomUser();
@@ -179,7 +217,11 @@ public class CharacterIntegrationTest {
                 .sessionAttr("user", u))
                 .andExpect(status().isOk());
     }
-
+    
+    /**
+     * Method to test character deletion invalid 
+     * @throws Exception
+     */
     @Test
     public void testInvalidCharacterDeleteNotOwner() throws Exception {
         User owner = randomUser();
@@ -191,7 +233,11 @@ public class CharacterIntegrationTest {
                 .sessionAttr("user", u))
                 .andExpect(status().isForbidden());
     }
-
+    
+    /**
+     * Method to test invalid character deletion with no session
+     * @throws Exception
+     */
     @Test
     public void testInvalidCharacterDeleteNotSession() throws Exception {
         User u = randomUser();

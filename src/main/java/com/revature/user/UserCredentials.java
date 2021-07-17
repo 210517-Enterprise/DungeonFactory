@@ -4,6 +4,11 @@ import com.sun.istack.NotNull;
 
 import lombok.Data;
 
+/**
+ * Class provides user credentials
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 @Data
 public class UserCredentials {
 	

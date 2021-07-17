@@ -5,6 +5,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import lombok.NoArgsConstructor;
 
+/**
+ * Class defines custom user not found exception
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 @NoArgsConstructor
 public class UserNotFoundException extends RuntimeException {

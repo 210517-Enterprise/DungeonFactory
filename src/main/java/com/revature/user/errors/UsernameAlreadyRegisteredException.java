@@ -1,5 +1,10 @@
 package com.revature.user.errors;
 
+/**
+ * Class defines username already registered exception.
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
+ *
+ */
 public class UsernameAlreadyRegisteredException extends RuntimeException{
 
 	public UsernameAlreadyRegisteredException() {
