@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import add from './icons/adddark.png';
+import none from './icons/nonedark.png';
 import {classToPng} from './CharacterImages';
 import { Link, Redirect } from 'react-router-dom';
 import './Form/CharacterList.css';
@@ -10,7 +12,6 @@ export default function CharList({user, onCreate }){
         fetch('http://localhost:8080/character', {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(json => updateCharacters(json))
-        console.log(characters)
     }, [])
 
     return (user) ? (
