@@ -1,6 +1,7 @@
 import React from 'react';
 import DFLogo from '../Home/logonewcolor.gif'
 import styled from "styled-components"
+import {Button} from "../UI/Button";
 
 const Container = styled.div`
   display: flex;
@@ -22,22 +23,6 @@ const Image = styled.img`
 const Description = styled.div`
   text-align: center;
   font-size: 20px;
-`
-
-const Button = styled.button`
-  flex: 0;
-  padding: 12px 18px;
-  border-radius: 4px;
-  background: #39ABFE;
-  font-weight: 600;
-  font-family: inherit;
-  font-size: 18px;
-  color: white;
-  display: inline-block;
-  border: none;
-  cursor: pointer;
-  margin-top: 42px;
-  margin-right: 18px;
 `
 
 export default function Home({ onStart }){
