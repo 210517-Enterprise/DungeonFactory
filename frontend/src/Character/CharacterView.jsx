@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from 'react-router';
 import {classToPng, raceToPng} from './CharacterImages';
 // Css
-import './CharacterView2.css';
+import './CharacterView.css';
 
 
 export default function CharacterView() {
