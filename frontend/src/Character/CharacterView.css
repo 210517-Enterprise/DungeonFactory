@@ -43,6 +43,34 @@ span.attributes > div > div > span {
     text-align: center;
 }
 
+.personalityfandt {
+    display: flex;
+    width: 35%;
+    height: 200px;
+    position: relative;
+    margin: auto;
+    margin-top: 25px;
+}
+
+.personalityfandt > div {
+    width: 45%;
+    height: 100%;
+    margin: auto;
+    margin-top: 8px;
+    border-radius: 10px;
+    background-color: #2D3439;
+    text-align: center;
+}
+
+.personalityfandt> div > h3 {
+    font-size: 180%;
+}
+
+.personalityfandt > div > p {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
 .cr {
     margin: auto;
     justify-content: center;
