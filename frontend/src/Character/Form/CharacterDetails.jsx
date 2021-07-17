@@ -1,6 +1,7 @@
 import styled, {css} from "styled-components";
-import {capitalize} from "../util";
+import {capitalize} from "../../util";
 import {useState} from "react";
+import {Header} from "./Header";
 
 const Container = styled.div`
   display: flex;
@@ -17,10 +18,11 @@ const Input = styled.input`
   background: #2D3439;
   border: none;
   padding: 12px 18px;
-  margin: 14px 0px;
+  margin: 14px 0;
   font-size: 16px;
   box-sizing: border-box;
   color: inherit;
+  width: 340px;
 `
 
 const TextArea = styled.textarea`
@@ -60,21 +62,24 @@ const Field = ({ name, label, multi, rows, onChange, details }) => {
 
 export default function CharacterDetails({ details, onChange }) {
     return (
-        <Container>
-            <DetailColumn>
-                <Field name="characterName" label="Character Name" onChange={onChange} details={details} />
-                <Field name="personality" onChange={onChange} details={details} label="Personality Traits" multi={true} />
-                <Field name="bonds" onChange={onChange} details={details} multi={true} />
-            </DetailColumn>
-            <DetailColumn>
-                <Field name="background" onChange={onChange} details={details} />
-                <Field name="ideals" onChange={onChange} details={details} multi={true} />
-                <Field name="flaws" onChange={onChange} details={details} multi={true} />
-            </DetailColumn>
-            <DetailColumn>
-                <Field name="alignment" onChange={onChange} details={details} />
-                <Field name="featAndTraits" onChange={onChange} details={details} multi={true} rows="12" label="Features & Traits" />
-            </DetailColumn>
-        </Container>
+        <>
+            <Header>Describe your character</Header>
+            <Container>
+                <DetailColumn>
+                    <Field name="characterName" label="Character Name" onChange={onChange} details={details} />
+                    <Field name="personality" onChange={onChange} details={details} label="Personality Traits" multi={true} />
+                    <Field name="bonds" onChange={onChange} details={details} multi={true} />
+                </DetailColumn>
+                <DetailColumn>
+                    <Field name="background" onChange={onChange} details={details} />
+                    <Field name="ideals" onChange={onChange} details={details} multi={true} />
+                    <Field name="flaws" onChange={onChange} details={details} multi={true} />
+                </DetailColumn>
+                <DetailColumn>
+                    <Field name="alignment" onChange={onChange} details={details} />
+                    <Field name="featAndTraits" onChange={onChange} details={details} multi={true} rows="12" label="Features & Traits" />
+                </DetailColumn>
+            </Container>
+        </>
     )
 }

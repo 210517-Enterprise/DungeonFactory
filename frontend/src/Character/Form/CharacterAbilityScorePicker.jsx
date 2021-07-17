@@ -1,20 +1,17 @@
 import styled, { css } from "styled-components";
 import React, {useState} from "react";
+import {Header} from "./Header";
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-top: 42px;
 `
 
 const AbilityContainer = styled.div`
 `
 
 const ScoreContainer = styled.div`
-`
-
-const ScoreNumber = styled.div`
-  font-size: 82px;
-  text-align: center;
 `
 
 const AbilityName = styled.div`
@@ -72,8 +69,11 @@ const AbilityList = ({ abilities, onChange }) => {
 
 export default function CharacterAbilityScorePicker(props) {
     return (
-        <Container>
-            <AbilityList {...props}/>
-        </Container>
+        <>
+            <Header>Determine Ability Scores</Header>
+            <Container>
+                <AbilityList {...props}/>
+            </Container>
+        </>
     )
 }

@@ -14,11 +14,9 @@ import sorcerer from './icons/sorcererdark.png';
 import warlock from './icons/warlockdark.png';
 import wizard from './icons/wizarddark.png';
 import { Link, Redirect } from 'react-router-dom';
-import './CharacterList.css';
+import './Form/CharacterList.css';
 
-
-
-export default function CharList({user, updateCharacterId}){
+export default function CharList({user, onCreate }){
     const [characters, updateCharacters] = useState([]);
 
     useEffect(() => {
@@ -61,14 +59,12 @@ export default function CharList({user, updateCharacterId}){
         <>
             <h1>Characters</h1>   
             <span> 
-                <Link to="/character/create">
-                    <div class="card">
-                        <img src={add} alt="Add a new character"/>
-                        <div class="container">
-                            <h4><b>Create a character</b></h4>
-                        </div>
+                <div class="card" onClick={onCreate}>
+                    <img src={add} alt="Add a new character"/>
+                    <div class="container">
+                        <h4><b>Create a character</b></h4>
                     </div>
-                </Link>
+                </div>
 
                 {characters.length !== 0 ?
                     characters.map(character => (

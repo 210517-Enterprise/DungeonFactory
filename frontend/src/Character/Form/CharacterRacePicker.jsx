@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import React, {useState} from "react";
+import {Header} from "./Header";
 
 const RaceListContainer = styled.div`
-  width: 1280px;
   display: flex;
   flex-wrap: wrap;
 `
@@ -45,5 +45,12 @@ export default function CharacterRacePicker({ races, onChange }) {
   }
   const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} selected={race.name === selected} />)
 
-  return <RaceListContainer><RaceList/></RaceListContainer>
+  return (
+      <>
+          <Header>Choose a race</Header>
+          <RaceListContainer>
+              <RaceList/>
+          </RaceListContainer>
+      </>
+  )
 }

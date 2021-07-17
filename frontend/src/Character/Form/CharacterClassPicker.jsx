@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import React, {useState} from "react";
+import {Header} from "./Header";
 
 const ClassListContainer = styled.div`
-  width: 1280px;
   display: flex;
   flex-wrap: wrap;
 `
@@ -44,5 +44,13 @@ export default function CharacterClassPicker({ classes, onChange }) {
     }
     const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} onChange={handleChange} selected={c.name === selected} />)
 
-    return <ClassListContainer><ClassList/></ClassListContainer>
+    return (
+        <>
+            <Header>Choose a class</Header>
+            <ClassListContainer>
+                <ClassList/>
+            </ClassListContainer>
+        </>
+
+        )
 }
