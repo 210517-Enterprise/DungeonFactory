@@ -1,18 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import add from './icons/adddark.png';
 import none from './icons/nonedark.png';
-import barbarian from './icons/barbariandark.png'
-import bard from './icons/barddark.png'
-import cleric from './icons/clericdark.png'
-import druid from './icons/druiddark.png'
-import fighter from './icons/fighterdark.png'
-import monk from './icons/monkdark.png';
-import paladin from './icons/paladindark.png'
-import ranger from './icons/rangerdark.png'
-import rogue from './icons/roguedark.png'
-import sorcerer from './icons/sorcererdark.png';
-import warlock from './icons/warlockdark.png';
-import wizard from './icons/wizarddark.png';
+import {classToPng} from './CharacterImages';
 import { Link, Redirect } from 'react-router-dom';
 import './Form/CharacterList.css';
 
