@@ -16,9 +16,7 @@ import wizard from './icons/wizarddark.png';
 import { Link, Redirect } from 'react-router-dom';
 import './CharacterList.css';
 
-
-
-export default function CharList({user, updateCharacterId}){
+export default function CharList({user}){
     const [characters, updateCharacters] = useState([]);
 
     useEffect(() => {

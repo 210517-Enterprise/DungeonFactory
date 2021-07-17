@@ -18,7 +18,6 @@ import React, { useEffect, useState } from 'react';
 
 export default function App() {
     const [user, updateUser] = useState(null);
-    const [characterId, updateCharacterId] = useState(null);
 
     useEffect(() => {
         async function getUser() {
