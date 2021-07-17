@@ -5,18 +5,7 @@ import CharacterClassPicker from "./CharacterClassPicker";
 import CharacterFormProgress from "./CharacterFormProgress";
 import CharacterAbilityScorePicker from "./CharacterAbilityScorePicker";
 import CharacterDetails from "./CharacterDetails";
-
-const Modal = styled.div`
-  position: fixed;
-  right: 0;
-  z-index: 999999;
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.4);
-`
+import {Modal, CloseButton} from "../../Modal/Modal";
 
 const FormContainer = styled.div`
   z-index: 2;
@@ -49,34 +38,6 @@ const Button = styled.button`
   cursor: pointer;
   margin-top: 42px;
   margin-right: 18px;
-`
-
-const CloseButton = styled.div`
-  right: 32px;
-  top: 32px;
-  width: 32px;
-  height: 32px;
-  opacity: 0.3;
-  cursor: pointer;
-  position: absolute;
-  
-  &:hover {
-    opacity: 0.8;
-  }
-  &:before, &:after {
-    position: absolute;
-    left: 15px;
-    content: ' ';
-    height: 33px;
-    width: 2px;
-    background: #fff;
-  }
-  &:before {
-    transform: rotate(45deg);
-  }
-  &:after {
-    transform: rotate(-45deg);
-  }
 `
 
 export default function CharacterForm({ visible, onClose }) {

@@ -8,9 +8,9 @@ import {
 } from "react-router-dom";
 
 import Home from './Home/Home'
-import Login from './User/Login'
+import LoginForm from './User/LoginForm'
 import Logout from './User/Logout'
-import Register from './User/Register'
+import RegisterForm from './User/RegisterForm'
 import Characters from './Character/CharacterList'
 import CharacterView from './Character/CharacterView';
 import React, { useEffect, useState } from 'react';
@@ -18,7 +18,9 @@ import CharacterForm from "./Character/Form/CharacterForm";
 
 export default function App() {
     const [user, updateUser] = useState(null);
-    const [characterFormVisible, updateFormVisibility] = useState(false);
+    const [characterFormVisible, updateCharacterFormVisibility] = useState(false);
+    const [loginFormVisible, updateLoginFormVisibility] = useState(false);
+    const [registerFormVisible, updateRegisterFormVisibility] = useState(false);
 
     useEffect(() => {
         async function getUser() {
@@ -31,49 +33,26 @@ export default function App() {
         getUser();
     }, [])
 
-    let links = []
-
-    if (user) {
-        links.push({
-            to: "/character/list",
-            label: "Characters"
-        });
-        links.push({
-            to: "/logout",
-            label: "Logout"
-        });
-    } else {
-        links.push({
-            to: "/login",
-            label: "Login"
-        });
-        links.push({
-            to: "/register",
-            label: "Register"
-        });
-    }
-
     return (
         <div className="app">
-            <CharacterForm visible={characterFormVisible} onClose={() => updateFormVisibility(false)} />
+            <CharacterForm visible={characterFormVisible} onClose={() => updateCharacterFormVisibility(false)} />
+            <LoginForm visible={loginFormVisible} onClose={() => updateLoginFormVisibility(false)} updateUser={updateUser}/>
+            <RegisterForm visible={registerFormVisible} onClose={() => updateRegisterFormVisibility(false)} updateUser={updateUser}/>
             <BrowserRouter>
                 <div className="navbar">
                     <div className="left-nav">
                         <Link to="/">Home</Link>
                     </div>
                     <div className="right-nav">
-                        {links.map(link => <li key={link.to}><Link to={link.to}>{link.label}</Link></li>)}
+                        {user && <Link to="/character/list">Characters</Link>}
+                        {user && <Link to="/logout">Logout</Link>}
+                        {!user && <Link to="/" onClick={() => updateLoginFormVisibility(true)} >Login</Link>}
+                        {!user && <Link to="/" onClick={() => updateRegisterFormVisibility(true)} >Register</Link>}
                     </div>
                 </div>
                 <Switch>
-                    <Route path="/login">
-                        <Login user={user} updateUser={updateUser}/>
-                    </Route>
-                    <Route path="/register">
-                        <Register user={user} updateUser={updateUser}/>
-                    </Route>
                     <Route path="/character/list">
-                        <Characters user={user} onCreate={() => updateFormVisibility(true)} />
+                        <Characters user={user} onCreate={() => updateCharacterFormVisibility(true)} />
                     </Route>
                     <Route path="/character/:id">
                         <CharacterView/>
