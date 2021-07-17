@@ -19,56 +19,6 @@ export default function CharacterView() {
             .then(json => updateCharacter(json));
     }, []);
 
-    function classToPng(className) {
-        if (className === "Barbarian") {
-            return barbarian;
-        } else if (className === "Bard") {
-            return bard;
-        } else if (className === "Cleric") {
-            return cleric;        
-        } else if (className === "Druid") {
-            return druid;        
-        } else if (className === "Fighter") {
-            return fighter;        
-        } else if (className === "Monk") {
-            return monk;
-        } else if (className === "Paladin") {
-            return paladin;        
-        } else if (className === "Ranger") {
-            return ranger;        
-        } else if (className === "Rogue") {
-            return rogue;        
-        } else if (className === "Sorcerer") {
-            return sorcerer;
-        } else if (className === "Warlock") {
-            return warlock;        
-        } else if (className === "Wizard") {
-            return wizard;        
-        }
-    }
-
-    function raceToPng(raceName) {
-        if (raceName === "Dragonborn"){
-            return dragonborn;
-        } else if (raceName === "Dwarf") {
-            return dwarf;
-        } else if (raceName === "Elf") {
-            return elf;
-        } else if (raceName === "Gnome") {
-            return gnome;
-        } else if (raceName === "Half-Elf") {
-            return halfElf;
-        } else if (raceName === "Half-Orc") {
-            return halfOrc;
-        } else if (raceName === "Halfling") {
-            return halfling;
-        } else if (raceName === "Human") {
-            return human;
-        } else if (raceName === "Tiefling") {
-            return tiefling;
-        }
-    }
-
     return (character) ? (
         <>
             <h1>{character.characterName}</h1>

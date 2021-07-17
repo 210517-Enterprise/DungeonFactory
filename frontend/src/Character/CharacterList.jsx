@@ -25,34 +25,6 @@ export default function CharList({user, onCreate }){
         .then(json => updateCharacters(json))
     }, [])
 
-    function classToPng(className) {
-        if (className === "Barbarian") {
-            return barbarian;
-        } else if (className === "Bard"){
-            return bard;
-        } else if (className === "Cleric"){
-            return cleric;        
-        } else if (className === "Druid"){
-            return druid;        
-        } else if (className === "Fighter"){
-            return fighter;        
-        } else if (className === "Monk"){
-            return monk;
-        } else if (className === "Paladin"){
-            return paladin;        
-        } else if (className === "Ranger"){
-            return ranger;        
-        } else if (className === "Rogue"){
-            return rogue;        
-        } else if (className === "Sorcerer"){
-            return sorcerer;
-        } else if (className === "Warlock"){
-            return warlock;        
-        } else if (className === "Wizard"){
-            return wizard;        
-        }
-    }
-
     return (user) ? (
         <>
             <h1>Characters</h1>   
