@@ -61,14 +61,14 @@ const CardFooter = styled.div`
   color: #7D94A4;
 `
 
-export default function CharList({ user, onCreate }){
+export default function CharList({ user, onCreate, currentCharacter }){
     const [characters, updateCharacters] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:8080/character', {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(json => updateCharacters(json))
-    }, [])
+    },[currentCharacter])
 
     if (!user) {
         return <Redirect to="/"/>

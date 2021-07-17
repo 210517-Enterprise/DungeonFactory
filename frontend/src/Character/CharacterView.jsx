@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useParams } from 'react-router';
 import styled from "styled-components";
 import {classToPng, raceToPng} from './CharacterImages';
@@ -10,6 +11,7 @@ const ButtonContainer = styled.div``
 
 export default function CharacterView({ onEdit, onDelete, currentCharacter, onChange }) {
     const { id } = useParams();
+    const history = useHistory()
 
     useEffect(() => {
         const requestInfo = {
@@ -20,6 +22,31 @@ export default function CharacterView({ onEdit, onDelete, currentCharacter, onCh
             .then(response => response.json())
             .then(json => onChange(json));
     }, []);
+
+    async function deleteCharacter(id) {
+        try {
+            const requestInfo = {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            };
+
+            const response = await fetch('http://localhost:8080/character/' + id, requestInfo)
+            if (response.status == 200) {
+            }
+        } catch (e) {
+            console.log("An unexpected error occured: " + e)
+        }
+    }
+
+    const handleDelete = async () => {
+        const choice = window.confirm("Do you really want to delete this character?")
+        if (choice) {
+            await deleteCharacter(currentCharacter.id)
+            history.push("/character/list")
+            onDelete()
+        }
+    }
 
     return (currentCharacter) ? (
         <>
@@ -85,7 +112,7 @@ export default function CharacterView({ onEdit, onDelete, currentCharacter, onCh
                 <span>
                     <ButtonContainer>
                         <Button background="#7D94A4" onClick={onEdit(currentCharacter)}>Edit</Button>
-                        <Button background="#CD5555" onClick={onDelete(currentCharacter)}>Delete</Button>
+                        <Button background="#CD5555" onClick={handleDelete}>Delete</Button>
                     </ButtonContainer>
                 </span>
             </div>

@@ -48,6 +48,7 @@ export default function App() {
     }
 
     const handleDelete = () => {
+        updateCurrentCharacter(null)
     }
 
     return (
@@ -73,7 +74,7 @@ export default function App() {
                 </div>
                 <Switch>
                     <Route path="/character/list">
-                        <Characters user={user} onCreate={() => updateCharacterFormVisibility(true)} />
+                        <Characters currentCharacter={currentCharacter} user={user} onCreate={() => updateCharacterFormVisibility(true)} />
                     </Route>
                     <Route path="/character/:id">
                         <CharacterView currentCharacter={currentCharacter} onChange={c => updateCurrentCharacter(c)} onDelete={handleDelete} onEdit={handleEdit}/>
