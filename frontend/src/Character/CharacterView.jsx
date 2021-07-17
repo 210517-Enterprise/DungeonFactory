@@ -121,7 +121,7 @@ export default function CharacterView() {
                         </div>
                     </div>
                 </span>
-                <span className="background">
+                <span className="personalityfandt">
                     <div>
                         <h3>Personality</h3>
                         <p>{character.personality}</p>
@@ -129,6 +129,14 @@ export default function CharacterView() {
                     <div>
                         <h3>Feats & Traits</h3>
                         <p>{character.featAndTraits}</p>
+                    </div>
+                </span>
+                <span className="backalign">
+                    <div>
+                        <p><b>Background:</b> {character.background}</p>
+                    </div>
+                    <div>
+                        <p><b>Alignment:</b> {character.alignment}</p>
                     </div>
                 </span>
             </div>
