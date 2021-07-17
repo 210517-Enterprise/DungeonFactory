@@ -16,6 +16,14 @@ const Progress = styled.div`
   background: #343C41;
 `
 
+const ProgressBar = styled.div`
+  height: 5px;
+  background: #39ABFE;
+  transition: all 0.2s;
+  opacity: 0.8;
+  ${props => css`width: calc(${(props.currentStep / 4 * 100)}%)`};
+`
+
 const StepContainer = styled.div`
   display: flex;
   align-items: center;
@@ -26,6 +34,7 @@ const Step = styled.div`
   font-size: 24px;
   margin-right: 42px;
   cursor: pointer;
+  user-select: none;
   ${props => props.step === props.currentStep && css`color: #39ABFE;`};
 `
 
@@ -36,12 +45,15 @@ const StepDivider = styled.div`
   margin-right: 42px;
   position: relative;
   bottom: 6px;
+  user-select: none;
 `
 
 export default function CharacterFormProgress({ step, onChange }) {
     return (
         <Container>
-            <Progress />
+            <Progress>
+                <ProgressBar currentStep={step} />
+            </Progress>
             <StepContainer>
                 <Step step={1} currentStep={step} onClick={() => onChange(1)}>Race</Step>
                 <StepDivider>......................</StepDivider>

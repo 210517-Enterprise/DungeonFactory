@@ -14,4 +14,10 @@ export const Button = styled.button`
   cursor: pointer;
   margin-top: 42px;
   margin-right: 18px;
+  user-select: none;
+  opacity: 0.8;
+  
+  &:hover {
+    opacity: 1;
+  }
 `
