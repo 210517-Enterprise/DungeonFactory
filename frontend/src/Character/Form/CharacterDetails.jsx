@@ -1,5 +1,5 @@
 import styled, {css} from "styled-components";
-import {capitalize} from "../util";
+import {capitalize} from "../../util";
 import {useState} from "react";
 
 const Container = styled.div`

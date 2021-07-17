@@ -13,7 +13,7 @@ import Logout from './User/Logout'
 import Register from './User/Register'
 import Characters from './Character/CharacterList'
 import CharacterView from './Character/CharacterView';
-import CharacterForm from './Character/CharacterForm'
+import CharacterForm from './Character/Form/CharacterForm'
 import React, { useEffect, useState } from 'react';
 
 export default function App() {
