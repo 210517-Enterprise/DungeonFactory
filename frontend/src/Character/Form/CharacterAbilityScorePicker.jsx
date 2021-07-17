@@ -52,6 +52,10 @@ const ScoreNumber = styled.div`
   background: #2D3439;
 `
 
+const Message = styled.div`
+  opacity: 0.5;
+`
+
 const Ability = ({ ability, abilities, onChange, onDragging, dragging }) => {
     const [name, value] = ability;
 
@@ -145,6 +149,7 @@ export default function CharacterAbilityScorePicker(props) {
             <Container>
                 <AbilityList {...props} dragging={dragging} onDragging={updateDragging} />
             </Container>
+            <Message>Drag and drop the numbers to swap them after rolling</Message>
             <Button onClick={handleRoll} background="#7D94A4">Roll</Button>
             <Button onClick={onNext}>Next</Button>
         </Slide>
