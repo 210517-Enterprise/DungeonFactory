@@ -203,6 +203,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             onChange={a => updateAbilities(a)}
             onNext={() => handleStepChange(currentStep + 1)} />,
         4: <CharacterDetails
+            currentCharacter={character}
             details={details}
             onChange={d => updateDetails(d)}
             onNext={handleSubmit} />

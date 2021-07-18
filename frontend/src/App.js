@@ -52,6 +52,10 @@ export default function App() {
         updateCurrentCharacter(null)
     }
 
+    const handleClose = () => {
+        updateCharacterFormVisibility(false)
+    }
+
     return (
         <div className="app">
             <LoginForm visible={loginFormVisible} onClose={() => updateLoginFormVisibility(false)} updateUser={updateUser}/>
@@ -60,7 +64,7 @@ export default function App() {
                 <CharacterForm
                     character={currentCharacter}
                     visible={characterFormVisible}
-                    onClose={() => updateCharacterFormVisibility(false)}
+                    onClose={handleClose}
                     onChange={c => updateCurrentCharacter(c)} />
                 <div className="navbar">
                     <div className="left-nav">
@@ -75,7 +79,7 @@ export default function App() {
                 </div>
                 <Switch>
                     <Route path="/character/list">
-                        <Characters currentCharacter={currentCharacter} user={user} onCreate={() => updateCharacterFormVisibility(true)} />
+                        <Characters currentCharacter={currentCharacter} user={user} onCreate={() => updateCharacterFormVisibility(true)} updateCharacter={updateCurrentCharacter} />
                     </Route>
                     <Route path="/character/:id">
                         <CharacterView currentCharacter={currentCharacter} onChange={c => updateCurrentCharacter(c)} onDelete={handleDelete} onEdit={handleEdit}/>

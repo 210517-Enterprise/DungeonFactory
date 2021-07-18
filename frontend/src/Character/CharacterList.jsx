@@ -62,10 +62,12 @@ const CardFooter = styled.div`
   color: #7D94A4;
 `
 
-export default function CharList({ user, onCreate, currentCharacter }){
+export default function CharList({ user, onCreate, currentCharacter, updateCharacter }){
     const [characters, updateCharacters] = useState([]);
 
     useEffect(() => {
+        updateCharacter(null)
+
         fetch(apiUrl + '/character', {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(json => updateCharacters(json))

@@ -63,7 +63,7 @@ const Field = ({ name, label, multi, rows, onChange, details }) => {
     )
 }
 
-export default function CharacterDetails({ details, onChange, slideLeft, onNext }) {
+export default function CharacterDetails({ details, onChange, slideLeft, onNext, currentCharacter }) {
     return (
         <Slide slideLeft={slideLeft}>
             <Header>Describe your character</Header>
@@ -83,7 +83,9 @@ export default function CharacterDetails({ details, onChange, slideLeft, onNext 
                     <Field name="featAndTraits" onChange={onChange} details={details} multi={true} rows="12" label="Features & Traits" />
                 </DetailColumn>
             </Container>
-            <Button onClick={onNext}>Create</Button>
+            {currentCharacter
+                    ? <Button onClick={onNext}>Update</Button>
+                    : <Button onClick={onNext}>Create</Button>}
         </Slide>
     )
 }
