@@ -83,7 +83,7 @@ export default function CharList({ user, onCreate, currentCharacter }){
                     <CardFooter>Add a character</CardFooter>
                 </Card>
                 {characters.map(character => (
-                    <Link to={`/character/${character.id}`}>
+                    <Link key={character.id} to={`/character/${character.id}`}>
                         <Card>
                             {character.characterClass
                                 ? <img src={classToPng(character.characterClass)} alt={character.characterClass}/>
@@ -92,9 +92,12 @@ export default function CharList({ user, onCreate, currentCharacter }){
                             <CardFooter>{character.characterName || "Nobody"}</CardFooter>
                         </Card>
                     </Link>))}
-                <RowPlaceholder/>
-                <RowPlaceholder/>
-                <RowPlaceholder/>
+                {characters.length > 3
+                  && <>
+                    <RowPlaceholder/>
+                    <RowPlaceholder/>
+                    <RowPlaceholder/>
+                </>}
             </Content>
         </Container>
     )
