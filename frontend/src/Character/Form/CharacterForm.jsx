@@ -8,6 +8,7 @@ import CharacterDetails from "./CharacterDetails";
 import { useHistory } from "react-router-dom";
 import {Modal, CloseButton} from "../../UI/Modal";
 import {zoomIn} from "react-animations";
+import {apiUrl} from "../../util";
 
 const zoomInAnimation = keyframes`${zoomIn}`;
 
@@ -80,7 +81,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         };
 
         try {
-            const response = await fetch('http://localhost:8080/character', requestInfo);
+            const response = await fetch(apiUrl + '/character', requestInfo);
             const data = await response.json()
 
             if (response.status === 200) {
@@ -121,6 +122,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
 
     useEffect(() => {
         if (character === null) {
+            updateDefaults()
             return
         }
 
@@ -151,7 +153,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         getClasses();
     }, []);
 
-    const handleClose = () => {
+    const updateDefaults = () => {
         updateShowAnimation(false)
         updateStep(1)
 
@@ -178,7 +180,10 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             alignment: "",
             featAndTraits: ""
         });
+    }
 
+    const handleClose = () => {
+        updateDefaults()
         onClose()
     }
 
@@ -212,6 +217,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             onChange={a => updateAbilities(a)}
             onNext={() => handleStepChange(currentStep + 1)} />,
         4: <CharacterDetails
+            currentCharacter={character}
             details={details}
             onChange={d => updateDetails(d)}
             onNext={handleSubmit} />

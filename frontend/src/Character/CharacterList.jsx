@@ -4,6 +4,7 @@ import add from './icons/adddark.png';
 import {classToPng} from './CharacterImages';
 import { Link, Redirect } from 'react-router-dom';
 import './Form/CharacterList.css';
+import {apiUrl} from "../util";
 
 const Container = styled.div`
   display: flex;
@@ -61,11 +62,13 @@ const CardFooter = styled.div`
   color: #7D94A4;
 `
 
-export default function CharList({ user, onCreate, currentCharacter }){
+export default function CharList({ user, onCreate, currentCharacter, updateCharacter }){
     const [characters, updateCharacters] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/character', {method: 'GET', credentials: 'include'})
+        updateCharacter(null)
+
+        fetch(apiUrl + '/character', {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(json => updateCharacters(json))
     },[currentCharacter])
@@ -82,7 +85,7 @@ export default function CharList({ user, onCreate, currentCharacter }){
                     <CardFooter>Add a character</CardFooter>
                 </Card>
                 {characters.map(character => (
-                    <Link to={`/character/${character.id}`}>
+                    <Link key={character.id} to={`/character/${character.id}`}>
                         <Card>
                             {character.characterClass
                                 ? <img src={classToPng(character.characterClass)} alt={character.characterClass}/>
@@ -91,9 +94,12 @@ export default function CharList({ user, onCreate, currentCharacter }){
                             <CardFooter>{character.characterName || "Nobody"}</CardFooter>
                         </Card>
                     </Link>))}
-                <RowPlaceholder/>
-                <RowPlaceholder/>
-                <RowPlaceholder/>
+                {characters.length > 3
+                  && <>
+                    <RowPlaceholder/>
+                    <RowPlaceholder/>
+                    <RowPlaceholder/>
+                </>}
             </Content>
         </Container>
     )

@@ -15,6 +15,7 @@ import Characters from './Character/CharacterList'
 import CharacterView from './Character/CharacterView';
 import React, { useEffect, useState } from 'react';
 import CharacterForm from "./Character/Form/CharacterForm";
+import {apiUrl} from "./util";
 
 export default function App() {
     const [user, updateUser] = useState(null);
@@ -25,8 +26,8 @@ export default function App() {
 
     useEffect(() => {
         async function getUser() {
-            let response = await fetch('http://localhost:8080/user/auth', { method: 'GET', credentials: 'include' });
-            let json = await response.json();
+            const response = await fetch(apiUrl + "/user/auth/", { method: 'GET', credentials: 'include' });
+            const json = await response.json();
             if (json) {
                 updateUser(json);
             }
@@ -51,6 +52,10 @@ export default function App() {
         updateCurrentCharacter(null)
     }
 
+    const handleClose = () => {
+        updateCharacterFormVisibility(false)
+    }
+
     return (
         <div className="app">
             <LoginForm visible={loginFormVisible} onClose={() => updateLoginFormVisibility(false)} updateUser={updateUser}/>
@@ -59,7 +64,7 @@ export default function App() {
                 <CharacterForm
                     character={currentCharacter}
                     visible={characterFormVisible}
-                    onClose={() => updateCharacterFormVisibility(false)}
+                    onClose={handleClose}
                     onChange={c => updateCurrentCharacter(c)} />
                 <div className="navbar">
                     <div className="left-nav">
@@ -74,7 +79,7 @@ export default function App() {
                 </div>
                 <Switch>
                     <Route path="/character/list">
-                        <Characters currentCharacter={currentCharacter} user={user} onCreate={() => updateCharacterFormVisibility(true)} />
+                        <Characters currentCharacter={currentCharacter} user={user} onCreate={() => updateCharacterFormVisibility(true)} updateCharacter={updateCurrentCharacter} />
                     </Route>
                     <Route path="/character/:id">
                         <CharacterView currentCharacter={currentCharacter} onChange={c => updateCurrentCharacter(c)} onDelete={handleDelete} onEdit={handleEdit}/>

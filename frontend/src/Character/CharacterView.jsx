@@ -6,6 +6,7 @@ import {classToPng, raceToPng} from './CharacterImages';
 // Css
 import './CharacterView.css';
 import {Button} from "../UI/Button";
+import {apiUrl} from "../util";
 
 const ButtonContainer = styled.div``
 
@@ -18,7 +19,7 @@ export default function CharacterView({ onEdit, onDelete, currentCharacter, onCh
             method: 'GET',
             credentials: 'include'
         };
-        fetch(`http://localhost:8080/character/${id}`, requestInfo)
+        fetch(apiUrl + `/character/${id}`, requestInfo)
             .then(response => response.json())
             .then(json => onChange(json));
     }, []);
@@ -31,9 +32,7 @@ export default function CharacterView({ onEdit, onDelete, currentCharacter, onCh
                 credentials: 'include'
             };
 
-            const response = await fetch('http://localhost:8080/character/' + id, requestInfo)
-            if (response.status == 200) {
-            }
+            const response = await fetch(apiUrl + '/character/' + id, requestInfo)
         } catch (e) {
             console.log("An unexpected error occured: " + e)
         }
