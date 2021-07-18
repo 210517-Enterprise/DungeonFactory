@@ -25,8 +25,8 @@ export default function App() {
 
     useEffect(() => {
         async function getUser() {
-            const url = process.env.NODE_ENV === 'prod'
-                ? process.env.API_URL + '/user/auth'
+            const url = process.env.NODE_ENV === 'production'
+                ? '/user/auth'
                 : 'http://localhost:8080/api/user/auth'
 
             const response = await fetch(url, { method: 'GET', credentials: 'include' });
