@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { Redirect } from 'react-router';
+import {apiUrl} from "../util";
 
 export default function Logout({updateUser}) {
     
     useEffect(() => {
-        fetch('http://localhost:8080/user/logout', {method: 'GET', credentials: 'include'});
+        fetch(apiUrl + '/user/logout', {method: 'GET', credentials: 'include'});
         updateUser(null);
     }, [])
     

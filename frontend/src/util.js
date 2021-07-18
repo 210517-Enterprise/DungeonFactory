@@ -5,3 +5,7 @@ export function capitalize(str) {
 
     return str.charAt(0).toUpperCase() + str.slice(1)
 }
+
+export const apiUrl = process.env.NODE_ENV === 'production'
+    ? '/api'
+    : 'http://localhost:8080/api'

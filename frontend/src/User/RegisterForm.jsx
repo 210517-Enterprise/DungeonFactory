@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Button, Error, Field, Form, FormContainer, SubHeader, SubmitContainer, TopContainer, Header} from "./LoginForm";
 import {Modal} from "../UI/Modal";
+import {apiUrl} from "../util";
 
 export default function RegisterForm({ updateUser, visible, onClose }) {
     const [errorMessage, updateErrorMessage] = useState("");
@@ -21,7 +22,7 @@ export default function RegisterForm({ updateUser, visible, onClose }) {
                 credentials: 'include'
             };
 
-            const response = await fetch('http://localhost:8080/user/register', requestInfo)
+            const response = await fetch(apiUrl + '/user/register', requestInfo)
 
             if(response.status !== 200){
                 updateErrorMessage(await response.text())
