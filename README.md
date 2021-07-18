@@ -9,21 +9,22 @@ Dungeon Factory is a character creator for Dungeons and Dragons 5th Edition. Uti
     - Name
     - Race & Class
     - Attributes
+    - Optional simulated rolling of stats
     - Background (Flaws, Ideals, Bonds, Alignment)
     - Features & Traits
-    - Equipment
 - Management of created characters
     - Viewing
+    - Updating
     - Deleting
 - Easily spin up this application locally
 
 ##### Future Plans
-- Updating/Leveling characters
-- Simulated rolling of stats
+- Leveling characters
 - Publication/Privatization of characters
+- More properties for characters
 - Further improvement to the UI
-- Change from single CORS location to a web filter
-- Add more customization to ports and ability to deploy on web
+- Better web deployment
+- Add more customization to ports on deployment
 
 ## To Deploy
 *This guide assumes you have maven, JDK >=8, node >=14.7, Docker and Docker-Compose >=version 3*

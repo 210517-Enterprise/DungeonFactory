@@ -4,6 +4,7 @@ import {Header} from "./Header";
 import {Slide} from "../../UI/Slide";
 import {Button} from "../../UI/Button";
 import {raceToPng} from "../CharacterImages";
+import ReactTooltip from 'react-tooltip';
 
 const RaceListContainer = styled.div`
   display: flex;
@@ -35,10 +36,11 @@ const RaceName = styled.div`
     text-align: center;
 `
 
-const Race = (({ name, onChange, selected, img }) => {
+const Race = (({ name, onChange, selected, img, desc}) => {
   return (
       <RaceContainer>
-          <RaceIcon selected={selected} img={img} onClick={() => onChange(name)} />
+          <RaceIcon selected={selected} img={img} onClick={() => onChange(name)} data-tip data-for={name}/>
+          <ReactTooltip id={name} effect='solid'><div style={{maxWidth: 200}}>{desc}</div></ReactTooltip>
           <RaceName>{name}</RaceName>
       </RaceContainer>
   )
@@ -49,7 +51,8 @@ export default function CharacterRacePicker({ currentRace, races, onChange, slid
         onChange(race)
     }
 
-    const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} img={raceToPng(race.name)} selected={race.name === currentRace} />)
+    console.log(races);
+    const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} img={raceToPng(race.name)} selected={race.name === currentRace} desc={race.alignment}/>)
 
     return (
         <Slide slideLeft={slideLeft} disabled={!showAnimation}>
