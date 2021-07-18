@@ -15,6 +15,7 @@ import Characters from './Character/CharacterList'
 import CharacterView from './Character/CharacterView';
 import React, { useEffect, useState } from 'react';
 import CharacterForm from "./Character/Form/CharacterForm";
+import {apiUrl} from "./util";
 
 export default function App() {
     const [user, updateUser] = useState(null);
@@ -25,11 +26,7 @@ export default function App() {
 
     useEffect(() => {
         async function getUser() {
-            const url = process.env.NODE_ENV === 'production'
-                ? '/user/auth'
-                : 'http://localhost:8080/api/user/auth'
-
-            const response = await fetch(url, { method: 'GET', credentials: 'include' });
+            const response = await fetch(apiUrl + "/user/auth/", { method: 'GET', credentials: 'include' });
             const json = await response.json();
             if (json) {
                 updateUser(json);

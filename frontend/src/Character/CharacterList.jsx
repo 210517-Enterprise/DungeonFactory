@@ -4,6 +4,7 @@ import add from './icons/adddark.png';
 import {classToPng} from './CharacterImages';
 import { Link, Redirect } from 'react-router-dom';
 import './Form/CharacterList.css';
+import {apiUrl} from "../util";
 
 const Container = styled.div`
   display: flex;
@@ -65,7 +66,7 @@ export default function CharList({ user, onCreate, currentCharacter }){
     const [characters, updateCharacters] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:8080/character', {method: 'GET', credentials: 'include'})
+        fetch(apiUrl + '/character', {method: 'GET', credentials: 'include'})
         .then(response => response.json())
         .then(json => updateCharacters(json))
     },[currentCharacter])
