@@ -4,6 +4,7 @@ import {Header} from "./Header";
 import {Slide} from "../../UI/Slide";
 import {Button} from "../../UI/Button";
 import {classToPng} from "../CharacterImages";
+import ReactTooltip from 'react-tooltip';
 
 const ClassListContainer = styled.div`
   display: flex;

@@ -95,9 +95,23 @@ export default function CharacterForm({ visible, onClose, character, onChange })
     }
 
     async function getRaces() {
-        const response = await fetch("https://www.dnd5eapi.co/api/races/");
+        const query = `
+        query {
+            races {
+                name
+                alignment
+            }
+        }`
+        
+        const requestInfo = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({query})
+        };
+
+        const response = await fetch("https://www.dnd5eapi.co/graphql", requestInfo);
         const races = await response.json();
-        updateRaces(races.results);
+        updateRaces(races.data.races);
     }
 
     async function getClasses() {
