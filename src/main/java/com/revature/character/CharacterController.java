@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin(allowCredentials="true", origins="http://localhost:3000")
 @RestController
-@RequestMapping("/character")
+@RequestMapping("/api/character")
 public class CharacterController {
 
 	private final CharacterService charService;

@@ -25,8 +25,12 @@ export default function App() {
 
     useEffect(() => {
         async function getUser() {
-            let response = await fetch('http://localhost:8080/user/auth', { method: 'GET', credentials: 'include' });
-            let json = await response.json();
+            const url = process.env.NODE_ENV === 'prod'
+                ? process.env.API_URL + '/user/auth'
+                : 'http://localhost:8080/api/user/auth'
+
+            const response = await fetch(url, { method: 'GET', credentials: 'include' });
+            const json = await response.json();
             if (json) {
                 updateUser(json);
             }
