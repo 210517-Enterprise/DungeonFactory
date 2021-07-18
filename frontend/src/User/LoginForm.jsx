@@ -99,7 +99,7 @@ export default function LoginForm({visible, updateUser, onClose}) {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ username: data.username, password: data.password }),
-            credentials: 'include'
+            credentials: 'same-origin'
         };
 
         try {
