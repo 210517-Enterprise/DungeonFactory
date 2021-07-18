@@ -107,6 +107,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
 
     useEffect(() => {
         if (character === null) {
+            updateDefaults()
             return
         }
 
@@ -137,7 +138,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         getClasses();
     }, []);
 
-    const handleClose = () => {
+    const updateDefaults = () => {
         updateShowAnimation(false)
         updateStep(1)
 
@@ -164,7 +165,10 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             alignment: "",
             featAndTraits: ""
         });
+    }
 
+    const handleClose = () => {
+        updateDefaults()
         onClose()
     }
 
