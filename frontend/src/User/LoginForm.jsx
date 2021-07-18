@@ -3,6 +3,7 @@ import {useForm} from 'react-hook-form';
 import {Modal} from "../UI/Modal";
 import styled, {keyframes} from "styled-components"
 import {zoomIn} from "react-animations";
+import {apiUrl} from "../util";
 
 const zoomInAnimation = keyframes`${zoomIn}`;
 
@@ -102,7 +103,7 @@ export default function LoginForm({visible, updateUser, onClose}) {
         };
 
         try {
-            const response = await fetch('http://localhost:8080/user/login', requestInfo)
+            const response = await fetch(apiUrl + '/user/login', requestInfo)
             const data = await response.json();
             console.log(data.message)
             if (response.status === 200) {
