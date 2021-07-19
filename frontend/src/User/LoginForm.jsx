@@ -105,19 +105,18 @@ export default function LoginForm({visible, updateUser, onClose}) {
         try {
             const response = await fetch(apiUrl + '/user/login', requestInfo)
             const data = await response.json();
-            console.log(data.message)
+
             if (response.status === 200) {
                 updateUser(data);
+                updateErrorMessage("")
+                reset(defaultValues)
+                onClose()
             } else {
                 updateErrorMessage(data.message)
             }
         } catch (e) {
             updateErrorMessage("Unexpected error occurred");
         }
-
-        updateErrorMessage("")
-        reset(defaultValues)
-        onClose()
     }
 
     if (!visible) {
