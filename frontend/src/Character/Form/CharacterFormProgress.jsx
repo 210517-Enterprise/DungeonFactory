@@ -21,7 +21,7 @@ const ProgressBar = styled.div`
   background: #39ABFE;
   transition: all 0.2s;
   opacity: 0.8;
-  ${props => css`width: calc(${(props.currentStep / 4 * 100)}%)`};
+  ${props => css`width: calc(${(props.currentStep / 5 * 100)}%)`};
 `
 
 const StepContainer = styled.div`
@@ -56,12 +56,14 @@ export default function CharacterFormProgress({ step, onChange }) {
             </Progress>
             <StepContainer>
                 <Step step={1} currentStep={step} onClick={() => onChange(1)}>Race</Step>
-                <StepDivider>......................</StepDivider>
+                <StepDivider>............</StepDivider>
                 <Step step={2} currentStep={step} onClick={() => onChange(2)}>Class</Step>
-                <StepDivider>......................</StepDivider>
+                <StepDivider>............</StepDivider>
                 <Step step={3} currentStep={step} onClick={() => onChange(3)}>Ability</Step>
-                <StepDivider>......................</StepDivider>
-                <Step step={4} currentStep={step} onClick={() => onChange(4)}>Details</Step>
+                <StepDivider>............</StepDivider>
+                <Step step={4} currentStep={step} onClick={() => onChange(4)}>Features</Step>
+                <StepDivider>............</StepDivider>
+                <Step step={5} currentStep={step} onClick={() => onChange(5)}>Details</Step>
             </StepContainer>
         </Container>
     )

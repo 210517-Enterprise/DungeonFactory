@@ -51,7 +51,6 @@ export default function CharacterRacePicker({ currentRace, races, onChange, slid
         onChange(race)
     }
 
-    console.log(races);
     const RaceList = () => races.map(race => <Race key={race.name} name={race.name} onChange={handleChange} img={raceToPng(race.name)} selected={race.name === currentRace} desc={race.alignment}/>)
 
     return (
