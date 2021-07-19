@@ -26,6 +26,12 @@ Dungeon Factory is a character creator for Dungeons and Dragons 5th Edition. Uti
 - Better web deployment
 - Add more customization to ports on deployment
 
+## To Develop
+
+1. Run `mvn spring-boot:run` while inside the main directory to start the API server
+2. Run `npm run start` while inside the `frontend` directory to start the development server for the React application
+
+
 ## To Deploy
 *This guide assumes you have maven, JDK >=8, node >=14.7, Docker and Docker-Compose >=version 3*
 #### 1: Docker setup
