@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Header} from "./Header";
 import {Slide} from "../../UI/Slide";
 import {Button} from "../../UI/Button";
+import ReactTooltip from "react-tooltip";
 
 const Container = styled.div`
   margin-bottom: 42px;
@@ -58,6 +59,8 @@ const Options = ({ classInfo, onChange, proficiencies }) => {
         }
     }
 
+    console.log(classInfo)
+
     return (
         <Container>
             {classInfo.proficiency_choices.map(choices =>
@@ -74,7 +77,10 @@ const Options = ({ classInfo, onChange, proficiencies }) => {
             <Divider />
             {classInfo.spellcasting && <OptionHeading>Spellcasting</OptionHeading>}
             <OptionContainer>
-                {classInfo.spellcasting && classInfo.spellcasting.info.map(s => <Option key={s.name}>{s.name}</Option> )}
+                {classInfo.spellcasting && classInfo.spellcasting.info.map(s =>
+                    <Option key={s.name} data-tip data-for={s.name}>{s.name}
+                        <ReactTooltip id={s.name} effect='solid'><div style={{maxWidth: 200}}>{s.desc}</div></ReactTooltip>
+                    </Option> )}
             </OptionContainer>
         </Container>
     )
