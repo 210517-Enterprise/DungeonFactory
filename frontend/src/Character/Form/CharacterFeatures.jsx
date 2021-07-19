@@ -72,7 +72,7 @@ const Options = ({ classInfo, onChange, proficiencies }) => {
                     </OptionContainer>
                 </div>)}
             <Divider />
-            <OptionHeading>Spellcasting</OptionHeading>
+            {classInfo.spellcasting && <OptionHeading>Spellcasting</OptionHeading>}
             <OptionContainer>
                 {classInfo.spellcasting && classInfo.spellcasting.info.map(s => <Option key={s.name}>{s.name}</Option> )}
             </OptionContainer>
