@@ -49,6 +49,8 @@ export default function CharacterForm({ visible, onClose, character, onChange })
 
     const [proficiencies, updateProficiencies] = useState("");
 
+    const [classInfo, updateClassInfo] = useState(null)
+
     const [abilities, updateAbilities] = useState({
         strength: 0,
         dexterity: 0,
@@ -205,6 +207,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         updateStep(1)
 
         updateProficiencies("")
+        updateClassInfo(null)
         updateRace("");
         updateClass("");
         updateStep(1);
@@ -274,6 +277,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             currentClass={characterClass}
             onNext={() => handleStepChange(currentStep + 1)} />,
         5: <CharacterDetails
+            currentCharacter={character}
             details={details}
             slideLeft={slideLeft}
             onChange={d => updateDetails(d)}
