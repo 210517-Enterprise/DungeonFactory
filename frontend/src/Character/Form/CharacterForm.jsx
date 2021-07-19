@@ -247,6 +247,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             currentClass={characterClass}
             onNext={() => handleStepChange(currentStep + 1)} />,
         5: <CharacterDetails
+            currentCharacter={character}
             details={details}
             slideLeft={slideLeft}
             onChange={d => updateDetails(d)}
