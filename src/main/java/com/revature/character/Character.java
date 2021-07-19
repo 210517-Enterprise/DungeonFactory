@@ -55,28 +55,28 @@ public class Character {
 	@Column(name="name", nullable=false)
 	private String characterName;
 	
-	@Column(name="background", nullable=false)
+	@Column(name="background", nullable=false, length = 9999)
 	private String background;
 	
 	@Column(name="alignment", nullable=false)
 	private String alignment;
 	
-	@Column(name="personality", nullable=false)
+	@Column(name="personality", nullable=false, length = 9999)
 	private String personality;
 	
-	@Column(name="ideals", nullable=false)
+	@Column(name="ideals", nullable=false, length = 9999)
 	private String ideals;
 	
-	@Column(name="bonds", nullable=false)
+	@Column(name="bonds", nullable=false, length = 9999)
 	private String bonds;
 	
-	@Column(name="flaws", nullable=false)
+	@Column(name="flaws", nullable=false, length = 9999)
 	private String flaws;
 	
-	@Column(name="featAndTraits", nullable=false)
+	@Column(name="featAndTraits", nullable=false, length = 9999)
 	private String featAndTraits;
 	
-	@Column(name="proficiencies", nullable=false)
+	@Column(name="proficiencies", nullable=false, length = 9999)
 	private String proficiencies;
 
 	@ManyToOne
