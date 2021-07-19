@@ -75,6 +75,9 @@ public class Character {
 	
 	@Column(name="featAndTraits", nullable=false)
 	private String featAndTraits;
+	
+	@Column(name="proficiencies", nullable=false)
+	private String proficiencies;
 
 	@ManyToOne
 	@JoinColumn(name="user_id", nullable=false)
