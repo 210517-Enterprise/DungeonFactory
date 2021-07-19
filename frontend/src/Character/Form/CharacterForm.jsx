@@ -48,6 +48,8 @@ export default function CharacterForm({ visible, onClose, character, onChange })
 
     const [proficiencies, updateProficiencies] = useState("");
 
+    const [classInfo, updateClassInfo] = useState(null)
+
     const [abilities, updateAbilities] = useState({
         strength: 0,
         dexterity: 0,
@@ -124,7 +126,6 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         updateClasses(classes.results)
     }
 
-    const [classInfo, updateClassInfo] = useState(null)
 
     async function getFeatures(charClass) {
         const response = await fetch(`https://www.dnd5eapi.co/api/classes/${charClass.toLowerCase()}`)
@@ -177,6 +178,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         updateStep(1)
 
         updateProficiencies("")
+        updateClassInfo(null)
         updateRace("");
         updateClass("");
         updateStep(1);
