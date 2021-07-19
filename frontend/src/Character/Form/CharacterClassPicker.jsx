@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {Header} from "./Header";
 import {Slide} from "../../UI/Slide";
 import {Button} from "../../UI/Button";
-import {classToPng} from "../CharacterImages";
+import {classToPng, classToDesc} from "../CharacterImages";
 import ReactTooltip from 'react-tooltip';
 
 const ClassListContainer = styled.div`
@@ -33,10 +33,11 @@ const ClassName = styled.div`
   text-align: center;
 `
 
-const CharacterClass = (({ name, onChange, selected, img}) => {
+const CharacterClass = (({ name, onChange, selected, img, desc}) => {
     return (
         <ClassContainer onClick={() => onChange(name)} >
-            <ClassIcon selected={selected} img={img} />
+            <ClassIcon selected={selected} img={img} data-tip data-for={name}/>
+            <ReactTooltip id={name} effect='solid'><div style={{maxWidth: 200}}>{desc}</div></ReactTooltip>
             <ClassName>{name}</ClassName>
         </ClassContainer>
     )
@@ -47,7 +48,7 @@ export default function CharacterClassPicker({ currentClass, classes, onChange, 
         onChange(charClass)
     }
 
-    const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} img={classToPng(c.name)} onChange={handleChange} selected={c.name === currentClass} />)
+    const ClassList = () => classes.map(c => <CharacterClass key={c.name} name={c.name} img={classToPng(c.name)} onChange={handleChange} selected={c.name === currentClass} desc={classToDesc(c.name)} />)
 
     return (
         <Slide slideLeft={slideLeft}>
