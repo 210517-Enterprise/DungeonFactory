@@ -25,19 +25,19 @@ export default function RegisterForm({ updateUser, visible, onClose }) {
             const response = await fetch(apiUrl + '/user/register', requestInfo)
 
             if(response.status !== 200){
-                updateErrorMessage(await response.text())
+                const data = await response.json()
+                updateErrorMessage(data.message)
             } else {
                 const user = await response.json();
+                updateErrorMessage("")
+                reset(defaultValues)
+                onClose()
                 updateUser(user);
             }
 
         } else {
             updateErrorMessage("Passwords did not match");
         }
-
-        updateErrorMessage("")
-        reset(defaultValues)
-        onClose()
     }
 
     if (!visible) {
