@@ -38,6 +38,10 @@ const Divider = styled.div`
   margin: 42px 0;
 `
 
+const Message = styled.div`
+    margin-bottom: 24px;
+`
+
 const Options = ({ classInfo, onChange, proficiencies }) => {
     if (!classInfo) {
         return <></>
@@ -80,6 +84,7 @@ export default function CharacterFeatures({ onChange, proficiencies, slideLeft, 
     return (
         <Slide slideLeft={slideLeft}>
             <Header>Class features</Header>
+            {!proficiencies && <Message>You have not selected a class yet.</Message>}
             <Options classInfo={classInfo} proficiencies={proficiencies} onChange={onChange} />
             <Button onClick={onNext}>Next</Button>
         </Slide>
