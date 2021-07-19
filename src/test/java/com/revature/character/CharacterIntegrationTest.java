@@ -101,7 +101,7 @@ public class CharacterIntegrationTest {
         character.put("flaws", c.getFlaws());
         character.put("featAndTraits", c.getFeatAndTraits());
         
-        mvc.perform(post("/character")
+        mvc.perform(post("/api/character")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(character.toString())
                 .sessionAttr("user", u))
@@ -134,7 +134,7 @@ public class CharacterIntegrationTest {
         
         characterService.insert(c);
 
-        mvc.perform(get("/character/" + c.getId())
+        mvc.perform(get("/api/character/" + c.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .sessionAttr("user", u))
                 .andExpect(status().isOk())
@@ -164,7 +164,7 @@ public class CharacterIntegrationTest {
         character.put("featAndTraits", c.getFeatAndTraits());
         
 
-        mvc.perform(put("/character")
+        mvc.perform(put("/api/character")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(character.toString())
                 .sessionAttr("user", u))
@@ -182,7 +182,7 @@ public class CharacterIntegrationTest {
         User u = randomUser();
         Character c = randomCharacter(u);
 
-        mvc.perform(get("/character")
+        mvc.perform(get("/api/character")
                 .contentType(MediaType.APPLICATION_JSON)
                 .sessionAttr("user", u))
                 .andExpect(status().isOk())
@@ -198,7 +198,7 @@ public class CharacterIntegrationTest {
      */
     @Test
     public void testInvalidCharacterCreateNoSession() throws Exception {
-        mvc.perform(post("/character")
+        mvc.perform(post("/api/character")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"race\": \"dwarf\"}"))
                 .andExpect(status().isForbidden());
@@ -213,7 +213,7 @@ public class CharacterIntegrationTest {
         User u = randomUser();
         Character c = randomCharacter(u);
 
-        mvc.perform(delete("/character/" + c.getId())
+        mvc.perform(delete("/api/character/" + c.getId())
                 .sessionAttr("user", u))
                 .andExpect(status().isOk());
     }
@@ -229,7 +229,7 @@ public class CharacterIntegrationTest {
 
         Character c = randomCharacter(owner);
 
-        mvc.perform(delete("/character/" + c.getId())
+        mvc.perform(delete("/api/character/" + c.getId())
                 .sessionAttr("user", u))
                 .andExpect(status().isForbidden());
     }
@@ -243,7 +243,7 @@ public class CharacterIntegrationTest {
         User u = randomUser();
         Character c = randomCharacter(u);
 
-        mvc.perform(delete("/character/" + c.getId()))
+        mvc.perform(delete("/api/character/" + c.getId()))
                 .andExpect(status().isForbidden());
     }
 }

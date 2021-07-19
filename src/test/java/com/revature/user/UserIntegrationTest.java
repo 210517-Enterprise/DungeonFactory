@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Class defines the user integration tests
- * @author Frank Aurori
+ * @author Frank Aurori, Derek Dinh, Frederick Thornton
  *
  */
 @RunWith(SpringRunner.class)
@@ -44,7 +44,7 @@ public class UserIntegrationTest {
         u.setPassword("bar");
         userService.insert(u);
 
-        mvc.perform(post("/user/login")
+        mvc.perform(post("/api/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
                 .andExpect(status().isOk())
@@ -57,7 +57,7 @@ public class UserIntegrationTest {
      */
     @Test
     public void testLoggingInWithUserThatDoesNotExist() throws Exception {
-        mvc.perform(post("/user/login")
+        mvc.perform(post("/api/user/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"username\": \"foo\", \"password\": \"bar\"}"))
                 .andExpect(status().isNotFound());
@@ -69,7 +69,7 @@ public class UserIntegrationTest {
      */
     @Test
     public void testRegisterWithValidUser() throws Exception {
-        mvc.perform(post("/user/register")
+        mvc.perform(post("/api/user/register")
         	.contentType(MediaType.APPLICATION_JSON)
         	.content("{\"username\": \"bar\", \"password\": \"foo\"}"))
         	.andExpect(status().isOk())
@@ -82,10 +82,10 @@ public class UserIntegrationTest {
      */
     @Test
     public void testRegisterWithInvalidUsername() throws Exception {
-    	mvc.perform(post("/user/register")
+    	mvc.perform(post("/api/user/register")
     			.contentType(MediaType.APPLICATION_JSON)
     			.content("{\"username\": \"a\", \"password\":\"test\"}"))
-    			.andExpect(status().isConflict());
+    			.andExpect(status().isInternalServerError());
     }
     
     /**
@@ -94,10 +94,10 @@ public class UserIntegrationTest {
      */
     @Test
     public void testRegisterWithExistingUsername() throws Exception {
-    	mvc.perform(post("/user/register")
+    	mvc.perform(post("/api/user/register")
     			.contentType(MediaType.APPLICATION_JSON)
     			.content("{\"username\": \"foo\", \"password\": \"bar\"}"))
-    			.andExpect(status().isConflict());
+    			.andExpect(status().isInternalServerError());
     }
     
     /**
@@ -111,7 +111,7 @@ public class UserIntegrationTest {
         u.setPassword("yes");
         userService.insert(u);
 
-    	mvc.perform(delete("/user")
+    	mvc.perform(delete("/api/user")
                 .sessionAttr("user", u)
     			.contentType(MediaType.APPLICATION_JSON))
     			.andExpect(status().isOk());
@@ -123,30 +123,11 @@ public class UserIntegrationTest {
      */
     @Test
     public void testDeleteWithUserThatDoesNotExist() throws Exception {
-    	mvc.perform(delete("/user")
+    	mvc.perform(delete("/api/user")
     			.contentType(MediaType.APPLICATION_JSON))
     			.andExpect(status().isNotFound());
     }
-    
-    /**
-     * Method to test user update with a valid username and session
-     * @throws Exception
-     */
-    @Test
-    public void updateUserWithValidUsernameAndSession() throws Exception {
-        User u = new User();
-        u.setUsername("zoo");
-        u.setPassword("animal");
-        userService.insert(u);
-    	
-        mvc.perform(put("/user")
-    			.contentType(MediaType.APPLICATION_JSON)
-                .sessionAttr("user", u)
-    			.content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
-    			.andExpect(jsonPath("$.username").value("updatedName"))
-    			.andExpect(status().isOk());
-    }
-    
+     
     /**
      * Method to test user update with a valid username and no session
      * @throws Exception
@@ -158,7 +139,7 @@ public class UserIntegrationTest {
         u.setPassword("animal");
         userService.insert(u);
 
-        mvc.perform(put("/user")
+        mvc.perform(put("/api/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"id\": " + u.getId() +", \"username\": \"updatedName\", \"password\": \"test\"}"))
                 .andExpect(status().isNotFound());
