@@ -153,8 +153,6 @@ export default function CharacterForm({ visible, onClose, character, onChange })
           updateAttributes(att);
     }
 
-    const [classInfo, updateClassInfo] = useState(null)
-
     async function getFeatures(charClass) {
         const response = await fetch(`https://www.dnd5eapi.co/api/classes/${charClass.toLowerCase()}`)
         const data = await response.json();
