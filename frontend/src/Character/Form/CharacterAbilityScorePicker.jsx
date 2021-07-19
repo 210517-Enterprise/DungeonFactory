@@ -3,6 +3,8 @@ import React, {useState} from "react";
 import {Header} from "./Header";
 import {Slide} from "../../UI/Slide";
 import {Button} from "../../UI/Button";
+import ReactTooltip from "react-tooltip";
+import {capitalize} from "../../util"
 
 const Container = styled.div`
   display: flex;
@@ -57,7 +59,7 @@ const Message = styled.div`
   margin-bottom: 42px;
 `
 
-const Ability = ({ ability, abilities, onChange, onDragging, dragging }) => {
+const Ability = ({ ability, abilities, attributes, onChange, onDragging, dragging }) => {
     const [name, value] = ability;
 
     const [editing, updateEditing] = useState(false)
@@ -81,7 +83,7 @@ const Ability = ({ ability, abilities, onChange, onDragging, dragging }) => {
 
 
     return (
-        <AbilityContainer>
+        <AbilityContainer data-tip data-for={name}>
             <ScoreContainer>
                 {editing
                     ? <ScoreInput key={name} value={value} onChange={e => onChange(name, e.target.value)} />
@@ -96,11 +98,12 @@ const Ability = ({ ability, abilities, onChange, onDragging, dragging }) => {
 
             </ScoreContainer>
             <AbilityName>{name.charAt(0).toUpperCase() + name.slice(1)}</AbilityName>
+            <ReactTooltip id={name} effect='solid'><div style={{maxWidth: 200}}>{attributes[capitalize(name)]}</div></ReactTooltip>
         </AbilityContainer>
     )
 }
 
-const AbilityList = ({ abilities, onChange, dragging, onDragging }) => {
+const AbilityList = ({ abilities, attributes, onChange, dragging, onDragging }) => {
     const handleChange = (name, value) => {
         let valueInt = parseInt(value, 10)
         if (value === "") {
@@ -118,6 +121,7 @@ const AbilityList = ({ abilities, onChange, dragging, onDragging }) => {
     return Object.entries(abilities).map(a =>
         <Ability key={a[0]}
                  ability={a}
+                 attributes={attributes}
                  onInputChange={handleChange}
                  onChange={onChange}
                  abilities={abilities}

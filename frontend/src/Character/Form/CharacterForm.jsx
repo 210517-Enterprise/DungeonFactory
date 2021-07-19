@@ -36,6 +36,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
     const history = useHistory()
     const [races, updateRaces] = useState([]);
     const [classes, updateClasses] = useState([]);
+    const [attributes, updateAttributes] = useState([]);
 
     const [race, updateRace] = useState("");
     const [characterClass, updateClass] = useState("");
@@ -126,6 +127,33 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         updateClasses(classes.results)
     }
 
+    async function getAttributes() {
+        const query = `
+            query {
+                abilityScores {
+                    full_name
+                    desc
+                }
+            }
+          `
+
+        const requestInfo = {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({query})
+        };
+
+        const response = await fetch("https://www.dnd5eapi.co/graphql", requestInfo);
+          const attributes = await response.json();
+          const att = {}
+          attributes.data.abilityScores.forEach(element => {
+              att[element.full_name] = element.desc[0]
+          });
+          console.log(att);
+          updateAttributes(att);
+    }
+
+    const [classInfo, updateClassInfo] = useState(null)
 
     async function getFeatures(charClass) {
         const response = await fetch(`https://www.dnd5eapi.co/api/classes/${charClass.toLowerCase()}`)
@@ -171,6 +199,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
     useEffect(() => {
         getRaces();
         getClasses();
+        getAttributes();
     }, []);
 
     const updateDefaults = () => {
@@ -236,6 +265,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             onNext={() => handleStepChange(currentStep + 1)} />,
         3: <CharacterAbilityScorePicker
             abilities={abilities}
+            attributes={attributes}
             slideLeft={slideLeft}
             onChange={a => updateAbilities(a)}
             onNext={() => handleStepChange(currentStep + 1)} />,
