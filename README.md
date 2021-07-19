@@ -65,6 +65,8 @@ Entering `docker-compose up` within the `./DungeonFactory` directory will now sp
     - React
     - CSS
     - Fetch
+    - styled-components
+    - react-animations
 - Deployment
     - Docker
     - Docker-Compose
