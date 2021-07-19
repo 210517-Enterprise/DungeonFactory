@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import {Modal, CloseButton} from "../../UI/Modal";
 import {zoomIn} from "react-animations";
 import {apiUrl} from "../../util";
+import CharacterFeatures from "./CharacterFeatures";
 
 const zoomInAnimation = keyframes`${zoomIn}`;
 
@@ -45,6 +46,8 @@ export default function CharacterForm({ visible, onClose, character, onChange })
 
     const [showAnimation, updateShowAnimation] = useState(false);
 
+    const [proficiencies, updateProficiencies] = useState("");
+
     const [abilities, updateAbilities] = useState({
         strength: 0,
         dexterity: 0,
@@ -75,7 +78,8 @@ export default function CharacterForm({ visible, onClose, character, onChange })
                 race,
                 characterClass,
                 ...abilities,
-                ...details
+                ...details,
+                proficiencies
             }),
             credentials: 'include'
         };
@@ -120,6 +124,20 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         updateClasses(classes.results)
     }
 
+    const [classInfo, updateClassInfo] = useState(null)
+
+    async function getFeatures(charClass) {
+        const response = await fetch(`https://www.dnd5eapi.co/api/classes/${charClass.toLowerCase()}`)
+        const data = await response.json();
+        updateClassInfo(data)
+    }
+
+    useEffect(() => {
+        if (characterClass) {
+            getFeatures(characterClass)
+        }
+    }, [characterClass])
+
     useEffect(() => {
         if (character === null) {
             updateDefaults()
@@ -146,6 +164,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             alignment: character.alignment,
             featAndTraits: character.featAndTraits
         });
+        updateProficiencies(character.proficiencies)
     }, [character, visible])
 
     useEffect(() => {
@@ -157,6 +176,7 @@ export default function CharacterForm({ visible, onClose, character, onChange })
         updateShowAnimation(false)
         updateStep(1)
 
+        updateProficiencies("")
         updateRace("");
         updateClass("");
         updateStep(1);
@@ -214,11 +234,19 @@ export default function CharacterForm({ visible, onClose, character, onChange })
             onNext={() => handleStepChange(currentStep + 1)} />,
         3: <CharacterAbilityScorePicker
             abilities={abilities}
+            slideLeft={slideLeft}
             onChange={a => updateAbilities(a)}
             onNext={() => handleStepChange(currentStep + 1)} />,
-        4: <CharacterDetails
-            currentCharacter={character}
+        4: <CharacterFeatures
+            proficiencies={proficiencies}
+            onChange={p => updateProficiencies(p)}
+            classInfo={classInfo}
+            slideLeft={slideLeft}
+            currentClass={characterClass}
+            onNext={() => handleStepChange(currentStep + 1)} />,
+        5: <CharacterDetails
             details={details}
+            slideLeft={slideLeft}
             onChange={d => updateDetails(d)}
             onNext={handleSubmit} />
     }
