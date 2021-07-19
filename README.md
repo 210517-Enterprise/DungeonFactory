@@ -54,11 +54,11 @@ services:
     frontend:
         image: dungeonfactory/frontend
         ports: 
-            - "3000:80"
+            - "80:80"
 ```
 Place this file within the `./DungeonFactory` directory.
 #### 3: Deploying
-Entering `docker-compose up` within the `./DungeonFactory` directory will now spin up this application. By going to `http://localhost:3000` you will be able to access the frontend and create an account and characters. 
+Entering `docker-compose up` within the `./DungeonFactory` directory will now spin up this application hosted on port `80`. This port can be changed but it is suggested to use `80` since it is the default listen port.
 
 ## Technologies Used
 - Backend
