@@ -71,3 +71,31 @@ export function raceToPng(raceName) {
         return tiefling;
     }
 }
+
+export function classToDesc(className) {
+    if (className === "Barbarian") {
+        return "A fierce warrior of primitive background who can enter a battle rage";
+    } else if (className === "Bard") {
+        return "An inspiring magician whose power echoes the music of creation";
+    } else if (className === "Cleric") {
+        return "A priestly champion who wields divine magic in service of a higher power";
+    } else if (className === "Druid") {
+        return "A priest of the Old Faith, wielding the powers of nature — moonlight and plant growth, fire and lightning — and adopting animal forms";
+    } else if (className === "Fighter") {
+        return "A master of martial combat, skilled with a variety of weapons and armor";
+    } else if (className === "Monk") {
+        return "A master of martial arts, harnessing the power of the body in pursuit of physical and spiritual perfection";
+    } else if (className === "Paladin") {
+        return "A holy warrior bound to a sacred oath";
+    } else if (className === "Ranger") {
+        return "A warrior who uses martial prowess and nature magic to combat threats on the edges of civilization";
+    } else if (className === "Rogue") {
+        return "A scoundrel who uses stealth and trickery to overcome obstacles and enemies";
+    } else if (className === "Sorcerer") {
+        return "A spellcaster who draws on inherent magic from a gift or bloodline";
+    } else if (className === "Warlock") {
+        return "A wielder of magic that is derived from a bargain with an extraplanar entity";
+    } else if (className === "Wizard") {
+        return "A scholarly magic-user capable of manipulating the structures of reality";
+    }
+}
